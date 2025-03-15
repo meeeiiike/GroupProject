@@ -31,12 +31,19 @@ public class StudentManagementDelete {
                 int choice = scanner.nextInt();
                 scanner.nextLine();
 
-                if (choice == 9) {
-                    System.out.println("Exiting...");
-                    continueRunning = false;
-                } else {
-                    System.out.println("Feature not yet implemented.");
+                switch (choice){
+                    case 1:
+                        System.out.println("Department table called");
+
+                        System.out.println("Enter department id to delete: ");
+                        break;
+                    case 9:
+                        continueRunning = false;
+                        break;
+                    default:
+                        System.out.println("Invalid option or feature not yet implemented");
                 }
+
             }
         }catch (SQLException e) {
             System.out.println("Database connection failed");

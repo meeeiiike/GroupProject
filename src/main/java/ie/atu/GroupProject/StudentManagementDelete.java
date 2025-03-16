@@ -2,6 +2,7 @@ package ie.atu.GroupProject;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Scanner;
 
@@ -36,6 +37,15 @@ public class StudentManagementDelete {
                         System.out.println("Department table called");
 
                         System.out.println("Enter department id to delete: ");
+                        int departmentID = scanner.nextInt();
+                        try{
+                            PreparedStatement stmt = connection.prepareStatement("DELETE FROM department WHERE department_id =" + departmentID);
+                            System.out.println("Successfully deleted id " + departmentID + " from department table.");
+                            stmt.executeUpdate();
+                        } catch (SQLException e){
+                            System.out.println("Database Error.");
+                            e.printStackTrace();
+                        }
                         break;
                     case 9:
                         continueRunning = false;

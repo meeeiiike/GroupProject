@@ -1,9 +1,6 @@
 package ie.atu.GroupProject;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Scanner;
 
 public class StudentManagementDelete {
@@ -42,6 +39,9 @@ public class StudentManagementDelete {
                             PreparedStatement stmt = connection.prepareStatement("DELETE FROM department WHERE department_id =" + departmentID);
                             System.out.println("Successfully deleted id " + departmentID + " from department table.");
                             stmt.executeUpdate();
+                        }catch (SQLIntegrityConstraintViolationException e) {
+                            System.out.println("Error: Cannot delete department because they are a foreign key in Course, Staff, Student, and College Address");
+                            System.out.println("Delete the related records first before deleting department.");
                         } catch (SQLException e){
                             System.out.println("Database Error.");
                             e.printStackTrace();

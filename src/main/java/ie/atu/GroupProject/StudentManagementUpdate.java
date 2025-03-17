@@ -47,6 +47,9 @@ public class StudentManagementUpdate {
                     //TODO: add error msg when we add ID that doesnt exist yet
                     // add same functionality for all switch cases
                     // test for failure, add exceptions and error logs
+                    // LOTS OF REDUNDANT CODE! once happy with functionality,
+                    // Clean up code to reduce redundancy
+
                     //Connects using db.properties,
                     //Uses prepare stmt to write query to update dept name at corresponding ID,
                     try (Connection con = DriverManager.getConnection(url, username, password)) {
@@ -62,10 +65,28 @@ public class StudentManagementUpdate {
                     }
                     break;
                 case 2:
-                    System.out.println("Update Student");
+                    System.out.println("Update Student\nPlease enter ID: ");
+                    int studentID = sc.nextInt();
+                    try (Connection con = DriverManager.getConnection(url, username, password)) {
+                        PreparedStatement stmt = con.prepareStatement("UPDATE student SET first_name = ?, last_name = ?, email = ? WHERE student_id = " + studentID);
+                        System.out.println("Enter first name: ");
+                        String first_name = sc.next();
+                        System.out.println("Enter last name: ");
+                        String last_name = sc.next();
+                        System.out.println("Enter email: ");
+                        String email = sc.next();
+                        stmt.setString(1, first_name);
+                        stmt.setString(2, last_name);
+                        stmt.setString(3, email);
+                        int rowsUpdated = stmt.executeUpdate();
+                        System.out.println("Rows Updated Successfully: " + rowsUpdated);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        System.out.println("Could not Connect");
+                    }
                     break;
                 case 3:
-                    System.out.println("Update Staff");
+                    System.out.println("Update Staff\nPlease enter ID: ");
                     break;
                 case 4:
                     System.out.println("Update Course");

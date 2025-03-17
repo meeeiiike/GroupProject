@@ -4,9 +4,17 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
 import java.util.Properties;
+import java.util.Scanner;
 
 public class StudentManagementUpdate {
     public static void main(String[] args){
+
+        Scanner sc = new Scanner(System.in);
+        System.out.println("\n Welcome to Student Management System! \n You Selected Update\n " +
+                "Please Select Table to Update: \n1. Department\n2. Student\n3. Staff\n4. Course\n" +
+                "5. Grades\n6. Payment\n7. College\n8. Address\n9. Exit\n Please Enter: ");
+        int choice = sc.nextInt();
+        sc.nextLine();
 
         // Get database properties
         Properties dbProps = new Properties();

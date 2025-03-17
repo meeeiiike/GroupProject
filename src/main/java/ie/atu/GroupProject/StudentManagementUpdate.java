@@ -7,24 +7,17 @@ import java.util.Properties;
 import java.util.Scanner;
 
 public class StudentManagementUpdate {
-    public static void main(String[] args){
-
-        Scanner sc = new Scanner(System.in);
-        System.out.println("\n Welcome to Student Management System! \n You Selected Update\n " +
-                "Please Select Table to Update: \n1. Department\n2. Student\n3. Staff\n4. Course\n" +
-                "5. Grades\n6. Payment\n7. College\n8. Address\n9. Exit\n Please Enter: ");
-        int choice = sc.nextInt();
-        sc.nextLine();
+    public static void main(String[] args) {
 
         // Get database properties
         Properties dbProps = new Properties();
-        try(InputStream input = TestConnection.class.getResourceAsStream("/db.properties")){
-            if(input== null){
+        try (InputStream input = TestConnection.class.getResourceAsStream("/db.properties")) {
+            if (input == null) {
                 System.out.println("Unable to find db.properties");
                 return;
             }
             dbProps.load(input);
-        } catch(IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return;
         }
@@ -32,21 +25,67 @@ public class StudentManagementUpdate {
         String username = dbProps.getProperty("db.username");
         String password = dbProps.getProperty("db.password");
 
-        // Update Query
-        String updateSQL = "UPDATE department SET name = 'NUIG' WHERE name = 'ATU'";
+        //Start Menu
+        boolean run = true;
+        Scanner sc = new Scanner(System.in);
 
-//String updateSQL = "UPDATE department SET name = '?' WHERE name = '?'";
-//Layout to use when we implement code to ask user for input
-//Will need to use PreparedStatements!
+        while (run) {
+            System.out.println("\n Welcome to Student Management System! \n You Selected Update\n " +
+                    "Please Select Table to Update: \n1. Department\n2. Student\n3. Staff\n4. Course\n" +
+                    "5. Grades\n6. Payment\n7. College\n8. Address\n9. Exit\n Please Enter: ");
+            int choice = sc.nextInt();
+            sc.nextLine();
 
-        // Create Connection using db.properties
-        try(Connection con = DriverManager.getConnection(url, username, password)){
-            Statement stmt = con.createStatement();
-            int rowsUpdated = stmt.executeUpdate(updateSQL);
-            System.out.println("Rows Updated Successfully: " +rowsUpdated);
-        } catch(SQLException e){
-            e.printStackTrace();
-            System.out.println("Could not Connect");
+            switch (choice) {
+                case 1:
+                    System.out.println("Update Department\nPlease enter ID: ");
+                    int departmentID = sc.nextInt();
+
+                    //TODO: add error msg when we add ID that doesnt exist yet
+                    // add same functionality for all switch cases
+                    // test for failure, add exceptions and error logs
+                    //Connects using db.properties,
+                    //Uses prepare stmt to write query to update dept name at corresponding ID,
+                    try (Connection con = DriverManager.getConnection(url, username, password)) {
+                        PreparedStatement stmt = con.prepareStatement("UPDATE department SET name = ? WHERE department_id = " + departmentID);
+                        System.out.println("Enter new name: ");
+                        String name = sc.next();
+                        stmt.setString(1, name);
+                        int rowsUpdated = stmt.executeUpdate();
+                        System.out.println("Rows Updated Successfully: " + rowsUpdated);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        System.out.println("Could not Connect");
+                    }
+                    break;
+                case 2:
+                    System.out.println("Update Student");
+                    break;
+                case 3:
+                    System.out.println("Update Staff");
+                    break;
+                case 4:
+                    System.out.println("Update Course");
+                    break;
+                case 5:
+                    System.out.println("Update Grades");
+                    break;
+                case 6:
+                    System.out.println("Update Payment");
+                    break;
+                case 7:
+                    System.out.println("Update College");
+                    break;
+                case 8:
+                    System.out.println("Update Address");
+                    break;
+                case 9:
+                    System.out.println("Goodbye!");
+                    run = false;
+                    break;
+                default:
+                    System.out.println("Error Occurred");
+            }
         }
     }
 }

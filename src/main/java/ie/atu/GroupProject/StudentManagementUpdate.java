@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class StudentManagementUpdate {
     public static void main(String[] args) {
 
+        // |------------------------------------------------------------------------------------------------------------------------|
         // Get database properties
         Properties dbProps = new Properties();
         try (InputStream input = TestConnection.class.getResourceAsStream("/db.properties")) {
@@ -24,7 +25,9 @@ public class StudentManagementUpdate {
         String url = dbProps.getProperty("db.url");
         String username = dbProps.getProperty("db.username");
         String password = dbProps.getProperty("db.password");
+        // |------------------------------------------------------------------------------------------------------------------------|
 
+        // |------------------------------------------------------------------------------------------------------------------------|
         //Start Menu
         boolean run = true;
         Scanner sc = new Scanner(System.in);

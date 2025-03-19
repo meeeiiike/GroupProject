@@ -1,3 +1,4 @@
+import ie.atu.GroupProject.StudentManagementUpdate;
 import ie.atu.GroupProject.TestConnection;
 import java.io.IOException;
 import java.io.InputStream;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SmsUpdateTest {
 
@@ -32,12 +34,13 @@ public class SmsUpdateTest {
         password = dbProps.getProperty("db.password");
         // |------------------------------------------------------------------------------------------------------------------------|
     }
+    //TODO: Call the method to reduce redundancy for all cases
     @Test
     void testUpdateDepartmentSuccess(){
         int departmentID = 1;
         try (Connection con = DriverManager.getConnection(url, username, password)) {
             PreparedStatement stmt = con.prepareStatement("UPDATE department SET name = ? WHERE department_id = " + departmentID);
-            String name = "TestATU";
+            String name = "TestAtuSuccess";
             stmt.setString(1, name);
             int rowsUpdated = stmt.executeUpdate();
             assertEquals(1, rowsUpdated);
@@ -46,5 +49,9 @@ public class SmsUpdateTest {
             e.printStackTrace();
             System.out.println("Could not Connect" + e.getMessage());
         }
+    }
+    @Test
+    void testUpdateDepartmentFailure(){
+
     }
 }

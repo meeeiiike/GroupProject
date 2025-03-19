@@ -6,8 +6,17 @@ import java.sql.*;
 import java.util.Properties;
 import java.util.Scanner;
 
+//TODO: add error msg when we add ID that doesnt exist yet
+// add same functionality for all switch cases
+// test for failure, add exceptions and error logs
+// Add connection pool!
+// Use Code Coverage to help with Testing! Complexity < 10
+// LOTS OF REDUNDANT CODE! once happy with functionality,
+// Clean up code to reduce redundancy
+
 public class StudentManagementUpdate {
-    public static void main(String[] args) {
+
+    public static void main(String[] args){
 
         // |------------------------------------------------------------------------------------------------------------------------|
         // Get database properties
@@ -41,30 +50,7 @@ public class StudentManagementUpdate {
 
             switch (choice) {
                 case 1:
-                    System.out.println("Update Department\nPlease enter ID: ");
-                    int departmentID = sc.nextInt();
-
-                    //TODO: add error msg when we add ID that doesnt exist yet
-                    // add same functionality for all switch cases
-                    // test for failure, add exceptions and error logs
-                    // Add connection pool!
-                    // Use Code Coverage to help with Testing! Complexity < 10
-                    // LOTS OF REDUNDANT CODE! once happy with functionality,
-                    // Clean up code to reduce redundancy
-
-                    //Connects using db.properties,
-                    //Uses prepare stmt to write query to update dept name at corresponding ID,
-                    try (Connection con = DriverManager.getConnection(url, username, password)) {
-                        PreparedStatement stmt = con.prepareStatement("UPDATE department SET name = ? WHERE department_id = " + departmentID);
-                        System.out.println("Enter new name: ");
-                        String name = sc.next();
-                        stmt.setString(1, name);
-                        int rowsUpdated = stmt.executeUpdate();
-                        System.out.println("Rows Updated Successfully: " + rowsUpdated);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                        System.out.println("Could not Connect");
-                    }
+                    updateDepartment(sc);
                     break;
                 case 2:
                     System.out.println("Update Student\nPlease enter ID: ");
@@ -99,7 +85,7 @@ public class StudentManagementUpdate {
                         System.out.println("Enter email: ");
                         String email = sc.next();
                         System.out.println("Enter phone: ");
-                        String phone  = sc.next();
+                        String phone = sc.next();
                         System.out.println("Enter office: ");
                         String office = sc.next();
                         stmt.setString(1, first_name);
@@ -170,4 +156,50 @@ public class StudentManagementUpdate {
             }
         }
     }
+
+    private static void updateDepartment(Scanner sc){
+
+        // TODO: fix dbProps loading issue where i have to include in every method to reduce redundancy
+        Properties dbProps = new Properties();
+        try (InputStream input = TestConnection.class.getResourceAsStream("/db.properties")) {
+            if (input == null) {
+                System.out.println("Unable to find db.properties");
+                return;
+            }
+            dbProps.load(input);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+        String url = dbProps.getProperty("db.url");
+        String username = dbProps.getProperty("db.username");
+        String password = dbProps.getProperty("db.password");
+
+        //Connects using db.properties,
+        //Uses prepare stmt to write query to update dept name at corresponding ID,
+        System.out.println("Update Department\nPlease enter ID: ");
+        int departmentID = sc.nextInt();
+        try (Connection con = DriverManager.getConnection(url, username, password)) {
+            PreparedStatement stmt = con.prepareStatement("UPDATE department SET name = ? WHERE department_id = " + departmentID);
+            System.out.println("Enter new name: ");
+            String name = sc.next();
+            stmt.setString(1, name);
+            int rowsUpdated = stmt.executeUpdate();
+
+            // simple error handling
+            // TODO: include when id>0 BUT not assigned to anything
+            if (rowsUpdated <= 0) {
+                throw new SQLException("ID INVALID: must be > 0");
+            }
+            System.out.println("Rows Updated Successfully: " + rowsUpdated);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Could not Connect");
+
+        }
+    }
 }
+
+
+
+

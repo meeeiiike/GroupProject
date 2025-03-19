@@ -1,28 +1,40 @@
 package ie.atu.GroupProject;
 
-
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.Scanner;
 
 public class StudentManagementCreate {
-
     public static void main(String[] args) {
 
-        String url = "jdbc:mysql://localhost:3306/sms";
-        String user = "root"; // Database Username
-        String password = "password"; // Database Password
+        Properties dbProps = new Properties();
+        try (InputStream input = TestConnection.class.getResourceAsStream("/db.properties")) {
+            if (input == null) {
+                System.out.println("Unable to find db.properties");
+                return;
+            }
+            dbProps.load(input);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return;
+        }
+        String url = dbProps.getProperty("db.url");
+        String username = dbProps.getProperty("db.username");
+        String password = dbProps.getProperty("db.password");
 
-        Scanner studentInput = new Scanner(System.in);
-        //get name of first student
+        Scanner departmentInput = new Scanner(System.in);
+        // Get name of department
         System.out.println("Please enter department name: ");
-        String name = studentInput.nextLine();
+        String name = departmentInput.nextLine();
 
         String insertSQL = "INSERT INTO department ( name) VALUES ('" + name + "')";
 
-        try (Connection connection = DriverManager.getConnection(url, user, password);
+        try (Connection connection = DriverManager.getConnection(url, username, password);
              Statement statement = connection.createStatement()) {
 
             // Execute the insert query

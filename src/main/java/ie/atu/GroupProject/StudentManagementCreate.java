@@ -33,6 +33,7 @@ public class StudentManagementCreate {
             System.out.print("1. Department: \n");
             System.out.print("2. Student: \n");
             System.out.print("Enter your choice: ");
+
             int choice = sc.nextInt();
             sc.nextLine();
 

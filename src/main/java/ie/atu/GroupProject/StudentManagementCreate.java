@@ -20,7 +20,7 @@ public class StudentManagementCreate {
             }
             dbProps.load(input);
         } catch (IOException e) {
-            e.printStackTrace();
+            e.printStackTrace();            // Print stack trace of the exception to console
             return;
         }
         String url = dbProps.getProperty("db.url");
@@ -32,7 +32,33 @@ public class StudentManagementCreate {
         System.out.println("Please enter department name: ");
         String name = departmentInput.nextLine();
 
-        String insertSQL = "INSERT INTO department ( name) VALUES ('" + name + "')";
+        String Dept insertSQL = "INSERT INTO department ( name) VALUES ('" + name + "')";
+        //insertSQL
+
+
+        Scanner studentidInput = new Scanner(System.in);
+        System.out.println("Please enter student id: ");
+        String sid = studentidInput.nextLine();
+
+        Scanner studentad1Input = new Scanner(System.in);
+        System.out.println("Please enter student address line 1: ");
+        String line1 = studentad1Input.nextLine();
+
+        Scanner studentad2Input = new Scanner(System.in);
+        System.out.println("Please enter student address line 2: ");
+        String line2 = studentad2Input.nextLine();
+
+        Scanner studentadTcInput = new Scanner(System.in);
+        System.out.println("Please enter student address town/city: ");
+        String line3 = studentadTcInput.nextLine();
+
+        Scanner studentadCInput = new Scanner(System.in);
+        System.out.println("Please enter student address town/city: ");
+        String line4 = studentadCInput.nextLine();
+
+
+        String insertSQL = "INSERT INTO student_address (student_id, address_line_1, address_line_2, town_city, county) VALUES ('" + sid + "', '" + line1 + "','" + line2 + "', '" + line3 + "','" + line4 +"')";
+
 
         try (Connection connection = DriverManager.getConnection(url, username, password);
              Statement statement = connection.createStatement()) {

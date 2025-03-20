@@ -7,6 +7,8 @@ import java.util.Properties;
 import java.util.Scanner;
 
 //TODO: add error msg when we add ID that doesnt exist yet
+// add helper method to find last inserted id (Paul has two verisons on insert w/transactions
+// add transactions
 // add same functionality for all switch cases
 // test for failure, add exceptions and error logs
 // Add connection pool!
@@ -20,7 +22,6 @@ public class StudentManagementUpdate {
         //Start Menu
         boolean run = true;
         Scanner sc = new Scanner(System.in);
-
         while (run) {
             System.out.println("\n Welcome to Student Management System! \n You Selected Update\n " +
                     "Please Select Table to Update: \n1. Department\n2. Student\n3. Staff\n4. Course\n" +
@@ -64,26 +65,11 @@ public class StudentManagementUpdate {
         }
     }
     private static void updateDepartment(Scanner sc){
-        // TODO: fix dbProps loading issue where i have to include in every method to reduce redundancy
-        Properties dbProps = new Properties();
-        try (InputStream input = TestConnection.class.getResourceAsStream("/db.properties")) {
-            if (input == null) {
-                System.out.println("Unable to find db.properties");
-                return;
-            }
-            dbProps.load(input);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-        String url = dbProps.getProperty("db.url");
-        String username = dbProps.getProperty("db.username");
-        String password = dbProps.getProperty("db.password");
-        //Connects using db.properties,
+        //Connects using dbUtils class, which handles grabbing db.properties and getting connection using hikari,
         //Uses prepare stmt to write query to update dept name at corresponding ID,
         System.out.println("Update Department\nPlease enter ID: ");
         int departmentID = sc.nextInt();
-        try (Connection con = DriverManager.getConnection(url, username, password)) {
+        try (Connection con = DbUtils.getConnection()) {
             PreparedStatement stmt = con.prepareStatement("UPDATE department SET name = ? WHERE department_id = " + departmentID);
             System.out.println("Enter new name: ");
             String name = sc.next();
@@ -101,23 +87,9 @@ public class StudentManagementUpdate {
         }
     }
     private static void updateStudent(Scanner sc) {// TODO: fix dbProps loading issue where i have to include in every method to reduce redundancy
-        Properties dbProps = new Properties();
-        try (InputStream input = TestConnection.class.getResourceAsStream("/db.properties")) {
-            if (input == null) {
-                System.out.println("Unable to find db.properties");
-                return;
-            }
-            dbProps.load(input);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-        String url = dbProps.getProperty("db.url");
-        String username = dbProps.getProperty("db.username");
-        String password = dbProps.getProperty("db.password");
-        System.out.println("Update Student\nPlease enter ID: ");
+    System.out.println("Update Student\nPlease enter ID: ");
         int studentID = sc.nextInt();
-        try (Connection con = DriverManager.getConnection(url, username, password)) {
+        try (Connection con = DbUtils.getConnection()) {
             PreparedStatement stmt = con.prepareStatement("UPDATE student SET first_name = ?, last_name = ?, email = ? WHERE student_id = " + studentID);
             System.out.println("Enter first name: ");
             String first_name = sc.next();
@@ -139,24 +111,9 @@ public class StudentManagementUpdate {
         }
     }
     private static void updateStaff(Scanner sc) {// TODO: fix dbProps loading issue where i have to include in every method to reduce redundancy
-        Properties dbProps = new Properties();
-        try (InputStream input = TestConnection.class.getResourceAsStream("/db.properties")) {
-            if (input == null) {
-                System.out.println("Unable to find db.properties");
-                return;
-            }
-            dbProps.load(input);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-        String url = dbProps.getProperty("db.url");
-        String username = dbProps.getProperty("db.username");
-        String password = dbProps.getProperty("db.password");
-
         System.out.println("Update staff\nPlease enter ID: ");
         int staffID = sc.nextInt();
-        try (Connection con = DriverManager.getConnection(url, username, password)) {
+        try (Connection con = DbUtils.getConnection()) {
             PreparedStatement stmt = con.prepareStatement("UPDATE staff SET first_name = ?, last_name = ?, email = ?, phone_number = ?, office_location = ? WHERE staff_id = " + staffID);
             System.out.println("Enter first name: ");
             String first_name = sc.next();
@@ -185,23 +142,9 @@ public class StudentManagementUpdate {
         }
     }
     private static void updateCourse(Scanner sc) {
-        Properties dbProps = new Properties();
-        try (InputStream input = TestConnection.class.getResourceAsStream("/db.properties")) {
-            if (input == null) {
-                System.out.println("Unable to find db.properties");
-                return;
-            }
-            dbProps.load(input);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-        String url = dbProps.getProperty("db.url");
-        String username = dbProps.getProperty("db.username");
-        String password = dbProps.getProperty("db.password");
         System.out.println("Update Course\nPlease enter ID: ");
         int courseID = sc.nextInt();
-        try (Connection con = DriverManager.getConnection(url, username, password)) {
+        try (Connection con = DbUtils.getConnection()) {
             PreparedStatement stmt = con.prepareStatement("UPDATE course SET course_name = ?, credits = ?, level = ?, semester = ?, duration_weeks = ?,  max_students = ? WHERE course_id = " + courseID);
             System.out.println("Enter course name: ");
             String course_name = sc.next();

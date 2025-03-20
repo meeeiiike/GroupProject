@@ -1,13 +1,10 @@
 package ie.atu.GroupProject;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.sql.*;
-import java.util.Properties;
 import java.util.Scanner;
 
 //TODO: add error msg when we add ID that doesnt exist yet
-// add helper method to find last inserted id (Paul has two verisons on insert w/transactions
+// add helper method to find last inserted id (Paul has two versions on insert w/transactions
 // add transactions
 // add same functionality for all switch cases
 // test for failure, add exceptions and error logs
@@ -23,9 +20,22 @@ public class StudentManagementUpdate {
         boolean run = true;
         Scanner sc = new Scanner(System.in);
         while (run) {
-            System.out.println("\n Welcome to Student Management System! \n You Selected Update\n " +
-                    "Please Select Table to Update: \n1. Department\n2. Student\n3. Staff\n4. Course\n" +
-                    "5. Grades\n6. Payment\n7. College\n8. Address\n9. Exit\n Please Enter: ");
+            System.out.println("""
+                    
+                     Welcome to Student Management System!\s
+                     You Selected Update
+                     \
+                    Please Select Table to Update:\s
+                    1. Department
+                    2. Student
+                    3. Staff
+                    4. Course
+                    5. Grades
+                    6. Payment
+                    7. College
+                    8. Address
+                    9. Exit
+                     Please Enter:\s""");
             int choice = sc.nextInt();
             sc.nextLine();
 
@@ -86,7 +96,7 @@ public class StudentManagementUpdate {
             System.out.println("Could not Connect");
         }
     }
-    private static void updateStudent(Scanner sc) {// TODO: fix dbProps loading issue where i have to include in every method to reduce redundancy
+    private static void updateStudent(Scanner sc) {
     System.out.println("Update Student\nPlease enter ID: ");
         int studentID = sc.nextInt();
         try (Connection con = DbUtils.getConnection()) {
@@ -110,7 +120,7 @@ public class StudentManagementUpdate {
             System.out.println("Could not Connect");
         }
     }
-    private static void updateStaff(Scanner sc) {// TODO: fix dbProps loading issue where i have to include in every method to reduce redundancy
+    private static void updateStaff(Scanner sc) {
         System.out.println("Update staff\nPlease enter ID: ");
         int staffID = sc.nextInt();
         try (Connection con = DbUtils.getConnection()) {

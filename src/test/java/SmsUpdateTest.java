@@ -1,45 +1,13 @@
-import ie.atu.GroupProject.StudentManagementUpdate;
-import ie.atu.GroupProject.TestConnection;
-import java.io.IOException;
-import java.io.InputStream;
+import ie.atu.GroupProject.DbUtils;
 import java.sql.*;
-import java.util.Properties;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SmsUpdateTest {
-
-    static String url;
-    static String username;
-    static String password;
-
-    // TODO: add dbUtils to reduce redundancy
-    @BeforeAll
-    static void setup(){
-        Properties dbProps = new Properties();
-        try (InputStream input = TestConnection.class.getResourceAsStream("/db.properties")) {
-            if (input == null) {
-                System.out.println("Unable to find db.properties");
-                return;
-            }
-            dbProps.load(input);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return;
-        }
-        url = dbProps.getProperty("db.url");
-        username = dbProps.getProperty("db.username");
-        password = dbProps.getProperty("db.password");
-        // |------------------------------------------------------------------------------------------------------------------------|
-    }
-    //TODO: Call the method to reduce redundancy for all cases
     @Test
     void testUpdateDepartmentSuccess(){
         int departmentID = 1;
-        try (Connection con = DriverManager.getConnection(url, username, password)) {
+        try (Connection con = DbUtils.getConnection()) {
             PreparedStatement stmt = con.prepareStatement("UPDATE department SET name = ? WHERE department_id = " + departmentID);
             String name = "TestAtuSuccess";
             stmt.setString(1, name);
@@ -54,7 +22,7 @@ public class SmsUpdateTest {
     @Test
     void testUpdateDepartmentFailure(){
         int departmentID = 0;
-        try (Connection con = DriverManager.getConnection(url, username, password)) {
+        try (Connection con = DbUtils.getConnection()) {
             PreparedStatement stmt = con.prepareStatement("UPDATE department SET name = ? WHERE department_id = " + departmentID);
             String name = "TestAtuSuccess";
             stmt.setString(1, name);
@@ -65,7 +33,7 @@ public class SmsUpdateTest {
             // if we refactor our code to reduce redundancy we could definitely go
             // about it this way, but for now ill focus on functionality
             assertEquals(0, rowsUpdated);
-            //   System.out.println("Rows Updated Successfully: " + rowsUpdated);
+            System.out.println("Rows Updated Successfully: " + rowsUpdated);
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Could not Connect" + e.getMessage());
@@ -74,7 +42,7 @@ public class SmsUpdateTest {
     @Test
     void testUpdateStudentSuccess(){
         int studentID = 1;
-        try (Connection con = DriverManager.getConnection(url, username, password)) {                                   //(department_id =?) try add see how it goes
+        try (Connection con = DbUtils.getConnection()) {
             PreparedStatement stmt = con.prepareStatement("UPDATE student SET first_name = ?, last_name =?, email = ? WHERE student_id = " + studentID);
             String firstName = "TestFirstName";
             String lastName = "TestLastName";
@@ -95,7 +63,7 @@ public class SmsUpdateTest {
     @Test
     void testUpdateStudentFailure(){
         int studentID = 0;
-        try (Connection con = DriverManager.getConnection(url, username, password)) {
+        try (Connection con = DbUtils.getConnection()) {
             PreparedStatement stmt = con.prepareStatement("UPDATE student SET first_name = ?, last_name =?, email = ? WHERE student_id = " + studentID);
             String firstName = "TestFirstName";
             String lastName = "TestLastName";
@@ -112,7 +80,7 @@ public class SmsUpdateTest {
             // if we refactor our code to reduce redundancy we could definitely go
             // about it this way, but for now ill focus on functionality
             assertEquals(0, rowsUpdated);
-            //   System.out.println("Rows Updated Successfully: " + rowsUpdated);
+            System.out.println("Rows Updated Successfully: " + rowsUpdated);
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Could not Connect" + e.getMessage());
@@ -121,7 +89,7 @@ public class SmsUpdateTest {
     @Test
     void testUpdateStaffSuccess(){
         int staffID = 1;
-        try (Connection con = DriverManager.getConnection(url, username, password)) {                                   //(department_id =?) try add see how it goes
+        try (Connection con = DbUtils.getConnection()) {
             PreparedStatement stmt = con.prepareStatement("UPDATE staff SET first_name = ?, last_name =?, email = ?, phone_number =?, office_location = ?  WHERE staff_id = " + staffID);
             String firstName = "TestFirstName";
             String lastName = "TestLastName";
@@ -146,7 +114,7 @@ public class SmsUpdateTest {
     @Test
     void testUpdateStaffFailure(){
         int staffID = 0;
-        try (Connection con = DriverManager.getConnection(url, username, password)) {
+        try (Connection con = DbUtils.getConnection()) {
             PreparedStatement stmt = con.prepareStatement("UPDATE staff SET first_name = ?, last_name =?, email = ?, phone_number =?, office_location = ?  WHERE staff_id = " + staffID);
             String firstName = "TestFirstName";
             String lastName = "TestLastName";
@@ -167,7 +135,7 @@ public class SmsUpdateTest {
             // if we refactor our code to reduce redundancy we could definitely go
             // about it this way, but for now ill focus on functionality
             assertEquals(0, rowsUpdated);
-            //   System.out.println("Rows Updated Successfully: " + rowsUpdated);
+            System.out.println("Rows Updated Successfully: " + rowsUpdated);
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Could not Connect" + e.getMessage());
@@ -176,7 +144,7 @@ public class SmsUpdateTest {
     @Test
     void testUpdateCourseSuccess(){
         int courseID = 1;
-        try (Connection con = DriverManager.getConnection(url, username, password)) {                                   //(department_id =?) try add see how it goes
+        try (Connection con = DbUtils.getConnection()) {
             PreparedStatement stmt = con.prepareStatement("UPDATE course SET course_name = ?, credits =?, level = ?, semester =?, duration_weeks = ?, max_students = ?  WHERE course_id = " + courseID);
             String courseName = "TestFirstName";
             int credits = 10;
@@ -203,7 +171,7 @@ public class SmsUpdateTest {
     @Test
     void testUpdateCourseFailure(){
         int courseID = 0;
-        try (Connection con = DriverManager.getConnection(url, username, password)) {                                   //(department_id =?) try add see how it goes
+        try (Connection con = DbUtils.getConnection()) {
             PreparedStatement stmt = con.prepareStatement("UPDATE course SET course_name = ?, credits =?, level = ?, semester =?, duration_weeks = ?, max_students = ?  WHERE course_id = " + courseID);
             String courseName = "TestSoftware";
             int credits = 10;

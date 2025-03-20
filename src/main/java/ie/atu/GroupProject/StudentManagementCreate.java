@@ -37,42 +37,56 @@ public class StudentManagementCreate {
             System.out.print("Enter your choice: ");
 
             int choice = sc.nextInt();
+            int rowsAffected;
+
             sc.nextLine();
 
-            String selectSQL = "";
-            String name = null;
+            String name;
+            String department_id;
+            String first_name;
+            String last_name;
+            String email;
+            String student_id;
+            String line1;
+            String line2;
+            String town_city;
+            String county;
 
-            String student_id = null;
-            String department_id = null;
-            String first_name = null;
-            String last_name = null;
-            String email = null;
-
-           // String student_id = null;
-            String line1 = null;
-            String line2 = null;
-            String town_city = null;
-            String county = null;
 
             switch (choice) {
 
                 case 1:
+
                     // Get name of department
                     Scanner departmentInput = new Scanner(System.in);
                     System.out.println("Please enter department name: ");
                     name = departmentInput.nextLine();
+
+                    String departmentInsertSQL = "INSERT INTO department (name) VALUES ('" + name + "')";
+                    try (Connection connection = DriverManager.getConnection(url, username, password);
+                         Statement statement = connection.createStatement()) {
+
+                    // Execute the insert query
+
+                     rowsAffected = statement.executeUpdate(departmentInsertSQL);
+
+                    if (rowsAffected > 0) {
+                        System.out.println("Record inserted successfully.");
+                    } else {
+                        System.out.println("Failed to insert record.");
+                    }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+
                     break;
 
                 case 2:
-
-                    Scanner student_idInput = new Scanner(System.in);
-                    System.out.println("Please enter student id: ");
-                    student_id = student_idInput.nextLine();
+                    // Get details of student
 
                     Scanner department_idInput = new Scanner(System.in);
                     System.out.println("Please enter student department id: ");
                     department_id = department_idInput.nextLine();
-
 
                     Scanner first_nameInput = new Scanner(System.in);
                     System.out.println("Please enter student first name: ");
@@ -85,6 +99,24 @@ public class StudentManagementCreate {
                     Scanner emailInput = new Scanner(System.in);
                     System.out.println("Please enter student email: ");
                     email = emailInput.nextLine();
+
+                    String studentInsertSQL = "INSERT INTO student (department_id, first_name, last_name, email) VALUES ('" + department_id + "','" + first_name + "', '" + last_name + "','" + email + "')";
+
+                    try (Connection connection = DriverManager.getConnection(url, username, password);
+                         Statement statement = connection.createStatement()) {
+
+                    // Execute the insert query
+
+                    rowsAffected = statement.executeUpdate(studentInsertSQL);
+
+                    if (rowsAffected > 0) {
+                        System.out.println("Record inserted successfully.");
+                    } else {
+                        System.out.println("Failed to insert record.");
+                    }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                     break;
 
 
@@ -110,33 +142,29 @@ public class StudentManagementCreate {
                     Scanner studentadCInput = new Scanner(System.in);
                     System.out.println("Please enter county: ");
                     county = studentadCInput.nextLine();
+
+                    String S_addressInsertSQL = "INSERT INTO student_address (student_id, address_line_1, address_line_2, town_city, county) VALUES ('" + student_id + "', '" + line1 + "','" + line2 + "', '" + town_city + "','" + county + "')";
+
+                    try (Connection connection = DriverManager.getConnection(url, username, password);
+                         Statement statement = connection.createStatement()) {
+
+                    // Execute the insert query
+                    rowsAffected = statement.executeUpdate(S_addressInsertSQL);
+
+                    if (rowsAffected > 0) {
+                        System.out.println("Record inserted successfully.");
+                    } else {
+                        System.out.println("Failed to insert record.");
+                    }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                     break;
 
 
                 default:
                     System.out.println("Invalid choice");
                     return;
-            }
-                String departmentInsertSQL = "INSERT INTO department (name) VALUES ('" + name + "')";
-                String studentInsertSQL = "INSERT INTO student (student_id, department_id, first_name, last_name, email) VALUES ('" + student_id + "', '" + department_id + "','" + first_name + "', '" + last_name + "','" + email + "')";
-                String S_addressInsertSQL = "INSERT INTO student_address (student_id, address_line_1, address_line_2, town_city, county) VALUES ('" + student_id + "', '" + line1 + "','" + line2 + "', '" + town_city + "','" + county + "')";
-
-            try (Connection connection = DriverManager.getConnection(url, username, password);
-                 Statement statement = connection.createStatement()) {
-
-                // Execute the insert query
-
-                    int rowsAffected = statement.executeUpdate(departmentInsertSQL);
-                        rowsAffected = statement.executeUpdate(studentInsertSQL);
-                        rowsAffected = statement.executeUpdate(S_addressInsertSQL);
-
-                if (rowsAffected > 0) {
-                    System.out.println("Record inserted successfully.");
-                } else {
-                    System.out.println("Failed to insert record.");
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
         }
     }

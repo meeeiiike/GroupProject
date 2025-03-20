@@ -16,6 +16,7 @@ public class SmsUpdateTest {
     static String username;
     static String password;
 
+    // TODO: add dbUtils to reduce redundancy
     @BeforeAll
     static void setup(){
         Properties dbProps = new Properties();

@@ -12,16 +12,12 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class DbUtils {
+
     private static final HikariDataSource DATA_SOURCE;
     private static final Logger LOGGER = LoggerFactory.getLogger(DbUtils.class);
-    private static final String URL = "jdbc:mysql://localhost:3306/sms";
-    private static final String USERNAME= "root";
-    private static final String PASSWORD = "password";
-
-
     static {
-        Properties dbProps = new Properties();
 
+        Properties dbProps = new Properties();
         // [Michael McDermott] I used AI to assist with loading the properties file here, basically told me
         // it should be in the static method as it should only load once, and that using return is bad practice,
         // instead we need to throw an exception to stop the db from loading
@@ -44,7 +40,7 @@ public class DbUtils {
             config.setMaximumPoolSize(4);
             DATA_SOURCE = new HikariDataSource(config);
         }catch(Exception e){
-            //LOGGER.error("Could not initialize Hikari Datasource" + e);
+            LOGGER.error("Could not initialize Hikari Datasource", e);
             throw new ExceptionInInitializerError(e);
         }
     }

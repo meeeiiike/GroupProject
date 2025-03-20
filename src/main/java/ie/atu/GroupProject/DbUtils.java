@@ -13,7 +13,7 @@ import java.util.Properties;
 
 public class DbUtils {
     private static final HikariDataSource DATA_SOURCE;
-    //private static final LOGGER LOGGER = LoggerFactory.getLogger(DbUtils.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DbUtils.class);
     private static final String URL = "jdbc:mysql://localhost:3306/sms";
     private static final String USERNAME= "root";
     private static final String PASSWORD = "password";
@@ -26,7 +26,6 @@ public class DbUtils {
         // it should be in the static method as it should only load once, and that using return is bad practice,
         // instead we need to throw an exception to stop the db from loading
         // if anyone else would like to try implement their own version ive no problem if you want to change anything
-        // ALSO error with logger, unsure if its with dependencies or syntax. will leave commented out for now.
         try(InputStream input = DbUtils.class.getResourceAsStream("/db.properties")){
             if(input== null){
                 throw new RuntimeException("Unable to find db.properties");
@@ -39,9 +38,9 @@ public class DbUtils {
 
         try{
             HikariConfig config = new HikariConfig();
-            config.setJdbcUrl(URL);
-            config.setUsername(USERNAME);
-            config.setPassword(PASSWORD);
+            config.setJdbcUrl(dbProps.getProperty("db.url"));
+            config.setUsername(dbProps.getProperty("db.username"));
+            config.setPassword(dbProps.getProperty("db.password"));
             config.setMaximumPoolSize(4);
             DATA_SOURCE = new HikariDataSource(config);
         }catch(Exception e){
@@ -56,7 +55,7 @@ public class DbUtils {
 
     public static void close(){
         if(DATA_SOURCE != null){
-            //LOGGER.info("Closing Hikari");
+            LOGGER.info("Closing Hikari");
             DATA_SOURCE.close();
         }
     }

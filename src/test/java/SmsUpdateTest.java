@@ -223,7 +223,7 @@ public class SmsUpdateTest {
             System.out.println("Rows Updated Successfully: " + rowsUpdated);
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Could not Connect" + e.getMessage());
+            System.out.println("Could not Connect " + e.getMessage());
         }
     }
 

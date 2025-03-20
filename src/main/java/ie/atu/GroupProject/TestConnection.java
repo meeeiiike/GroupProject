@@ -26,12 +26,11 @@ public class TestConnection {
         String username = dbProps.getProperty("db.username");
         String password = dbProps.getProperty("db.password");
 
-        try(Connection con = DriverManager.getConnection(url, username, password)){
-            System.out.println("Connected");
+        try(Connection con = DbUtils.getConnection()){
+            System.out.println("Connected!");
         } catch(SQLException e){
             e.printStackTrace();
             System.out.println("Could not Connect");
         }
-
     }
 }

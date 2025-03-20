@@ -4,8 +4,12 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import org.slf4j.LoggerFactory;
 import org.slf4j.Logger;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class DbUtils {
     private static final HikariDataSource DATA_SOURCE;
@@ -16,6 +20,23 @@ public class DbUtils {
 
 
     static {
+        Properties dbProps = new Properties();
+
+        // [Michael McDermott] I used AI to assist with loading the properties file here, basically told me
+        // it should be in the static method as it should only load once, and that using return is bad practice,
+        // instead we need to throw an exception to stop the db from loading
+        // if anyone else would like to try implement their own version ive no problem if you want to change anything
+        // ALSO error with logger, unsure if its with dependencies or syntax. will leave commented out for now.
+        try(InputStream input = DbUtils.class.getResourceAsStream("/db.properties")){
+            if(input== null){
+                throw new RuntimeException("Unable to find db.properties");
+            }
+            dbProps.load(input);
+        } catch(IOException e){
+            e.printStackTrace();
+            throw new RuntimeException("Unable to find db.properties");
+        }
+
         try{
             HikariConfig config = new HikariConfig();
             config.setJdbcUrl(URL);

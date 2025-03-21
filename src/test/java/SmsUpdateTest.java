@@ -213,5 +213,77 @@ public class SmsUpdateTest {
             System.out.println("Could not Connect " + e.getMessage());
         }
     }
+    @Test
+    void testUpdateGradesSuccess(){
+        int gradeID = 1;
+        int studentID = 1;
+        int courseID = 1;
+
+        try (Connection con = DbUtils.getConnection()) {
+            PreparedStatement stmt = con.prepareStatement("UPDATE grades SET level = ?, grade =?, student_id =?, course_id = ? WHERE grade_id = " + gradeID);
+            int level = 8;
+            int grade = 80;
+
+            stmt.setInt(1, level);
+            stmt.setInt(2, grade);
+            stmt.setInt(3, studentID);
+            stmt.setInt(4, courseID);
+
+            int rowsUpdated = stmt.executeUpdate();
+            assertEquals(1, rowsUpdated);
+            System.out.println("Rows Updated Successfully: " + rowsUpdated);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Could not Connect" + e.getMessage());
+        }
+    }
+    @Test
+    void testUpdateGradesFailure() {
+        int gradeID = 0;
+        int studentID = 0;
+        int courseID = 0;
+
+        try (Connection con = DbUtils.getConnection()) {
+            PreparedStatement stmt = con.prepareStatement("UPDATE grades SET level = ?, grade =?, student_id =?, course_id = ? WHERE grade_id = " + gradeID);
+            int level = 8;
+            int grade = 80;
+
+            stmt.setInt(1, level);
+            stmt.setInt(2, grade);
+            stmt.setInt(3, studentID);
+            stmt.setInt(4, courseID);
+
+            int rowsUpdated = stmt.executeUpdate();
+            assertEquals(0, rowsUpdated);
+            System.out.println("Rows Updated Successfully: " + rowsUpdated);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Could not Connect" + e.getMessage());
+        }
+    }
+    @Test
+    void testUpdatePaymentSuccess(){
+        int paymentID = 1;
+        int studentID = 1;
+        int courseID = 1;
+
+        try (Connection con = DbUtils.getConnection()) {
+            PreparedStatement stmt = con.prepareStatement("UPDATE payments SET payment_status = ?, payment_amount =?, student_id =?, course_id = ? WHERE payment_id = " + paymentID);
+            String paymentStatus = "TEST";
+            int paymentAmount = 80;
+
+            stmt.setString(1, paymentStatus);
+            stmt.setInt(2, paymentAmount);
+            stmt.setInt(3, studentID);
+            stmt.setInt(4, courseID);
+
+            int rowsUpdated = stmt.executeUpdate();
+            assertEquals(1, rowsUpdated);
+            System.out.println("Rows Updated Successfully: " + rowsUpdated);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Could not Connect" + e.getMessage());
+        }
+    }
 
 }

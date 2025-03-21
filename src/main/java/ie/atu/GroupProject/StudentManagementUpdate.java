@@ -73,19 +73,11 @@ public class StudentManagementUpdate {
             }
         }
     }
-    private static void updateDepartment(Scanner sc){
-        //Connects using dbUtils class, which handles grabbing db.properties and getting connection using hikari,
-        //Uses prepare stmt to write query to update dept name at corresponding ID,
-        System.out.println("Update Department\nPlease enter ID: ");
-        int departmentID = sc.nextInt();
+    private static void updateDepartmentRefactor(String name,int departmentID) {
         try (Connection con = DbUtils.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("UPDATE department SET name = ? WHERE department_id = " + departmentID);
-            System.out.println("Enter new name: ");
-            String name = sc.next();
-            sc.nextLine();
+            PreparedStatement stmt = con.prepareStatement("UPDATE department SET name = ? WHERE department_id =" + departmentID);
             stmt.setString(1, name);
             int rowsUpdated = stmt.executeUpdate();
-            // simple error handling
             // TODO: include when id>0 BUT not assigned to anything
             if (rowsUpdated <= 0) {
                 throw new SQLException("ID INVALID: must be > 0 AND must be assigned already");
@@ -93,8 +85,16 @@ public class StudentManagementUpdate {
             System.out.println("Rows Updated Successfully: " + rowsUpdated);
         } catch (SQLException e) {
             e.printStackTrace();
-            System.out.println("Could not Connect");
+            System.out.println(e.getMessage());
         }
+    }
+    private static void updateDepartment(Scanner sc){
+        System.out.println("Update Department\nPlease enter ID: ");
+        int departmentID = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Enter new name: ");
+        String name = sc.nextLine();
+        updateDepartmentRefactor(name, departmentID);
     }
     private static void updateStudent(Scanner sc) {
     System.out.println("Update Student\nPlease enter ID: ");

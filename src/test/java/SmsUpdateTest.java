@@ -1,9 +1,17 @@
 import ie.atu.GroupProject.DbUtils;
 import java.sql.*;
+
+import ie.atu.GroupProject.StudentManagementUpdate;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SmsUpdateTest {
+    @Test
+    void testUpdateDepartmentSuccessRefactored(){
+        int departmentID = 1;
+        String name = "TestAtuSuccess";
+        StudentManagementUpdate.updateDepartmentRefactor(name,departmentID);
+    }
     @Test
     void testUpdateDepartmentSuccess(){
         int departmentID = 1;

@@ -73,7 +73,7 @@ public class StudentManagementUpdate {
             }
         }
     }
-    private static void updateDepartmentRefactor(String name,int departmentID) {
+    public static void updateDepartmentRefactor(String name,int departmentID) {
         try (Connection con = DbUtils.getConnection()) {
             PreparedStatement stmt = con.prepareStatement("UPDATE department SET name = ? WHERE department_id =" + departmentID);
             stmt.setString(1, name);
@@ -88,7 +88,7 @@ public class StudentManagementUpdate {
             System.out.println(e.getMessage());
         }
     }
-    private static void updateDepartment(Scanner sc){
+    public static void updateDepartment(Scanner sc){
         System.out.println("Update Department\nPlease enter ID: ");
         int departmentID = sc.nextInt();
         sc.nextLine();

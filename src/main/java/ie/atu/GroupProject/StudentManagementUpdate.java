@@ -213,22 +213,16 @@ public class StudentManagementUpdate {
             int courseID = sc.nextInt();
 
             stmt.setInt(1, level);
-            stmt.setInt(2, grade);
-            stmt.setInt(3, studentID);
-            stmt.setInt(4, courseID);
-
-            int rowsUpdated = stmt.executeUpdate();
-            if (rowsUpdated <= 0) {
-                throw new SQLException("ID INVALID: must be > 0 AND must be assigned already");
-            }
-            System.out.println("Rows Updated Successfully: " + rowsUpdated);
+            //Refactored to reduce some code
+            setGradeStudentCourseID(stmt, grade, studentID, courseID);
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Could not Connect");
         }
     }
+
     private static void updatePayment(Scanner sc) {
-        System.out.println("Update Payemnts\nPlease enter ID: ");
+        System.out.println("Update Payments\nPlease enter ID: ");
         int paymentID = sc.nextInt();
         try (Connection con = DbUtils.getConnection()) {
             PreparedStatement stmt = con.prepareStatement("UPDATE payments SET payment_status = ?, payment_amount =?, student_id =?, course_id = ? WHERE payment_id = " + paymentID);
@@ -242,15 +236,7 @@ public class StudentManagementUpdate {
             int courseID = sc.nextInt();
 
             stmt.setString(1, paymentStatus);
-            stmt.setInt(2, paymentAmount);
-            stmt.setInt(3, studentID);
-            stmt.setInt(4, courseID);
-
-            int rowsUpdated = stmt.executeUpdate();
-            if (rowsUpdated <= 0) {
-                throw new SQLException("ID INVALID: must be > 0 AND must be assigned already");
-            }
-            System.out.println("Rows Updated Successfully: " + rowsUpdated);
+            setGradeStudentCourseID(stmt, paymentAmount, studentID, courseID);
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Could not Connect");
@@ -270,24 +256,13 @@ public class StudentManagementUpdate {
             System.out.println("Enter County: ");
             String county = sc.next();
             System.out.println("Enter Department ID: ");
-            int departmentID = sc.nextInt();
-
-            stmt.setString(1, addressLine1);
-            stmt.setString(2, addressLine2);
-            stmt.setString(3, townCity);
-            stmt.setString(4, county);
-            stmt.setInt(5, departmentID);
-
-            int rowsUpdated = stmt.executeUpdate();
-            if (rowsUpdated <= 0) {
-                throw new SQLException("ID INVALID: must be > 0 AND must be assigned already");
-            }
-            System.out.println("Rows Updated Successfully: " + rowsUpdated);
+            GetAddressDetails(sc, stmt, addressLine1, addressLine2, townCity, county);
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Could not Connect");
         }
     }
+
     private static void updateAddress(Scanner sc) {
         System.out.println("Update Address\nPlease enter ID: ");
         int studentAddressID = sc.nextInt();
@@ -302,23 +277,39 @@ public class StudentManagementUpdate {
             System.out.println("Enter County: ");
             String county = sc.next();
             System.out.println("Enter Student ID: ");
-            int studentID = sc.nextInt();
-
-            stmt.setString(1, addressLine1);
-            stmt.setString(2, addressLine2);
-            stmt.setString(3, townCity);
-            stmt.setString(4, county);
-            stmt.setInt(5, studentID);
-
-            int rowsUpdated = stmt.executeUpdate();
-            if (rowsUpdated <= 0) {
-                throw new SQLException("ID INVALID: must be > 0 AND must be assigned already");
-            }
-            System.out.println("Rows Updated Successfully: " + rowsUpdated);
+            GetAddressDetails(sc, stmt, addressLine1, addressLine2, townCity, county);
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Could not Connect");
         }
+    }
+    // Refactored reduces some redundancy
+    private static void GetAddressDetails(Scanner sc, PreparedStatement stmt, String addressLine1, String addressLine2, String townCity, String county) throws SQLException {
+        int departmentID = sc.nextInt();
+
+        stmt.setString(1, addressLine1);
+        stmt.setString(2, addressLine2);
+        stmt.setString(3, townCity);
+        stmt.setString(4, county);
+        stmt.setInt(5, departmentID);
+
+        int rowsUpdated = stmt.executeUpdate();
+        if (rowsUpdated <= 0) {
+            throw new SQLException("ID INVALID: must be > 0 AND must be assigned already");
+        }
+        System.out.println("Rows Updated Successfully: " + rowsUpdated);
+    }
+    //Refactored to reduce some code
+    private static void setGradeStudentCourseID(PreparedStatement stmt, int grade, int studentID, int courseID) throws SQLException {
+        stmt.setInt(2, grade);
+        stmt.setInt(3, studentID);
+        stmt.setInt(4, courseID);
+
+        int rowsUpdated = stmt.executeUpdate();
+        if (rowsUpdated <= 0) {
+            throw new SQLException("ID INVALID: must be > 0 AND must be assigned already");
+        }
+        System.out.println("Rows Updated Successfully: " + rowsUpdated);
     }
 }
 

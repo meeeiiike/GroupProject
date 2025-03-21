@@ -32,6 +32,28 @@ public class StudentManagementDelete {
                 switch (choice){
                     case 1:
                         deleteDepartment(scanner);
+                        break;
+                    case 2:
+                        deleteStudent(scanner);
+                        break;
+                    case 3:
+                        System.out.println("Staff called");
+                        break;
+                    case 4:
+                        System.out.println("Course called");
+                        break;
+                    case 5:
+                        System.out.println("Grade called");
+                        break;
+                    case 6:
+                        System.out.println("Payment called");
+                        break;
+                    case 7:
+                        System.out.println("College called");
+                        break;
+                    case 8:
+                        System.out.println("Address called");
+                        break;
                     case 9:
                         continueRunning = false;
                         break;
@@ -66,6 +88,30 @@ public class StudentManagementDelete {
             System.out.println("Delete the related records first before deleting this department.");
         } catch (SQLException e) {
             System.out.println("Database Error: Unable to delete department.");
+            e.printStackTrace();
+        }
+    }
+
+    private static void deleteStudent(Scanner scanner) {
+        System.out.print("Enter student ID to delete: ");
+        int studentID = scanner.nextInt();
+        scanner.nextLine();
+
+        try (Connection con = DbUtils.getConnection()) {
+            PreparedStatement stmt = con.prepareStatement("DELETE FROM student WHERE student_id =" + studentID);
+            System.out.println("Successfully student id " + studentID + " from department table.");
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated <= 0){
+                System.out.println("The student id of " + studentID + " was not found");
+            }
+            else {
+                System.out.println("Successfully student id " + studentID + " from department table.");
+            }
+        } catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("Error: Cannot delete student because it is referenced in other tables (e.g., Grades, Payments, and Address).");
+            System.out.println("Delete the related records first before deleting this student.");
+        } catch (SQLException e) {
+            System.out.println("Database Error: Unable to delete student.");
             e.printStackTrace();
         }
     }

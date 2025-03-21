@@ -83,6 +83,7 @@ public class StudentManagementUpdate {
             PreparedStatement stmt = con.prepareStatement("UPDATE department SET name = ? WHERE department_id = " + departmentID);
             System.out.println("Enter new name: ");
             String name = sc.next();
+            sc.nextLine();
             stmt.setString(1, name);
             int rowsUpdated = stmt.executeUpdate();
             // simple error handling
@@ -100,16 +101,19 @@ public class StudentManagementUpdate {
     System.out.println("Update Student\nPlease enter ID: ");
         int studentID = sc.nextInt();
         try (Connection con = DbUtils.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("UPDATE student SET first_name = ?, last_name = ?, email = ? WHERE student_id = " + studentID);
+            PreparedStatement stmt = con.prepareStatement("UPDATE student SET first_name = ?, last_name = ?, email = ?, department_id = ? WHERE student_id = " + studentID);
             System.out.println("Enter first name: ");
             String first_name = sc.next();
             System.out.println("Enter last name: ");
             String last_name = sc.next();
             System.out.println("Enter email: ");
             String email = sc.next();
+            System.out.println("Please Choose Department ID: ");
+            int departmentID = sc.nextInt();
             stmt.setString(1, first_name);
             stmt.setString(2, last_name);
             stmt.setString(3, email);
+            stmt.setInt(4, departmentID);
             int rowsUpdated = stmt.executeUpdate();
             if (rowsUpdated <= 0) {
                 throw new SQLException("ID INVALID: must be > 0 AND must be assigned already");
@@ -124,7 +128,7 @@ public class StudentManagementUpdate {
         System.out.println("Update staff\nPlease enter ID: ");
         int staffID = sc.nextInt();
         try (Connection con = DbUtils.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("UPDATE staff SET first_name = ?, last_name = ?, email = ?, phone_number = ?, office_location = ? WHERE staff_id = " + staffID);
+            PreparedStatement stmt = con.prepareStatement("UPDATE staff SET first_name = ?, last_name = ?, email = ?, phone_number = ?, office_location = ?, department_id = ? WHERE staff_id = " + staffID);
             System.out.println("Enter first name: ");
             String first_name = sc.next();
             System.out.println("Enter last name: ");
@@ -135,11 +139,14 @@ public class StudentManagementUpdate {
             String phone = sc.next();
             System.out.println("Enter office: ");
             String office = sc.next();
+            System.out.println("Please Choose Department ID: ");
+            int departmentID = sc.nextInt();
             stmt.setString(1, first_name);
             stmt.setString(2, last_name);
             stmt.setString(3, email);
             stmt.setString(4, phone);
             stmt.setString(5, office);
+            stmt.setInt(6, departmentID);
 
             int rowsUpdated = stmt.executeUpdate();
             if (rowsUpdated <= 0) {
@@ -155,7 +162,7 @@ public class StudentManagementUpdate {
         System.out.println("Update Course\nPlease enter ID: ");
         int courseID = sc.nextInt();
         try (Connection con = DbUtils.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("UPDATE course SET course_name = ?, credits = ?, level = ?, semester = ?, duration_weeks = ?,  max_students = ? WHERE course_id = " + courseID);
+            PreparedStatement stmt = con.prepareStatement("UPDATE course SET course_name = ?, credits = ?, level = ?, semester = ?, duration_weeks = ?,  max_students = ?, department_id = ?, staff_id =? WHERE course_id = " + courseID);
             System.out.println("Enter course name: ");
             String course_name = sc.next();
             System.out.println("Enter credits: ");
@@ -168,6 +175,10 @@ public class StudentManagementUpdate {
             int duration_weeks = sc.nextInt();
             System.out.println("Enter Max Students: ");
             int max_students = sc.nextInt();
+            System.out.println("Please Choose Department ID: ");
+            int departmentID = sc.nextInt();
+            System.out.println("Please Choose Staff ID: ");
+            int staffID = sc.nextInt();
 
             stmt.setString(1, course_name);
             stmt.setInt(2, credits);
@@ -175,6 +186,8 @@ public class StudentManagementUpdate {
             stmt.setInt(4, semester);
             stmt.setInt(5, duration_weeks);
             stmt.setInt(6, max_students);
+            stmt.setInt(7, departmentID);
+            stmt.setInt(8, staffID);
 
             int rowsUpdated = stmt.executeUpdate();
             if (rowsUpdated <= 0) {

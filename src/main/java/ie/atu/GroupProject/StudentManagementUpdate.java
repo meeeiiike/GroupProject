@@ -62,7 +62,7 @@ public class StudentManagementUpdate {
                     updateCollege(sc);
                     break;
                 case 8:
-                    System.out.println("Update Address");
+                    updateAddress(sc);
                     break;
                 case 9:
                     System.out.println("Goodbye!");
@@ -277,6 +277,38 @@ public class StudentManagementUpdate {
             stmt.setString(3, townCity);
             stmt.setString(4, county);
             stmt.setInt(5, departmentID);
+
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated <= 0) {
+                throw new SQLException("ID INVALID: must be > 0 AND must be assigned already");
+            }
+            System.out.println("Rows Updated Successfully: " + rowsUpdated);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Could not Connect");
+        }
+    }
+    private static void updateAddress(Scanner sc) {
+        System.out.println("Update Address\nPlease enter ID: ");
+        int studentAddressID = sc.nextInt();
+        try (Connection con = DbUtils.getConnection()) {
+            PreparedStatement stmt = con.prepareStatement("UPDATE student_address SET address_line_1 = ?, address_line_2 =?, town_city =?, county = ?, student_id = ? WHERE student_address_id = " + studentAddressID);
+            System.out.println("Enter Address Line 1: ");
+            String addressLine1 = sc.next();
+            System.out.println("Enter Address Line 2: ");
+            String addressLine2 = sc.next();
+            System.out.println("Enter Town OR City: ");
+            String townCity = sc.next();
+            System.out.println("Enter County: ");
+            String county = sc.next();
+            System.out.println("Enter Student ID: ");
+            int studentID = sc.nextInt();
+
+            stmt.setString(1, addressLine1);
+            stmt.setString(2, addressLine2);
+            stmt.setString(3, townCity);
+            stmt.setString(4, county);
+            stmt.setInt(5, studentID);
 
             int rowsUpdated = stmt.executeUpdate();
             if (rowsUpdated <= 0) {

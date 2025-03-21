@@ -54,7 +54,7 @@ public class StudentManagementUpdate {
                     break;
                 //TODO write test units FIRST for rest of switch cases, then add test units for existing code
                 case 5:
-                    System.out.println("Update Grades");
+                    updateGrades(sc);
                     break;
                 case 6:
                     System.out.println("Update Payment");
@@ -188,6 +188,35 @@ public class StudentManagementUpdate {
             stmt.setInt(6, max_students);
             stmt.setInt(7, departmentID);
             stmt.setInt(8, staffID);
+
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated <= 0) {
+                throw new SQLException("ID INVALID: must be > 0 AND must be assigned already");
+            }
+            System.out.println("Rows Updated Successfully: " + rowsUpdated);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Could not Connect");
+        }
+    }
+    private static void updateGrades(Scanner sc) {
+        System.out.println("Update Course\nPlease enter ID: ");
+        int gradeID = sc.nextInt();
+        try (Connection con = DbUtils.getConnection()) {
+            PreparedStatement stmt = con.prepareStatement("UPDATE grades SET level = ?, grade =?, student_id =?, course_id = ? WHERE grade_id = " + gradeID);
+            System.out.println("Enter level: ");
+            int level = sc.nextInt();
+            System.out.println("Enter grade: ");
+            int grade = sc.nextInt();
+            System.out.println("Enter student ID: ");
+            int studentID = sc.nextInt();
+            System.out.println("Enter course ID: ");
+            int courseID = sc.nextInt();
+
+            stmt.setInt(1, level);
+            stmt.setInt(2, grade);
+            stmt.setInt(3, studentID);
+            stmt.setInt(4, courseID);
 
             int rowsUpdated = stmt.executeUpdate();
             if (rowsUpdated <= 0) {

@@ -3,18 +3,18 @@ package ie.atu.GroupProject;
 import java.sql.*;
 import java.util.Scanner;
 
-//TODO: add error msg when we add ID that doesnt exist yet
-// add helper method to find last inserted id (Paul has two versions on insert w/transactions
+//TODO:
+// add error msg when we add ID that doesnt exist yet
 // add transactions
-// add same functionality for all switch cases
+// add more functionality to updateTable methods
 // test for failure, add exceptions and error logs
-// Add connection pool!
+// need to add lots of more exception types along with lots more specific success/failure tests
 // Use Code Coverage to help with Testing! Complexity < 10
 // LOTS OF REDUNDANT CODE! once happy with functionality,
 // Clean up code to reduce redundancy
 
 public class StudentManagementUpdate {
-    public static void main(String[] args){
+    public static void main(String[] args) throws SQLException {
         // |------------------------------------------------------------------------------------------------------------------------|
         //Start Menu
         boolean run = true;
@@ -73,7 +73,7 @@ public class StudentManagementUpdate {
             }
         }
     }
-    public static void updateDepartmentRefactor(String name,int departmentID) {
+    public static void updateDepartmentRefactor(String name,int departmentID) throws SQLException {
         try (Connection con = DbUtils.getConnection()) {
             PreparedStatement stmt = con.prepareStatement("UPDATE department SET name = ? WHERE department_id =" + departmentID);
             stmt.setString(1, name);
@@ -83,12 +83,21 @@ public class StudentManagementUpdate {
                 throw new SQLException("ID INVALID: must be > 0 AND must be assigned already");
             }
             System.out.println("Rows Updated Successfully: " + rowsUpdated);
-        } catch (SQLException e) {
+        }
+        /*
+            [Michael McDermott]
+            I Used AI [ also youtube, various forums ] to debug this error where my failure test would not pass.
+            this was happening because of the catch() block executing before the exception could
+            be thrown so it would never reach our Junit tests. So ive left that commented out now and
+            added throws SQLException to any method that had an error and required it
+
+            catch (SQLException e) {
             e.printStackTrace();
             System.out.println(e.getMessage());
-        }
+            }
+        */
     }
-    public static void updateDepartment(Scanner sc){
+    public static void updateDepartment(Scanner sc) throws SQLException {
         System.out.println("Update Department\nPlease enter ID: ");
         int departmentID = sc.nextInt();
         sc.nextLine();
@@ -96,6 +105,7 @@ public class StudentManagementUpdate {
         String name = sc.nextLine();
         updateDepartmentRefactor(name, departmentID);
     }
+    // MAKE SURE TO ADD NEXT LINE SO ALL ENTRIES CAN HAVE SPACES AND CAUSE CRASH
     private static void updateStudent(Scanner sc) {
     System.out.println("Update Student\nPlease enter ID: ");
         int studentID = sc.nextInt();

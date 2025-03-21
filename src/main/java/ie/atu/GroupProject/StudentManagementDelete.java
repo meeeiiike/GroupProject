@@ -31,22 +31,7 @@ public class StudentManagementDelete {
 
                 switch (choice){
                     case 1:
-                        System.out.println("Department table called");
-
-                        System.out.println("Enter department id to delete: ");
-                        int departmentID = scanner.nextInt();
-                        try{
-                            PreparedStatement stmt = connection.prepareStatement("DELETE FROM department WHERE department_id =" + departmentID);
-                            System.out.println("Successfully deleted id " + departmentID + " from department table.");
-                            stmt.executeUpdate();
-                        }catch (SQLIntegrityConstraintViolationException e) {
-                            System.out.println("Error: Cannot delete department because they are a foreign key in Course, Staff, Student, and College Address");
-                            System.out.println("Delete the related records first before deleting department.");
-                        } catch (SQLException e){
-                            System.out.println("Database Error.");
-                            e.printStackTrace();
-                        }
-                        break;
+                        deleteDepartment(scanner);
                     case 9:
                         continueRunning = false;
                         break;
@@ -57,6 +42,30 @@ public class StudentManagementDelete {
             }
         }catch (SQLException e) {
             System.out.println("Database connection failed");
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteDepartment(Scanner scanner) {
+        System.out.print("Enter department ID to delete: ");
+        int departmentID = scanner.nextInt();
+        scanner.nextLine();
+
+        try (Connection con = DbUtils.getConnection()) {
+            PreparedStatement stmt = con.prepareStatement("DELETE FROM department WHERE department_id =" + departmentID);
+            System.out.println("Successfully deleted id " + departmentID + " from department table.");
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated <= 0){
+                System.out.println("The department id of " + departmentID + " was not found");
+            }
+            else {
+                System.out.println("Successfully deleted id " + departmentID + " from department table.");
+            }
+        } catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("Error: Cannot delete department because it is referenced in other tables (e.g., Course, Staff, Student, College Address).");
+            System.out.println("Delete the related records first before deleting this department.");
+        } catch (SQLException e) {
+            System.out.println("Database Error: Unable to delete department.");
             e.printStackTrace();
         }
     }

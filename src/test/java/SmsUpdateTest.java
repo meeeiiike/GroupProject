@@ -17,9 +17,7 @@ public class SmsUpdateTest {
     void testUpdateDepartmentFailure(){
         int departmentID = 0;
         String name = "TestAtuFailure";
-        Exception e = assertThrows(SQLException.class, ()-> {
-            StudentManagementUpdate.updateDepartment(name, departmentID);
-        });
+        Exception e = assertThrows(SQLException.class, ()-> StudentManagementUpdate.updateDepartment(name, departmentID));
         assertEquals("ID INVALID: must be > 0 AND must be assigned already", e.getMessage());
     }
     @Test
@@ -38,9 +36,7 @@ public class SmsUpdateTest {
         String firstName = "TestFirstName";
         String lastName = "TestLastName";
         String email = "TestEmail";
-        Exception e = assertThrows(SQLException.class, ()-> {
-            StudentManagementUpdate.updateStudent(firstName, lastName, email, departmentID, studentID);
-        });
+        Exception e = assertThrows(SQLException.class, ()-> StudentManagementUpdate.updateStudent(firstName, lastName, email, departmentID, studentID));
         assertEquals("ID INVALID: must be > 0 AND must be assigned already", e.getMessage());
     }
     @Test
@@ -63,9 +59,7 @@ public class SmsUpdateTest {
         String email = "TestEmail";
         String phoneNumber = "Test087000000";
         String officeLocation = "TestOfficeLocation";
-        Exception e = assertThrows(SQLException.class, ()-> {
-            StudentManagementUpdate.updateStaff(firstName, lastName, email, phoneNumber, officeLocation, departmentID, staffID);
-        });
+        Exception e = assertThrows(SQLException.class, ()-> StudentManagementUpdate.updateStaff(firstName, lastName, email, phoneNumber, officeLocation, departmentID, staffID));
         assertEquals("ID INVALID: must be > 0 AND must be assigned already", e.getMessage());
     }
     @Test

@@ -8,129 +8,59 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SmsUpdateTest {
     @Test
-    void testUpdateDepartmentSuccessRefactored() throws SQLException {
+    void testUpdateDepartmentSuccess() throws SQLException {
         int departmentID = 1;
         String name = "TestAtuSuccess";
-        StudentManagementUpdate.updateDepartmentRefactor(name,departmentID);
+        StudentManagementUpdate.updateDepartment(name,departmentID);
     }
     @Test
-    void testUpdateDepartmentFailureRefactored(){
+    void testUpdateDepartmentFailure(){
         int departmentID = 0;
         String name = "TestAtuFailure";
-        Exception e = assertThrows(SQLException.class, ()-> {
-            StudentManagementUpdate.updateDepartmentRefactor(name, departmentID);
-        });
+        Exception e = assertThrows(SQLException.class, ()-> StudentManagementUpdate.updateDepartment(name, departmentID));
         assertEquals("ID INVALID: must be > 0 AND must be assigned already", e.getMessage());
     }
     @Test
-    void testUpdateStudentSuccess(){
+    void testUpdateStudentSuccess() throws SQLException {
         int studentID = 1;
         int departmentID = 1;
-        try (Connection con = DbUtils.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("UPDATE student SET first_name = ?, last_name =?, email = ?, department_id = ? WHERE student_id = " + studentID);
-            String firstName = "TestFirstName";
-            String lastName = "TestLastName";
-            String email = "TestEmail";
-
-            stmt.setString(1, firstName);
-            stmt.setString(2, lastName);
-            stmt.setString(3, email);
-            stmt.setInt(4, departmentID);
-
-            int rowsUpdated = stmt.executeUpdate();
-            assertEquals(1, rowsUpdated);
-            System.out.println("Rows Updated Successfully: " + rowsUpdated);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Could not Connect" + e.getMessage());
-        }
+        String firstName = "TestFirstName";
+        String lastName = "TestLastName";
+        String email = "TestEmail";
+        StudentManagementUpdate.updateStudent(firstName, lastName, email, departmentID, studentID);
     }
     @Test
     void testUpdateStudentFailure(){
         int studentID = 0;
         int departmentID = 0;
-        try (Connection con = DbUtils.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("UPDATE student SET first_name = ?, last_name =?, email = ?, department_id = ? WHERE student_id = " + studentID);
-            String firstName = "TestFirstName";
-            String lastName = "TestLastName";
-            String email = "TestEmail";
-
-            stmt.setString(1, firstName);
-            stmt.setString(2, lastName);
-            stmt.setString(3, email);
-            stmt.setInt(4, departmentID);
-
-            int rowsUpdated = stmt.executeUpdate();
-            // not the best way of doing it, certainly not as good as pauls the way he creates
-            // an instance of Calc (our case student management system) then calls the add
-            // function or whatever ( crud operations for us ) inside a lambda
-            // if we refactor our code to reduce redundancy we could definitely go
-            // about it this way, but for now ill focus on functionality
-            assertEquals(0, rowsUpdated);
-            System.out.println("Rows Updated Successfully: " + rowsUpdated);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Could not Connect" + e.getMessage());
-        }
+        String firstName = "TestFirstName";
+        String lastName = "TestLastName";
+        String email = "TestEmail";
+        Exception e = assertThrows(SQLException.class, ()-> StudentManagementUpdate.updateStudent(firstName, lastName, email, departmentID, studentID));
+        assertEquals("ID INVALID: must be > 0 AND must be assigned already", e.getMessage());
     }
     @Test
-    void testUpdateStaffSuccess(){
+    void testUpdateStaffSuccess() throws SQLException {
         int staffID = 1;
         int departmentID = 1;
-        try (Connection con = DbUtils.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("UPDATE staff SET first_name = ?, last_name =?, email = ?, phone_number =?, office_location = ?, department_id =? WHERE staff_id = " + staffID);
-            String firstName = "TestFirstName";
-            String lastName = "TestLastName";
-            String email = "TestEmail";
-            String phoneNumber = "Test087000000";
-            String officeLocation = "TestOfficeLocation";
-
-            stmt.setString(1, firstName);
-            stmt.setString(2, lastName);
-            stmt.setString(3, email);
-            stmt.setString(4, phoneNumber);
-            stmt.setString(5, officeLocation);
-            stmt.setInt(6, departmentID);
-
-            int rowsUpdated = stmt.executeUpdate();
-            assertEquals(1, rowsUpdated);
-            System.out.println("Rows Updated Successfully: " + rowsUpdated);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Could not Connect" + e.getMessage());
-        }
+        String firstName = "TestFirstName";
+        String lastName = "TestLastName";
+        String email = "TestEmail";
+        String phoneNumber = "Test087000000";
+        String officeLocation = "TestOfficeLocation";
+        StudentManagementUpdate.updateStaff(firstName, lastName, email, phoneNumber, officeLocation, departmentID, staffID);
     }
     @Test
     void testUpdateStaffFailure(){
         int staffID = 0;
         int departmentID = 0;
-        try (Connection con = DbUtils.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("UPDATE staff SET first_name = ?, last_name =?, email = ?, phone_number =?, office_location = ?, department_id =?  WHERE staff_id = " + staffID);
-            String firstName = "TestFirstName";
-            String lastName = "TestLastName";
-            String email = "TestEmail";
-            String phoneNumber = "Test087000000";
-            String officeLocation = "TestOfficeLocation";
-
-            stmt.setString(1, firstName);
-            stmt.setString(2, lastName);
-            stmt.setString(3, email);
-            stmt.setString(4, phoneNumber);
-            stmt.setString(5, officeLocation);
-            stmt.setInt(6, departmentID);
-
-            int rowsUpdated = stmt.executeUpdate();
-            // not the best way of doing it, certainly not as good as pauls the way he creates
-            // an instance of Calc (our case student management system) then calls the add
-            // function or whatever ( crud operations for us ) inside a lambda
-            // if we refactor our code to reduce redundancy we could definitely go
-            // about it this way, but for now ill focus on functionality
-            assertEquals(0, rowsUpdated);
-            System.out.println("Rows Updated Successfully: " + rowsUpdated);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Could not Connect" + e.getMessage());
-        }
+        String firstName = "TestFirstName";
+        String lastName = "TestLastName";
+        String email = "TestEmail";
+        String phoneNumber = "Test087000000";
+        String officeLocation = "TestOfficeLocation";
+        Exception e = assertThrows(SQLException.class, ()-> StudentManagementUpdate.updateStaff(firstName, lastName, email, phoneNumber, officeLocation, departmentID, staffID));
+        assertEquals("ID INVALID: must be > 0 AND must be assigned already", e.getMessage());
     }
     @Test
     void testUpdateCourseSuccess(){

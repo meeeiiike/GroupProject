@@ -31,10 +31,17 @@ public class StudentManagementDelete {
 
                 switch (choice){
                     case 1:
-                        deleteDepartment(scanner);
+                        System.out.println("Enter department ID to delete: ");
+                        int departmentID = scanner.nextInt();
+                        try {
+                            deleteDepartment(departmentID);
+                        }
+                        catch (SQLException e){
+                            System.out.println("Database Error: Unable to delete department,");
+                        }
                         break;
                     case 2:
-                        deleteStudent(scanner);
+                        System.out.println("Student called");
                         break;
                     case 3:
                         System.out.println("Staff called");
@@ -68,51 +75,21 @@ public class StudentManagementDelete {
         }
     }
 
-    public static void deleteDepartment(Scanner scanner) {
-        System.out.print("Enter department ID to delete: ");
-        int departmentID = scanner.nextInt();
-        scanner.nextLine();
-
-        try (Connection con = DbUtils.getConnection()) {
+    public static void deleteDepartment(int departmentID) throws SQLException {
+        try(Connection con = DbUtils.getConnection()){
             PreparedStatement stmt = con.prepareStatement("DELETE FROM department WHERE department_id =" + departmentID);
-            System.out.println("Successfully deleted id " + departmentID + " from department table.");
             int rowsUpdated = stmt.executeUpdate();
+
             if (rowsUpdated <= 0){
                 System.out.println("The department id of " + departmentID + " was not found");
             }
             else {
-                System.out.println("Successfully deleted id " + departmentID + " from department table.");
+                System.out.println("Successfully deleted id " + departmentID + "from department table");
             }
-        } catch (SQLIntegrityConstraintViolationException e) {
-            System.out.println("Error: Cannot delete department because it is referenced in other tables (e.g., Course, Staff, Student, College Address).");
-            System.out.println("Delete the related records first before deleting this department.");
-        } catch (SQLException e) {
-            System.out.println("Database Error: Unable to delete department.");
-            e.printStackTrace();
         }
-    }
-
-    private static void deleteStudent(Scanner scanner) {
-        System.out.print("Enter student ID to delete: ");
-        int studentID = scanner.nextInt();
-        scanner.nextLine();
-
-        try (Connection con = DbUtils.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("DELETE FROM student WHERE student_id =" + studentID);
-            System.out.println("Successfully student id " + studentID + " from department table.");
-            int rowsUpdated = stmt.executeUpdate();
-            if (rowsUpdated <= 0){
-                System.out.println("The student id of " + studentID + " was not found");
-            }
-            else {
-                System.out.println("Successfully student id " + studentID + " from department table.");
-            }
-        } catch (SQLIntegrityConstraintViolationException e) {
-            System.out.println("Error: Cannot delete student because it is referenced in other tables (e.g., Grades, Payments, and Address).");
-            System.out.println("Delete the related records first before deleting this student.");
-        } catch (SQLException e) {
-            System.out.println("Database Error: Unable to delete student.");
-            e.printStackTrace();
+        catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("Error: Cannot delete department because it is referenced in other tables.");
+            throw new  SQLIntegrityConstraintViolationException("Error: Cannot delete department because it is referenced in other tables.");
         }
     }
 }

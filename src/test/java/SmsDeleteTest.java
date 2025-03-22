@@ -42,4 +42,19 @@ public class SmsDeleteTest {
         Exception ex = assertThrows(SQLIntegrityConstraintViolationException.class, () -> StudentManagementDelete.deleteStudent(studentID));
         assertEquals("Error: Cannot delete student because it is referenced in other tables.", ex.getMessage());
     }
+
+    @Test
+    void testDeleteStaffSuccess() throws SQLException {
+        int staffID = 2;
+
+        StudentManagementDelete.deleteStaff(staffID);
+    }
+
+    @Test
+    void testDeleteStaffFailure() {
+        int staffID = 1;
+
+        Exception ex = assertThrows(SQLIntegrityConstraintViolationException.class, () -> StudentManagementDelete.deleteStaff(staffID));
+        assertEquals("Error: Cannot delete staff because it is referenced in other tables.", ex.getMessage());
+    }
 }

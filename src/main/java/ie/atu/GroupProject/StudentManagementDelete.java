@@ -41,7 +41,14 @@ public class StudentManagementDelete {
                         }
                         break;
                     case 2:
-                        System.out.println("Student called");
+                        System.out.println("Enter student ID to delete: ");
+                        int studentID = scanner.nextInt();
+                        try {
+                            deleteStudent(studentID);
+                        }
+                        catch (SQLException e){
+                            System.out.println("Database Error: Read above");
+                        }
                         break;
                     case 3:
                         System.out.println("Staff called");
@@ -90,6 +97,24 @@ public class StudentManagementDelete {
         catch (SQLIntegrityConstraintViolationException e) {
             System.out.println("Error: Cannot delete department because it is referenced in other tables.");
             throw new  SQLIntegrityConstraintViolationException("Error: Cannot delete department because it is referenced in other tables.");
+        }
+    }
+
+    public static void deleteStudent(int studentID) throws SQLException {
+        try (Connection con = DbUtils.getConnection()){
+            PreparedStatement stmt = con.prepareStatement("DELETE FROM student WHERE student_id =" + studentID);
+            int rowsUpdated = stmt.executeUpdate();
+
+            if (rowsUpdated <= 0){
+                System.out.println("The student id of " + studentID + " was not found");
+            }
+            else {
+                System.out.println("Successfully deleted id " + studentID + " from student table");
+            }
+        }
+        catch (SQLIntegrityConstraintViolationException e){
+            System.out.println("Error: Cannot delete student because it is referenced in other tables.");
+            throw new  SQLIntegrityConstraintViolationException("Error: Cannot delete student because it is referenced in other tables.");
         }
     }
 }

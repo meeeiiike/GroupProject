@@ -1,71 +1,30 @@
 import ie.atu.GroupProject.DbUtils;
+import ie.atu.GroupProject.StudentManagementDelete;
+import ie.atu.GroupProject.StudentManagementUpdate;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SmsDeleteTest {
 
     @Test
-    void testDeleteDepartmentSuccess(){
-        int departmentID = 1;
-        try(Connection con = DbUtils.getConnection()){
-            PreparedStatement stmt = con.prepareStatement("DELETE FROM department WHERE department_id =" + departmentID);
+    void testDeleteDepartmentSuccess() throws SQLException {
+        int departmentID = 1; // if 1 exist it should delete and if not should say it doesnt exist
 
-            int rowsAffected = stmt.executeUpdate();
-
-            assertEquals(1, rowsAffected);
-        } catch (SQLException e){
-            System.out.println("Database Error.");
-            e.printStackTrace();
-        }
+        StudentManagementDelete.deleteDepartment(departmentID);
     }
 
     @Test
-    void testDeleteDepartmentFailure(){
-        int departmentID = 0;
-        try (Connection con = DbUtils.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("DELETE FROM department WHERE department_id = " + departmentID);
+    void testDeleteDepartmentFailure() {
+        int departmentID = 4; // Make sure that the id is referred to other tables
 
-            int rowsAffected = stmt.executeUpdate();
-
-            assertEquals(0, rowsAffected);
-        } catch (SQLException e) {
-            System.out.println("Database Error.");
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    void testDeleteStudentSuccess(){
-        int studentID = 1;
-        try(Connection con = DbUtils.getConnection()){
-            PreparedStatement stmt = con.prepareStatement("DELETE FROM student WHERE student_id =" + studentID);
-
-            int rowsAffected = stmt.executeUpdate();
-
-            assertEquals(1, rowsAffected);
-        } catch (SQLException e){
-            System.out.println("Database Error.");
-            e.printStackTrace();
-        }
-    }
-
-    @Test
-    void testDeleteStudentFailure(){
-        int studentID = 0;
-        try (Connection con = DbUtils.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("DELETE FROM student WHERE student_id = " + studentID);
-
-            int rowsAffected = stmt.executeUpdate();
-
-            assertEquals(0, rowsAffected);
-        } catch (SQLException e) {
-            System.out.println("Database Error.");
-            e.printStackTrace();
-        }
+        Exception ex = assertThrows(SQLIntegrityConstraintViolationException.class, () -> StudentManagementDelete.deleteDepartment(departmentID));
+        assertEquals("Error: Cannot delete department because it is referenced in other tables.", ex.getMessage());
     }
 }

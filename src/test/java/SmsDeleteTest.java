@@ -72,4 +72,21 @@ public class SmsDeleteTest {
         Exception ex = assertThrows(SQLIntegrityConstraintViolationException.class, () -> StudentManagementDelete.deleteCourse(courseID));
         assertEquals("Error: Cannot delete course because it is referenced in other tables.", ex.getMessage());
     }
+
+    //For the following tests they won't cause a SQLIntegrityConstraintViolationException, we're taking a
+    //data not existing in the table as failure
+
+    @Test
+    void testDeleteGradeSuccess() throws SQLException {
+        int gradeID = 1; //Make sure there is a grade with the ID listed in the database
+
+        StudentManagementDelete.deleteGrade(gradeID);
+    }
+
+    @Test
+    void testDeleteGradeFailure() throws SQLException {
+        int gradeID = 100;
+
+        StudentManagementDelete.deleteGrade(gradeID);
+    }
 }

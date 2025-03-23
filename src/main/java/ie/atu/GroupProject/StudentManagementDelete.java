@@ -101,7 +101,14 @@ public class StudentManagementDelete {
                         }
                         break;
                     case 8:
-                        System.out.println("Address called");
+                        System.out.println("Enter student address ID to delete");
+                        int addressID = scanner.nextInt();
+                        try {
+                            deleteAddress(addressID);
+                        }
+                        catch (SQLException e){
+                            System.out.println("Database Error");
+                        }
                         break;
                     case 9:
                         continueRunning = false;
@@ -227,6 +234,20 @@ public class StudentManagementDelete {
             }
             else {
                 System.out.println("Successfully deleted id " + collegeID + " from college address table");
+            }
+        }
+    }
+
+    public static void deleteAddress(int addressID) throws SQLException {
+        try(Connection con = DbUtils.getConnection()){
+            PreparedStatement stmt = con.prepareStatement("DELETE FROM student_address WHERE student_address_id=" + addressID);
+            int rowsUpdated = stmt.executeUpdate();
+
+            if (rowsUpdated <= 0){
+                System.out.println("The student address id of " + addressID + " was not found");
+            }
+            else {
+                System.out.println("Successfully deleted id " + addressID + " from student address table");
             }
         }
     }

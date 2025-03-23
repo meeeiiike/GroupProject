@@ -89,4 +89,18 @@ public class SmsDeleteTest {
 
         StudentManagementDelete.deleteGrade(gradeID);
     }
+
+    @Test
+    void testDeletePaymentSuccess() throws SQLException {
+        int paymentID = 1;
+
+        StudentManagementDelete.deletePayment(paymentID);
+    }
+
+    @Test
+    void testDeletePaymentFailure() throws SQLException {
+        int paymentID = 100;
+
+        StudentManagementDelete.deletePayment(paymentID);
+    }
 }

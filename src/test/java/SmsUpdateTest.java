@@ -1,3 +1,4 @@
+import ch.qos.logback.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy;
 import ie.atu.GroupProject.DbUtils;
 import java.sql.*;
 
@@ -67,32 +68,14 @@ public class SmsUpdateTest {
         int courseID = 1;
         int departmentID = 1;
         int staffID = 1;
+        String courseName = "TestFirstName";
+        int credits = 10;
+        int level = 8;
+        int semester = 2;
+        int durationWeeks = 20;
+        int maxStudents = 40;
 
-        try (Connection con = DbUtils.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("UPDATE course SET course_name = ?, credits =?, level = ?, semester =?, duration_weeks = ?, max_students = ?, department_id =?, staff_id = ? WHERE course_id = " + courseID);
-            String courseName = "TestFirstName";
-            int credits = 10;
-            int level = 8;
-            int semester = 2;
-            int durationWeeks = 20;
-            int maxStudents = 40;
-
-            stmt.setString(1, courseName);
-            stmt.setInt(2, credits);
-            stmt.setInt(3, level);
-            stmt.setInt(4, semester);
-            stmt.setInt(5, durationWeeks);
-            stmt.setInt(6, maxStudents);
-            stmt.setInt(7, departmentID);
-            stmt.setInt(8, staffID);
-
-            int rowsUpdated = stmt.executeUpdate();
-            assertEquals(1, rowsUpdated);
-            System.out.println("Rows Updated Successfully: " + rowsUpdated);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Could not Connect" + e.getMessage());
-        }
+        StudentManagementUpdate.updateCourse(courseName,credits,level,semester,durationWeeks,maxStudents, departmentID,staffID, courseID);
     }
     @Test
     void testUpdateCourseFailure(){

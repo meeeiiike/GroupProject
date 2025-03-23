@@ -1,4 +1,3 @@
-import ch.qos.logback.core.rolling.DefaultTimeBasedFileNamingAndTriggeringPolicy;
 import ie.atu.GroupProject.DbUtils;
 import java.sql.*;
 

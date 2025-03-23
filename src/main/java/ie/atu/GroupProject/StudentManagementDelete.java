@@ -81,7 +81,14 @@ public class StudentManagementDelete {
                         }
                         break;
                     case 6:
-                        System.out.println("Payment called");
+                        System.out.println("Enter payment ID to delete");
+                        int paymentID = scanner.nextInt();
+                        try {
+                            deletePayment(paymentID);
+                        }
+                        catch (SQLException e){
+                            System.out.println("Database Error");
+                        }
                         break;
                     case 7:
                         System.out.println("College called");
@@ -185,6 +192,20 @@ public class StudentManagementDelete {
             }
             else {
                 System.out.println("Successfully deleted id " + gradeID + " from grade table");
+            }
+        }
+    }
+
+    public static void deletePayment(int paymentID) throws SQLException {
+        try(Connection con = DbUtils.getConnection()){
+            PreparedStatement stmt = con.prepareStatement("DELETE FROM payments WHERE payment_id=" + paymentID);
+            int rowsUpdated = stmt.executeUpdate();
+
+            if (rowsUpdated <= 0){
+                System.out.println("The payment id of " + paymentID + " was not found");
+            }
+            else {
+                System.out.println("Successfully deleted id " + paymentID + " from payment table");
             }
         }
     }

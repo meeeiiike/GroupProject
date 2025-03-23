@@ -117,4 +117,18 @@ public class SmsDeleteTest {
 
         StudentManagementDelete.deleteCollege(collegeID);
     }
+
+    @Test
+    void testDeleteAddressSuccess() throws SQLException {
+        int addressID = 1;
+
+        StudentManagementDelete.deleteAddress(addressID);
+    }
+
+    @Test
+    void testDeleteAddressFailure() throws SQLException {
+        int addressID = 100;
+
+        StudentManagementDelete.deleteAddress(addressID);
+    }
 }

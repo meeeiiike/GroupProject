@@ -64,7 +64,7 @@ public class SmsUpdateTest {
         assertEquals("ID INVALID: must be > 0 AND must be assigned already", e.getMessage());
     }
     @Test
-    void testUpdateCourseSuccess(){
+    void testUpdateCourseSuccess() throws SQLException {
         int courseID = 1;
         int departmentID = 1;
         int staffID = 1;
@@ -74,7 +74,6 @@ public class SmsUpdateTest {
         int semester = 2;
         int durationWeeks = 20;
         int maxStudents = 40;
-
         StudentManagementUpdate.updateCourse(courseName,credits,level,semester,durationWeeks,maxStudents, departmentID,staffID, courseID);
     }
     @Test

@@ -43,7 +43,7 @@ public class StudentManagementUpdate {
                 case 1 -> getDepartmentDetails(sc);
                 case 2 -> getStudentDetails(sc);
                 case 3 -> getStaffDetails(sc);
-                case 4 -> updateCourse(sc);
+                case 4 -> getCourseDetails(sc);
                 case 5 -> updateGrades(sc);
                 case 6 -> updatePayment(sc);
                 case 7 -> updateCollege(sc);
@@ -55,6 +55,14 @@ public class StudentManagementUpdate {
                 default -> System.out.println("Error Occurred");
             }
         }
+    }
+    public static void getDepartmentDetails(Scanner sc) throws SQLException {
+        System.out.println("Update Department\nPlease enter ID: ");
+        int departmentID = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Enter new name: ");
+        String name = sc.nextLine();
+        updateDepartment(name, departmentID);
     }
 
     public static void updateDepartment(String name,int departmentID) throws SQLException {
@@ -80,14 +88,6 @@ public class StudentManagementUpdate {
             System.out.println(e.getMessage());
             }
         */
-    }
-    public static void getDepartmentDetails(Scanner sc) throws SQLException {
-        System.out.println("Update Department\nPlease enter ID: ");
-        int departmentID = sc.nextInt();
-        sc.nextLine();
-        System.out.println("Enter new name: ");
-        String name = sc.nextLine();
-        updateDepartment(name, departmentID);
     }
     // MAKE SURE TO ADD NEXT LINE SO ALL ENTRIES CAN HAVE SPACES AND NOT CAUSE CRASH
 
@@ -155,28 +155,39 @@ public class StudentManagementUpdate {
             System.out.println("Rows Updated Successfully: " + rowsUpdated);
         }
     }
-    private static void updateCourse(Scanner sc) {
+
+    public static void getCourseDetails(Scanner sc) throws SQLException{
         System.out.println("Update Course\nPlease enter ID: ");
         int courseID = sc.nextInt();
-        try (Connection con = DbUtils.getConnection()) {
+        sc.nextLine();
+        System.out.println("Enter course name: ");
+        String course_name = sc.nextLine();
+        System.out.println("Enter credits: ");
+        int credits = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Enter level: ");
+        int level = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Enter semester: ");
+        int semester = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Enter duration in weeks: ");
+        int duration_weeks = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Enter Max Students: ");
+        int max_students = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Please Choose Department ID: ");
+        int departmentID = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Please Choose Staff ID: ");
+        int staffID = sc.nextInt();
+        sc.nextLine();
+        updateCourse(course_name, credits, level, semester, duration_weeks, max_students, departmentID, staffID, courseID);
+    }
+    public static void updateCourse(String course_name, int credits, int level, int semester, int duration_weeks, int max_students, int departmentID, int staffID, int courseID) throws SQLException {
+        try (Connection con = DbUtils.getConnection()){
             PreparedStatement stmt = con.prepareStatement("UPDATE course SET course_name = ?, credits = ?, level = ?, semester = ?, duration_weeks = ?,  max_students = ?, department_id = ?, staff_id =? WHERE course_id = " + courseID);
-            System.out.println("Enter course name: ");
-            String course_name = sc.next();
-            System.out.println("Enter credits: ");
-            int credits = sc.nextInt();
-            System.out.println("Enter level: ");
-            int level = sc.nextInt();
-            System.out.println("Enter semester: ");
-            int semester = sc.nextInt();
-            System.out.println("Enter duration in weeks: ");
-            int duration_weeks = sc.nextInt();
-            System.out.println("Enter Max Students: ");
-            int max_students = sc.nextInt();
-            System.out.println("Please Choose Department ID: ");
-            int departmentID = sc.nextInt();
-            System.out.println("Please Choose Staff ID: ");
-            int staffID = sc.nextInt();
-
             stmt.setString(1, course_name);
             stmt.setInt(2, credits);
             stmt.setInt(3, level);
@@ -185,15 +196,11 @@ public class StudentManagementUpdate {
             stmt.setInt(6, max_students);
             stmt.setInt(7, departmentID);
             stmt.setInt(8, staffID);
-
             int rowsUpdated = stmt.executeUpdate();
             if (rowsUpdated <= 0) {
                 throw new SQLException("ID INVALID: must be > 0 AND must be assigned already");
             }
             System.out.println("Rows Updated Successfully: " + rowsUpdated);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Could not Connect");
         }
     }
     private static void updateGrades(Scanner sc) {
@@ -209,7 +216,6 @@ public class StudentManagementUpdate {
             int studentID = sc.nextInt();
             System.out.println("Enter course ID: ");
             int courseID = sc.nextInt();
-
             stmt.setInt(1, level);
             //Refactored to reduce some code
             setGradeStudentCourseID(stmt, grade, studentID, courseID);

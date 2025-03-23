@@ -103,4 +103,18 @@ public class SmsDeleteTest {
 
         StudentManagementDelete.deletePayment(paymentID);
     }
+
+    @Test
+    void testDeleteCollegeSuccess() throws SQLException {
+        int collegeID = 1;
+
+        StudentManagementDelete.deleteCollege(collegeID);
+    }
+
+    @Test
+    void testDeleteCollegeFailure() throws SQLException {
+        int collegeID = 100;
+
+        StudentManagementDelete.deleteCollege(collegeID);
+    }
 }

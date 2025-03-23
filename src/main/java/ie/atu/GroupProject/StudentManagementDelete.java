@@ -71,7 +71,14 @@ public class StudentManagementDelete {
                         }
                         break;
                     case 5:
-                        System.out.println("Grade called");
+                        System.out.println("Enter grade ID to delete");
+                        int gradeID = scanner.nextInt();
+                        try {
+                            deleteGrade(gradeID);
+                        }
+                        catch (SQLException e){
+                            System.out.println("Database Error");
+                        }
                         break;
                     case 6:
                         System.out.println("Payment called");
@@ -165,6 +172,20 @@ public class StudentManagementDelete {
         } catch (SQLIntegrityConstraintViolationException e){
             System.out.println("Error: Cannot delete course because it is referenced in other tables.");
             throw new SQLIntegrityConstraintViolationException("Error: Cannot delete course because it is referenced in other tables.");
+        }
+    }
+
+    public static void deleteGrade(int gradeID) throws SQLException {
+        try(Connection con = DbUtils.getConnection()){
+            PreparedStatement stmt = con.prepareStatement("DELETE FROM grades WHERE grade_id=" + gradeID);
+            int rowsUpdated = stmt.executeUpdate();
+
+            if (rowsUpdated <= 0){
+                System.out.println("The grade id of " + gradeID + " was not found");
+            }
+            else {
+                System.out.println("Successfully deleted id " + gradeID + " from grade table");
+            }
         }
     }
 }

@@ -21,6 +21,7 @@ public class SmsUpdateTest {
         Exception e = assertThrows(SQLException.class, ()-> StudentManagementUpdate.updateDepartment(name, departmentID));
         assertEquals("ID INVALID: must be > 0 AND must be assigned already", e.getMessage());
     }
+
     @Test
     void testUpdateStudentSuccess() throws SQLException {
         int studentID = 1;
@@ -40,6 +41,7 @@ public class SmsUpdateTest {
         Exception e = assertThrows(SQLException.class, ()-> StudentManagementUpdate.updateStudent(firstName, lastName, email, departmentID, studentID));
         assertEquals("ID INVALID: must be > 0 AND must be assigned already", e.getMessage());
     }
+
     @Test
     void testUpdateStaffSuccess() throws SQLException {
         int staffID = 1;
@@ -63,6 +65,7 @@ public class SmsUpdateTest {
         Exception e = assertThrows(SQLException.class, ()-> StudentManagementUpdate.updateStaff(firstName, lastName, email, phoneNumber, officeLocation, departmentID, staffID));
         assertEquals("ID INVALID: must be > 0 AND must be assigned already", e.getMessage());
     }
+
     @Test
     void testUpdateCourseSuccess() throws SQLException {
         int courseID = 1;
@@ -87,108 +90,55 @@ public class SmsUpdateTest {
         int semester = 2;
         int durationWeeks = 20;
         int maxStudents = 40;
-
-        Exception e = assertThrows(SQLException.class, ()-> {
-            StudentManagementUpdate.updateCourse(courseName,credits,level,semester,durationWeeks,maxStudents, departmentID,staffID, courseID);
-        });
+        Exception e = assertThrows(SQLException.class, ()-> StudentManagementUpdate.updateCourse(courseName,credits,level,semester,durationWeeks,maxStudents, departmentID,staffID, courseID));
         assertEquals("ID INVALID: must be > 0 AND must be assigned already", e.getMessage());
     }
+
     @Test
-    void testUpdateGradesSuccess(){
+    void testUpdateGradesSuccess() throws SQLException {
         int gradeID = 1;
         int studentID = 1;
         int courseID = 1;
-
-        try (Connection con = DbUtils.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("UPDATE grades SET level = ?, grade =?, student_id =?, course_id = ? WHERE grade_id = " + gradeID);
-            int level = 8;
-            int grade = 80;
-
-            stmt.setInt(1, level);
-            stmt.setInt(2, grade);
-            stmt.setInt(3, studentID);
-            stmt.setInt(4, courseID);
-
-            int rowsUpdated = stmt.executeUpdate();
-            assertEquals(1, rowsUpdated);
-            System.out.println("Rows Updated Successfully: " + rowsUpdated);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Could not Connect" + e.getMessage());
-        }
+        int level = 8;
+        int grade = 80;
+        StudentManagementUpdate.updateGrades(level, grade, studentID, courseID, gradeID);
     }
     @Test
     void testUpdateGradesFailure() {
         int gradeID = 0;
         int studentID = 0;
         int courseID = 0;
-
-        try (Connection con = DbUtils.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("UPDATE grades SET level = ?, grade =?, student_id =?, course_id = ? WHERE grade_id = " + gradeID);
-            int level = 8;
-            int grade = 80;
-
-            stmt.setInt(1, level);
-            stmt.setInt(2, grade);
-            stmt.setInt(3, studentID);
-            stmt.setInt(4, courseID);
-
-            int rowsUpdated = stmt.executeUpdate();
-            assertEquals(0, rowsUpdated);
-            System.out.println("Rows Updated Successfully: " + rowsUpdated);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Could not Connect" + e.getMessage());
-        }
+        int level = 0;
+        int grade = 0;
+        Exception e = assertThrows(SQLException.class, ()->{
+           StudentManagementUpdate.updateGrades(level, grade, studentID,courseID,gradeID);
+        });
+        assertEquals("ID INVALID: must be > 0 AND must be assigned already", e.getMessage());
     }
+
     @Test
-    void testUpdatePaymentSuccess(){
+    void testUpdatePaymentSuccess() throws SQLException {
         int paymentID = 1;
         int studentID = 1;
         int courseID = 1;
-
-        try (Connection con = DbUtils.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("UPDATE payments SET payment_status = ?, payment_amount =?, student_id =?, course_id = ? WHERE payment_id = " + paymentID);
-            String paymentStatus = "TEST";
-            int paymentAmount = 80;
-
-            stmt.setString(1, paymentStatus);
-            stmt.setInt(2, paymentAmount);
-            stmt.setInt(3, studentID);
-            stmt.setInt(4, courseID);
-
-            int rowsUpdated = stmt.executeUpdate();
-            assertEquals(1, rowsUpdated);
-            System.out.println("Rows Updated Successfully: " + rowsUpdated);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Could not Connect" + e.getMessage());
-        }
+        String paymentStatus = "TestSuccess";
+        int paymentAmount = 80;
+        StudentManagementUpdate.updatePayment(paymentStatus, paymentAmount, studentID,courseID,paymentID);
     }
     @Test
     void testUpdatePaymentFailure(){
         int paymentID = 0;
         int studentID = 0;
         int courseID = 0;
+        String paymentStatus = "TestFailure";
+        int paymentAmount = 0;
+        Exception e = assertThrows(SQLException.class, ()-> {
+            StudentManagementUpdate.updatePayment(paymentStatus, paymentAmount, studentID,courseID,paymentID);
+        });
+        assertEquals("ID INVALID: must be > 0 AND must be assigned already", e.getMessage());
 
-        try (Connection con = DbUtils.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("UPDATE payments SET payment_status = ?, payment_amount =?, student_id =?, course_id = ? WHERE payment_id = " + paymentID);
-            String paymentStatus = "TEST";
-            int paymentAmount = 80;
-
-            stmt.setString(1, paymentStatus);
-            stmt.setInt(2, paymentAmount);
-            stmt.setInt(3, studentID);
-            stmt.setInt(4, courseID);
-
-            int rowsUpdated = stmt.executeUpdate();
-            assertEquals(0, rowsUpdated);
-            System.out.println("Rows Updated Successfully: " + rowsUpdated);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Could not Connect" + e.getMessage());
-        }
     }
+
     @Test
     void testUpdateCollegeSuccess(){
         int departmentID = 1;

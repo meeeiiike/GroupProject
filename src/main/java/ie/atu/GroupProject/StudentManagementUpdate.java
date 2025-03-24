@@ -15,16 +15,12 @@ import java.util.Scanner;
 
 public class StudentManagementUpdate {
     public static void main(String[] args) throws SQLException {
-        // |------------------------------------------------------------------------------------------------------------------------|
         //Start Menu
         boolean run = true;
         Scanner sc = new Scanner(System.in);
         while (run) {
             System.out.println("""
                     
-                     Welcome to Student Management System!\s
-                     You Selected Update
-                     \
                     Please Select Table to Update:\s
                     1. Department
                     2. Student
@@ -38,7 +34,6 @@ public class StudentManagementUpdate {
                      Please Enter:\s""");
             int choice = sc.nextInt();
             sc.nextLine();
-
             switch (choice) {
                 case 1 -> getDepartmentDetails(sc);
                 case 2 -> getStudentDetails(sc);
@@ -46,8 +41,8 @@ public class StudentManagementUpdate {
                 case 4 -> getCourseDetails(sc);
                 case 5 -> getGradeDetails(sc);
                 case 6 -> getPaymentDetails(sc);
-                case 7 -> updateCollege(sc);
-                case 8 -> updateAddress(sc);
+                case 7 -> getCollegeDetails(sc);
+                case 8 -> getAddressDetails(sc);
                 case 9 -> {
                     System.out.println("Goodbye!");
                     run = false;
@@ -58,7 +53,7 @@ public class StudentManagementUpdate {
     }
 
     public static void getDepartmentDetails(Scanner sc) throws SQLException {
-        System.out.println("Update Department\nPlease enter ID: ");
+        System.out.println("Please enter ID: ");
         int departmentID = sc.nextInt();
         sc.nextLine();
         System.out.println("Enter new name: ");
@@ -78,7 +73,7 @@ public class StudentManagementUpdate {
         }
         /*
             [Michael McDermott]
-            I Used AI [ also youtube, various forums ] to debug this error where my failure test would not pass.
+            I Used AI [ also YouTube, various forums ] to debug this error where my failure test would not pass.
             this was happening because of the catch() block executing before the exception could
             be thrown so it would never reach our Junit tests. So ive left that commented out now and
             added throws SQLException to any method that had an error and required it
@@ -89,10 +84,9 @@ public class StudentManagementUpdate {
             }
         */
     }
-    // MAKE SURE TO ADD NEXT LINE SO ALL ENTRIES CAN HAVE SPACES AND NOT CAUSE CRASH
 
     public static void getStudentDetails(Scanner sc) throws SQLException{
-        System.out.println("Update Student\nPlease enter ID: ");
+        System.out.println("Please enter ID: ");
         int studentID = sc.nextInt();
         sc.nextLine();
         System.out.println("Enter first name: ");
@@ -122,7 +116,7 @@ public class StudentManagementUpdate {
     }
 
     public static void getStaffDetails(Scanner sc) throws  SQLException{
-        System.out.println("Update staff\nPlease enter ID: ");
+        System.out.println("Please enter ID: ");
         int staffID = sc.nextInt();
         sc.nextLine();
         System.out.println("Enter first name: ");
@@ -158,7 +152,7 @@ public class StudentManagementUpdate {
     }
 
     public static void getCourseDetails(Scanner sc) throws SQLException{
-        System.out.println("Update Course\nPlease enter ID: ");
+        System.out.println("Please enter ID: ");
         int courseID = sc.nextInt();
         sc.nextLine();
         System.out.println("Enter course name: ");
@@ -206,16 +200,21 @@ public class StudentManagementUpdate {
     }
 
     public static void getGradeDetails(Scanner sc)throws SQLException {
-        System.out.println("Update Grades\nPlease enter ID: ");
+        System.out.println("Please enter ID: ");
         int gradeID = sc.nextInt();
+        sc.nextLine();
         System.out.println("Enter level: ");
         int level = sc.nextInt();
+        sc.nextLine();
         System.out.println("Enter grade: ");
         int grade = sc.nextInt();
+        sc.nextLine();
         System.out.println("Enter student ID: ");
         int studentID = sc.nextInt();
+        sc.nextLine();
         System.out.println("Enter course ID: ");
         int courseID = sc.nextInt();
+        sc.nextLine();
         updateGrades(level, grade, studentID,courseID,gradeID);
     }
     public static void updateGrades(int level, int grade, int studentID, int courseID, int gradeID) throws SQLException{
@@ -234,16 +233,20 @@ public class StudentManagementUpdate {
     }
 
     public static void getPaymentDetails(Scanner sc) throws SQLException{
-        System.out.println("Update Payments\nPlease enter ID: ");
+        System.out.println("Please enter ID: ");
         int paymentID = sc.nextInt();
+        sc.nextLine();
         System.out.println("Enter payment status: ");
-        String paymentStatus = sc.next();
+        String paymentStatus = sc.nextLine();
         System.out.println("Enter Amount: ");
         int paymentAmount = sc.nextInt();
+        sc.nextLine();
         System.out.println("Enter student ID: ");
         int studentID = sc.nextInt();
+        sc.nextLine();
         System.out.println("Enter course ID: ");
         int courseID = sc.nextInt();
+        sc.nextLine();
         updatePayment(paymentStatus, paymentAmount, studentID,courseID, paymentID);
     }
     public static void updatePayment(String paymentStatus, int paymentAmount, int studentID, int courseID, int paymentID) throws SQLException {
@@ -262,65 +265,70 @@ public class StudentManagementUpdate {
 
         }
     }
-    private static void updateCollege(Scanner sc) {
-        System.out.println("Update College\nPlease enter ID: ");
+
+    public static void getCollegeDetails(Scanner sc) throws SQLException{
+        System.out.println("Please enter ID: ");
         int collegeAddressID = sc.nextInt();
-        try (Connection con = DbUtils.getConnection()) {
+        sc.nextLine();
+        System.out.println("Enter Address Line 1: ");
+        String addressLine1 = sc.nextLine();
+        System.out.println("Enter Address Line 2: ");
+        String addressLine2 = sc.nextLine();
+        System.out.println("Enter Town OR City: ");
+        String townCity = sc.nextLine();
+        System.out.println("Enter County: ");
+        String county = sc.nextLine();
+        System.out.println("Enter Department ID: ");
+        int departmentID = sc.nextInt();
+        sc.nextLine();
+        updateCollege(addressLine1, addressLine2, townCity, county, departmentID, collegeAddressID);
+    }
+    public static void updateCollege(String addressLine1, String addressLine2, String townCity, String county, int departmentID, int collegeAddressID) throws SQLException{
+         try (Connection con = DbUtils.getConnection()) {
             PreparedStatement stmt = con.prepareStatement("UPDATE college_address SET address_line_1 = ?, address_line_2 =?, town_city =?, county = ?, department_id = ? WHERE college_address_id = " + collegeAddressID);
-            System.out.println("Enter Address Line 1: ");
-            String addressLine1 = sc.next();
-            System.out.println("Enter Address Line 2: ");
-            String addressLine2 = sc.next();
-            System.out.println("Enter Town OR City: ");
-            String townCity = sc.next();
-            System.out.println("Enter County: ");
-            String county = sc.next();
-            System.out.println("Enter Department ID: ");
-            GetAddressDetails(sc, stmt, addressLine1, addressLine2, townCity, county);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Could not Connect");
+             stmt.setString(1, addressLine1);
+             stmt.setString(2, addressLine2);
+             stmt.setString(3, townCity);
+             stmt.setString(4, county);
+             stmt.setInt(5, departmentID);
+             int rowsUpdated = stmt.executeUpdate();
+             if (rowsUpdated <= 0) {
+                 throw new SQLException("ID INVALID: must be > 0 AND must be assigned already");
+             }
+             System.out.println("Rows Updated Successfully: " + rowsUpdated);
         }
     }
 
-    private static void updateAddress(Scanner sc) {
-        System.out.println("Update Address\nPlease enter ID: ");
+    public static void getAddressDetails(Scanner sc) throws SQLException{
+        System.out.println("Please enter ID: ");
         int studentAddressID = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Enter Address Line 1: ");
+        String addressLine1 = sc.nextLine();
+        System.out.println("Enter Address Line 2: ");
+        String addressLine2 = sc.nextLine();
+        System.out.println("Enter Town OR City: ");
+        String townCity = sc.nextLine();
+        System.out.println("Enter County: ");
+        String county = sc.nextLine();
+        System.out.println("Enter Student ID: ");
+        int studentID = sc.nextInt();
+        sc.nextLine();
+        updateAddress(addressLine1, addressLine2, townCity, county, studentID, studentAddressID);
+    }
+    public static void updateAddress(String addressLine1, String addressLine2, String townCity, String county, int studentID, int studentAddressID) throws SQLException{
         try (Connection con = DbUtils.getConnection()) {
             PreparedStatement stmt = con.prepareStatement("UPDATE student_address SET address_line_1 = ?, address_line_2 =?, town_city =?, county = ?, student_id = ? WHERE student_address_id = " + studentAddressID);
-            System.out.println("Enter Address Line 1: ");
-            String addressLine1 = sc.next();
-            System.out.println("Enter Address Line 2: ");
-            String addressLine2 = sc.next();
-            System.out.println("Enter Town OR City: ");
-            String townCity = sc.next();
-            System.out.println("Enter County: ");
-            String county = sc.next();
-            System.out.println("Enter Student ID: ");
-            GetAddressDetails(sc, stmt, addressLine1, addressLine2, townCity, county);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Could not Connect");
+            stmt.setString(1, addressLine1);
+            stmt.setString(2, addressLine2);
+            stmt.setString(3, townCity);
+            stmt.setString(4, county);
+            stmt.setInt(5, studentID);
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated <= 0) {
+                throw new SQLException("ID INVALID: must be > 0 AND must be assigned already");
+            }
+            System.out.println("Rows Updated Successfully: " + rowsUpdated);
         }
-    }
-    // Refactored reduces some redundancy
-    private static void GetAddressDetails(Scanner sc, PreparedStatement stmt, String addressLine1, String addressLine2, String townCity, String county) throws SQLException {
-        int departmentID = sc.nextInt();
-
-        stmt.setString(1, addressLine1);
-        stmt.setString(2, addressLine2);
-        stmt.setString(3, townCity);
-        stmt.setString(4, county);
-        stmt.setInt(5, departmentID);
-
-        int rowsUpdated = stmt.executeUpdate();
-        if (rowsUpdated <= 0) {
-            throw new SQLException("ID INVALID: must be > 0 AND must be assigned already");
-        }
-        System.out.println("Rows Updated Successfully: " + rowsUpdated);
     }
 }
-
-
-
-

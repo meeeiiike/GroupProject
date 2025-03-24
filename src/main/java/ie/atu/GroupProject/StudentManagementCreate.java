@@ -126,7 +126,7 @@ public class StudentManagementCreate {
                     break;
 
 
-                case 3:
+                case 8:
 
                     // Get details of student address
                     Scanner studentidInput = new Scanner(System.in);

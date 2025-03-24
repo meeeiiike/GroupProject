@@ -109,9 +109,7 @@ public class SmsUpdateTest {
         int courseID = 0;
         int level = 0;
         int grade = 0;
-        Exception e = assertThrows(SQLException.class, ()->{
-           StudentManagementUpdate.updateGrades(level, grade, studentID,courseID,gradeID);
-        });
+        Exception e = assertThrows(SQLException.class, ()-> StudentManagementUpdate.updateGrades(level, grade, studentID,courseID,gradeID));
         assertEquals("ID INVALID: must be > 0 AND must be assigned already", e.getMessage());
     }
 
@@ -131,118 +129,54 @@ public class SmsUpdateTest {
         int courseID = 0;
         String paymentStatus = "TestFailure";
         int paymentAmount = 0;
-        Exception e = assertThrows(SQLException.class, ()-> {
-            StudentManagementUpdate.updatePayment(paymentStatus, paymentAmount, studentID,courseID,paymentID);
-        });
+        Exception e = assertThrows(SQLException.class, ()-> StudentManagementUpdate.updatePayment(paymentStatus, paymentAmount, studentID,courseID,paymentID));
         assertEquals("ID INVALID: must be > 0 AND must be assigned already", e.getMessage());
 
     }
 
     @Test
-    void testUpdateCollegeSuccess(){
+    void testUpdateCollegeSuccess() throws SQLException {
         int departmentID = 1;
         int collegeAddressID = 1;
-
-        try (Connection con = DbUtils.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("UPDATE college_address SET address_line_1 = ?, address_line_2 =?, town_city =?, county = ?, department_id = ? WHERE college_address_id = " + collegeAddressID);
-            String addressLine1 = "TEST";
-            String addressLine2 = "TEST";
-            String townCity = "TEST";
-            String county = "TEST";
-
-            stmt.setString(1, addressLine1);
-            stmt.setString(2, addressLine2);
-            stmt.setString(3, townCity);
-            stmt.setString(4, county);
-            stmt.setInt(5, departmentID);
-
-            int rowsUpdated = stmt.executeUpdate();
-            assertEquals(1, rowsUpdated);
-            System.out.println("Rows Updated Successfully: " + rowsUpdated);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Could not Connect" + e.getMessage());
-        }
-}
+        String addressLine1 = "TEST";
+        String addressLine2 = "TEST";
+        String townCity = "TEST";
+        String county = "TEST";
+        StudentManagementUpdate.updateCollege(addressLine1, addressLine2, townCity, county, departmentID, collegeAddressID);
+    }
     @Test
     void testUpdateCollegeFailure(){
         int departmentID = 0;
         int collegeAddressID = 0;
+       String addressLine1 = "TEST";
+        String addressLine2 = "TEST";
+        String townCity = "TEST";
+        String county = "TEST";
+        SQLException e = assertThrows(SQLException.class, ()-> StudentManagementUpdate.updateCollege(addressLine1, addressLine2, townCity, county, departmentID, collegeAddressID));
+        assertEquals("ID INVALID: must be > 0 AND must be assigned already", e.getMessage());
 
-        try (Connection con = DbUtils.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("UPDATE college_address SET address_line_1 = ?, address_line_2 =?, town_city =?, county = ?, department_id = ? WHERE college_address_id = " + collegeAddressID);
-            String addressLine1 = "TEST";
-            String addressLine2 = "TEST";
-            String townCity = "TEST";
-            String county = "TEST";
-
-            stmt.setString(1, addressLine1);
-            stmt.setString(2, addressLine2);
-            stmt.setString(3, townCity);
-            stmt.setString(4, county);
-            stmt.setInt(5, departmentID);
-
-            int rowsUpdated = stmt.executeUpdate();
-            assertEquals(0, rowsUpdated);
-            System.out.println("Rows Updated Successfully: " + rowsUpdated);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Could not Connect" + e.getMessage());
-        }
     }
+
     @Test
-    void testUpdateAddressSuccess(){
+    void testUpdateAddressSuccess() throws SQLException{
         int studentAddressID = 1;
         int studentID = 1;
-
-
-        try (Connection con = DbUtils.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("UPDATE student_address SET address_line_1 = ?, address_line_2 =?, town_city =?, county = ?, student_id = ? WHERE student_address_id = " + studentAddressID);
-            String addressLine1 = "TEST";
-            String addressLine2 = "TEST";
-            String townCity = "TEST";
-            String county = "TEST";
-
-            stmt.setString(1, addressLine1);
-            stmt.setString(2, addressLine2);
-            stmt.setString(3, townCity);
-            stmt.setString(4, county);
-            stmt.setInt(5, studentID);
-
-            int rowsUpdated = stmt.executeUpdate();
-            assertEquals(1, rowsUpdated);
-            System.out.println("Rows Updated Successfully: " + rowsUpdated);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Could not Connect" + e.getMessage());
-        }
+        String addressLine1 = "TEST";
+        String addressLine2 = "TEST";
+        String townCity = "TEST";
+        String county = "TEST";
+        StudentManagementUpdate.updateCollege(addressLine1, addressLine2, townCity, county,studentID,studentAddressID);
     }
     @Test
     void testUpdateAddressFailure(){
         int studentAddressID = 0;
         int studentID = 0;
-
-
-        try (Connection con = DbUtils.getConnection()) {
-            PreparedStatement stmt = con.prepareStatement("UPDATE student_address SET address_line_1 = ?, address_line_2 =?, town_city =?, county = ?, student_id = ? WHERE student_address_id = " + studentAddressID);
-            String addressLine1 = "TEST";
-            String addressLine2 = "TEST";
-            String townCity = "TEST";
-            String county = "TEST";
-
-            stmt.setString(1, addressLine1);
-            stmt.setString(2, addressLine2);
-            stmt.setString(3, townCity);
-            stmt.setString(4, county);
-            stmt.setInt(5, studentID);
-
-            int rowsUpdated = stmt.executeUpdate();
-            assertEquals(0, rowsUpdated);
-            System.out.println("Rows Updated Successfully: " + rowsUpdated);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("Could not Connect" + e.getMessage());
-        }
+        String addressLine1 = "TEST";
+        String addressLine2 = "TEST";
+        String townCity = "TEST";
+        String county = "TEST";
+        Exception e = assertThrows(SQLException.class, ()-> {
+           StudentManagementUpdate.updateAddress(addressLine1, addressLine2, townCity, county, studentID, studentAddressID);
+        });
     }
-
 }

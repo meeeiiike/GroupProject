@@ -76,7 +76,7 @@ public class StudentManagementUpdate {
         }
         /*
             [Michael McDermott]
-            I Used AI [ also youtube, various forums ] to debug this error where my failure test would not pass.
+            I Used AI [ also YouTube, various forums ] to debug this error where my failure test would not pass.
             this was happening because of the catch() block executing before the exception could
             be thrown so it would never reach our Junit tests. So ive left that commented out now and
             added throws SQLException to any method that had an error and required it

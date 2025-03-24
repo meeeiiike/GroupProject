@@ -1,6 +1,4 @@
-import ie.atu.GroupProject.DbUtils;
 import java.sql.*;
-
 import ie.atu.GroupProject.StudentManagementUpdate;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -175,8 +173,7 @@ public class SmsUpdateTest {
         String addressLine2 = "TEST";
         String townCity = "TEST";
         String county = "TEST";
-        Exception e = assertThrows(SQLException.class, ()-> {
-           StudentManagementUpdate.updateAddress(addressLine1, addressLine2, townCity, county, studentID, studentAddressID);
-        });
+        Exception e = assertThrows(SQLException.class, ()-> StudentManagementUpdate.updateAddress(addressLine1, addressLine2, townCity, county, studentID, studentAddressID));
+        assertEquals("ID INVALID: must be > 0 AND must be assigned already", e.getMessage());
     }
 }

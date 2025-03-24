@@ -16,8 +16,18 @@ public class Main {
                 System.out.println("Goodbye!");
                 break;
             }
-            System.out.println("Please Select Table: \n1. Department\n2. Student\n3. Staff\n4. Course\n" +
-                    "5. Grades\n6. Payment\n7. College\n8. Address\n9. Exit\n Please Enter: ");
+            System.out.println("""
+                    Please Select Table:\s
+                    1. Department
+                    2. Student
+                    3. Staff
+                    4. Course
+                    5. Grades
+                    6. Payment
+                    7. College
+                    8. Address
+                    9. Exit
+                     Please Enter:\s""");
             int inputTable = sc.nextInt();
             sc.nextLine();
             switch (inputCrud){

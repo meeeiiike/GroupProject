@@ -146,7 +146,7 @@ public class SmsUpdateTest {
     void testUpdateCollegeFailure(){
         int departmentID = 0;
         int collegeAddressID = 0;
-       String addressLine1 = "TEST";
+        String addressLine1 = "TEST";
         String addressLine2 = "TEST";
         String townCity = "TEST";
         String county = "TEST";

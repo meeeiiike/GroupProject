@@ -17,7 +17,7 @@ public class Main {
                 break;
             }
             System.out.println("""
-                    Please Select Table:\s
+                    \nPlease Select Table:\s
                     1. Department
                     2. Student
                     3. Staff

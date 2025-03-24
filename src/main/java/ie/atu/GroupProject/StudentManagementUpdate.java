@@ -21,9 +21,6 @@ public class StudentManagementUpdate {
         while (run) {
             System.out.println("""
                     
-                     Welcome to Student Management System!\s
-                     You Selected Update
-                     \
                     Please Select Table to Update:\s
                     1. Department
                     2. Student
@@ -56,7 +53,7 @@ public class StudentManagementUpdate {
     }
 
     public static void getDepartmentDetails(Scanner sc) throws SQLException {
-        System.out.println("Update Department\nPlease enter ID: ");
+        System.out.println("Please enter ID: ");
         int departmentID = sc.nextInt();
         sc.nextLine();
         System.out.println("Enter new name: ");
@@ -89,7 +86,7 @@ public class StudentManagementUpdate {
     }
 
     public static void getStudentDetails(Scanner sc) throws SQLException{
-        System.out.println("Update Student\nPlease enter ID: ");
+        System.out.println("Please enter ID: ");
         int studentID = sc.nextInt();
         sc.nextLine();
         System.out.println("Enter first name: ");
@@ -119,7 +116,7 @@ public class StudentManagementUpdate {
     }
 
     public static void getStaffDetails(Scanner sc) throws  SQLException{
-        System.out.println("Update staff\nPlease enter ID: ");
+        System.out.println("Please enter ID: ");
         int staffID = sc.nextInt();
         sc.nextLine();
         System.out.println("Enter first name: ");
@@ -155,7 +152,7 @@ public class StudentManagementUpdate {
     }
 
     public static void getCourseDetails(Scanner sc) throws SQLException{
-        System.out.println("Update Course\nPlease enter ID: ");
+        System.out.println("Please enter ID: ");
         int courseID = sc.nextInt();
         sc.nextLine();
         System.out.println("Enter course name: ");
@@ -203,7 +200,7 @@ public class StudentManagementUpdate {
     }
 
     public static void getGradeDetails(Scanner sc)throws SQLException {
-        System.out.println("Update Grades\nPlease enter ID: ");
+        System.out.println("Please enter ID: ");
         int gradeID = sc.nextInt();
         sc.nextLine();
         System.out.println("Enter level: ");
@@ -236,7 +233,7 @@ public class StudentManagementUpdate {
     }
 
     public static void getPaymentDetails(Scanner sc) throws SQLException{
-        System.out.println("Update Payments\nPlease enter ID: ");
+        System.out.println("Please enter ID: ");
         int paymentID = sc.nextInt();
         sc.nextLine();
         System.out.println("Enter payment status: ");
@@ -270,7 +267,7 @@ public class StudentManagementUpdate {
     }
 
     public static void getCollegeDetails(Scanner sc) throws SQLException{
-        System.out.println("Update College\nPlease enter ID: ");
+        System.out.println("Please enter ID: ");
         int collegeAddressID = sc.nextInt();
         sc.nextLine();
         System.out.println("Enter Address Line 1: ");
@@ -303,7 +300,7 @@ public class StudentManagementUpdate {
     }
 
     public static void getAddressDetails(Scanner sc) throws SQLException{
-        System.out.println("Update Address\nPlease enter ID: ");
+        System.out.println("Please enter ID: ");
         int studentAddressID = sc.nextInt();
         sc.nextLine();
         System.out.println("Enter Address Line 1: ");

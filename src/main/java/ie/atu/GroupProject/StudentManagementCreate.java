@@ -30,10 +30,16 @@ public class StudentManagementCreate {
 
         Scanner sc = new Scanner(System.in);
         while (true) {
-            System.out.print("Enter the table you want to insert data to: \n");
+            System.out.print("Select table to insert data: \n");
             System.out.print("1. Department: \n");
             System.out.print("2. Student: \n");
-            System.out.print("3. Student address: \n");
+            System.out.print("3. Staff: \n");
+            System.out.print("4. Course: \n");
+            System.out.print("5. Grades: \n");
+            System.out.print("6. Payments: \n");
+            System.out.print("7. College Address: \n");
+            System.out.print("8. Student Address: \n");
+            System.out.print("9. Exit Menu:\n");
             System.out.print("Enter your choice: ");
 
             int choice = sc.nextInt();

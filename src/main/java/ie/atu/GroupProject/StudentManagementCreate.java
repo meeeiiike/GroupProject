@@ -57,6 +57,8 @@ public class StudentManagementCreate {
             String line2;
             String town_city;
             String county;
+            String phone_number;
+            String office_location;
 
 
             switch (choice) {
@@ -125,6 +127,57 @@ public class StudentManagementCreate {
                     }
                     break;
 
+                case 3:
+                    // Get details of staff
+
+                   /* Scanner staffInput = new Scanner(System.in);
+                    System.out.println("Please enter staff department id: ");
+                    department_id = department_idInput.nextLine();
+                    */
+                    Scanner firstnameInput = new Scanner(System.in);
+                    System.out.println("Please enter staff first name: ");
+                    first_name = firstnameInput.nextLine();
+
+                    Scanner lastnameInput = new Scanner(System.in);
+                    System.out.println("Please enter staff last name: ");
+                    last_name = lastnameInput.nextLine();
+
+                    Scanner staffemailInput = new Scanner(System.in);
+                    System.out.println("Please enter staff email: ");
+                    email = staffemailInput.nextLine();
+
+                    Scanner phone_numberInput = new Scanner(System.in);
+                    System.out.println("Please enter staff phone number: ");
+                    phone_number = phone_numberInput.nextLine();
+
+                    Scanner office_locationInput = new Scanner(System.in);
+                    System.out.println("Please enter staff office location: ");  //college_address_id???
+                    office_location = office_locationInput.nextLine();
+
+                    Scanner departmentidInput = new Scanner(System.in);
+                    System.out.println("Please enter staff department: ");
+                    department_id = departmentidInput.nextLine();
+
+
+
+                    String staffInsertSQL = "INSERT INTO staff (first_name, last_name, email, phone_number,department_id,) VALUES ('" + first_name + "', '" + last_name + "','" + email + "','" + phone_number + "','" + office_location + "','" + department_id + "')";
+
+                    try (Connection connection = DriverManager.getConnection(url, username, password);
+                         Statement statement = connection.createStatement()) {
+
+                        // Execute the insert query
+
+                        rowsAffected = statement.executeUpdate(staffInsertSQL);
+
+                        if (rowsAffected > 0) {
+                            System.out.println("Record inserted successfully.");
+                        } else {
+                            System.out.println("Failed to insert record.");
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                    break;
 
                 case 8:
 

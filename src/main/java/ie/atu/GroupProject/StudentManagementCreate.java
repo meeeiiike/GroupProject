@@ -160,7 +160,7 @@ public class StudentManagementCreate {
 
 
 
-                    String staffInsertSQL = "INSERT INTO staff (first_name, last_name, email, phone_number,department_id,) VALUES ('" + first_name + "', '" + last_name + "','" + email + "','" + phone_number + "','" + office_location + "','" + department_id + "')";
+                    String staffInsertSQL = "INSERT INTO staff (first_name, last_name, email, phone_number, office_location ,department_id) VALUES ('" + first_name + "', '" + last_name + "','" + email + "','" + phone_number + "','" + office_location + "','" + department_id + "')";
 
                     try (Connection connection = DriverManager.getConnection(url, username, password);
                          Statement statement = connection.createStatement()) {

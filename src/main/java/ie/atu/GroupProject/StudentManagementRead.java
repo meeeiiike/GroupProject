@@ -137,19 +137,95 @@ public class StudentManagementRead {
                     break;
                 case 5:
 
-                    selectSQL = "Select * from grades where grade = ";
+                    selectSQL = "Select * from grades";
+                    try (Connection connection = DriverManager.getConnection(url, username, password);
+                         Statement statement = connection.createStatement();
+                         ResultSet resultSet = statement.executeQuery(selectSQL)){
+
+                        while(resultSet.next()){
+                            int course = resultSet.getInt("course_id");
+                            int grade = resultSet.getInt("grade");
+                            int gradeId = resultSet.getInt("grade_id");
+                            int level = resultSet.getInt("level");
+                            int student = resultSet.getInt("student_id");
+
+
+                            System.out.printf("Grade ID " + gradeId + "Student ID " + student + "Course ID " + course + "Level " + level + "Grade " + grade + "\n");
+                        }
+                    }
+                    catch (SQLException e){
+                        e.printStackTrace();
+                    }
                     break;
                 case 6:
 
-                    selectSQL = "Select * from address where addressID = ";
+                    selectSQL = "Select * from payments";
+                    try (Connection connection = DriverManager.getConnection(url, username, password);
+                         Statement statement = connection.createStatement();
+                         ResultSet resultSet = statement.executeQuery(selectSQL)){
+
+                        while(resultSet.next()){
+                            int payment = resultSet.getInt("payment_id");
+                            int course = resultSet.getInt("course_id");
+                            int paymentAmount = resultSet.getInt("payment_amount");
+                            String paymentStatus = resultSet.getString("payment_status");
+                            int student = resultSet.getInt("student_id");
+
+
+                            System.out.printf("Payment ID " + payment + "Student ID " + student + "Course ID " + course + "Payment Status  " + paymentStatus + "Payment Amount  " + paymentAmount + "\n");
+                        }
+                    }
+                    catch (SQLException e){
+                        e.printStackTrace();
+                    }
                     break;
                 case 7:
 
-                    selectSQL = "Select * from college where CollegeAddressID = ";
+                    selectSQL = "Select * from college_address";
+                    try (Connection connection = DriverManager.getConnection(url, username, password);
+                         Statement statement = connection.createStatement();
+                         ResultSet resultSet = statement.executeQuery(selectSQL)){
+
+                        while(resultSet.next()){
+                            int studAddressId = resultSet.getInt("student_address_id");
+                            int student = resultSet.getInt("student_id");
+                            String address1 = resultSet.getString("address_line_1");
+                            String address2 = resultSet.getString("address_line_2");
+                            String town_city = resultSet.getString("town_city");
+                            String county = resultSet.getString("county");
+
+
+
+                            System.out.printf("Student Address ID " + studAddressId + "Student ID " + student + "Address Line 1 " + address1 + "Address Line 2 " + address2 + "Town_City " + town_city + "County" + county + "\n");
+                        }
+                    }
+                    catch (SQLException e){
+                        e.printStackTrace();
+                    }
                     break;
                 case 8:
 
-                    selectSQL = "Select * from address where StudentAddressID = ";
+                    selectSQL = "Select * from college_address";
+                    try (Connection connection = DriverManager.getConnection(url, username, password);
+                         Statement statement = connection.createStatement();
+                         ResultSet resultSet = statement.executeQuery(selectSQL)){
+
+                        while(resultSet.next()){
+                            int collegeAddressId = resultSet.getInt("college_address_id");
+                            int department = resultSet.getInt("department_id");
+                            String address1 = resultSet.getString("address_line_1");
+                            String address2 = resultSet.getString("address_line_2");
+                            String town_city = resultSet.getString("town_city");
+                            String county = resultSet.getString("county");
+
+
+
+                            System.out.printf("College Address ID " + collegeAddressId + "Department ID " + department + "Address Line 1 " + address1 + "Address Line 2 " + address2 + "Town_City " + town_city + "County" + county + "\n");
+                        }
+                    }
+                    catch (SQLException e){
+                        e.printStackTrace();
+                    }
                     break;
                 case 9:
                     System.out.print("Goodbye:)\n");
@@ -158,23 +234,6 @@ public class StudentManagementRead {
                     System.out.println("Invalid choice\n");
                     break;
             }
-
-            try (Connection connection = DriverManager.getConnection(url, username, password);
-                 Statement statement = connection.createStatement();
-                 ResultSet resultSet = statement.executeQuery(selectSQL)){
-
-                while(resultSet.next()){
-                    int department = resultSet.getInt("department_id");
-                    String name = resultSet.getString("name");
-
-                    System.out.printf("Department ID " + department + "Department Name " + name);
-
-                }
-            }
-            catch (SQLException e){
-                e.printStackTrace();
-            }
-
 
 
 

@@ -58,11 +58,11 @@ public class SmsReadTest {
 
     @Test
     void testReadCollege(){
-        testTable("College", "collegeID");
+        testTable("CollegeAddress", "collegeAddressID");
     }
     @Test
     void testReadAddress(){
-        testTable("Address", "addressID");
+        testTable("studentAddress", "studentAddressID");
     }
 
 

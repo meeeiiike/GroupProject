@@ -13,6 +13,7 @@ import java.util.Scanner;
 // LOTS OF REDUNDANT CODE! once happy with functionality,
 // Clean up code to reduce redundancy
 
+
 public class StudentManagementUpdate {
     public static void main(String[] args) throws SQLException {
         //Start Menu

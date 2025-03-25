@@ -2,32 +2,40 @@ package ie.atu.GroupProject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Properties;
 import java.util.Scanner;
 
 
 public class StudentManagementCreate {
-    public static void main(String[] args) {
+    public static void getdepartmentInput(Scanner sc) throws SQLException {
 
-        Properties dbProps = new Properties();
-        try (InputStream input = TestConnection.class.getResourceAsStream("/db.properties")) {
-            if (input == null) {
-                System.out.println("Unable to find db.properties");
-                return;
+        System.out.println("Enter department name: ");
+        String name = sc.nextLine();
+
+        setDepartmentInput(name);
+    }
+
+    public static void setDepartmentInput(String name) throws SQLException {
+        String departmentInsertSQL = "INSERT INTO department (name) VALUES ('" + name + "')";
+        try (Connection connection = DbUtils.getConnection()) {
+            Statement statement = connection.createStatement();
+
+                // Execute the insert query
+
+                int rowsAffected = statement.executeUpdate(departmentInsertSQL);
+
+                if (rowsAffected > 0) {
+                    System.out.println("Record inserted successfully.");
+                } else {
+                    System.out.println("Failed to insert record.");
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-            dbProps.load(input);
-        } catch (IOException e) {
-            e.printStackTrace();            // Print stack trace of the exception to console
-            return;
-        }
-        String url = dbProps.getProperty("db.url");
-        String username = dbProps.getProperty("db.username");
-        String password = dbProps.getProperty("db.password");
+    }
 
+    public static void main(String[] args) throws SQLException {
         Scanner sc = new Scanner(System.in);
         while (true) {
             System.out.print("Select table to insert data: \n");
@@ -45,6 +53,7 @@ public class StudentManagementCreate {
             int choice = sc.nextInt();
             int rowsAffected;
 
+
             sc.nextLine();
 
             String name;
@@ -61,18 +70,17 @@ public class StudentManagementCreate {
             String office_location;
 
 
-            switch (choice) {
+                switch (choice) {
+                    case 1: getdepartmentInput(sc);
 
-                case 1:
-
-                    // Get name of department
+               /*     // Get name of department
                     Scanner departmentInput = new Scanner(System.in);
                     System.out.println("Please enter department name: ");
                     name = departmentInput.nextLine();
 
                     String departmentInsertSQL = "INSERT INTO department (name) VALUES ('" + name + "')";
-                    try (Connection connection = DriverManager.getConnection(url, username, password);
-                         Statement statement = connection.createStatement()) {
+                    try (Connection connection = DbUtils.getConnection()) {
+                    Statement statement = connection.createStatement()) {
 
                     // Execute the insert query
 
@@ -87,144 +95,149 @@ public class StudentManagementCreate {
                         e.printStackTrace();
                     }
 
-                    break;
 
-                case 2:
-                    // Get details of student
+                */
+                        break;
 
-                    Scanner department_idInput = new Scanner(System.in);
-                    System.out.println("Please enter student department id: ");
-                    department_id = department_idInput.nextLine();
+                  /*  case 2:
+                        // Get details of student
 
-                    Scanner first_nameInput = new Scanner(System.in);
-                    System.out.println("Please enter student first name: ");
-                    first_name = first_nameInput.nextLine();
+                        Scanner department_idInput = new Scanner(System.in);
+                        System.out.println("Please enter student department id: ");
+                        department_id = department_idInput.nextLine();
 
-                    Scanner last_nameInput = new Scanner(System.in);
-                    System.out.println("Please enter student last name: ");
-                    last_name = last_nameInput.nextLine();
+                        Scanner first_nameInput = new Scanner(System.in);
+                        System.out.println("Please enter student first name: ");
+                        first_name = first_nameInput.nextLine();
 
-                    Scanner emailInput = new Scanner(System.in);
-                    System.out.println("Please enter student email: ");
-                    email = emailInput.nextLine();
+                        Scanner last_nameInput = new Scanner(System.in);
+                        System.out.println("Please enter student last name: ");
+                        last_name = last_nameInput.nextLine();
 
-                    String studentInsertSQL = "INSERT INTO student (department_id, first_name, last_name, email) VALUES ('" + department_id + "','" + first_name + "', '" + last_name + "','" + email + "')";
+                        Scanner emailInput = new Scanner(System.in);
+                        System.out.println("Please enter student email: ");
+                        email = emailInput.nextLine();
 
-                    try (Connection connection = DriverManager.getConnection(url, username, password);
-                         Statement statement = connection.createStatement()) {
+                        String studentInsertSQL = "INSERT INTO student (department_id, first_name, last_name, email) VALUES ('" + department_id + "','" + first_name + "', '" + last_name + "','" + email + "')";
 
-                    // Execute the insert query
+                        try (Connection connection = DriverManager.getConnection(url, username, password);
+                             Statement statement = connection.createStatement()) {
 
-                    rowsAffected = statement.executeUpdate(studentInsertSQL);
+                            // Execute the insert query
 
-                    if (rowsAffected > 0) {
-                        System.out.println("Record inserted successfully.");
-                    } else {
-                        System.out.println("Failed to insert record.");
-                    }
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    break;
+                            rowsAffected = statement.executeUpdate(studentInsertSQL);
 
-                case 3:
-                    // Get details of staff
+                            if (rowsAffected > 0) {
+                                System.out.println("Record inserted successfully.");
+                            } else {
+                                System.out.println("Failed to insert record.");
+                            }
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        break;
+
+                    case 3:
+                        // Get details of staff
 
                    /* Scanner staffInput = new Scanner(System.in);
                     System.out.println("Please enter staff department id: ");
                     department_id = department_idInput.nextLine();
-                    */
-                    Scanner firstnameInput = new Scanner(System.in);
-                    System.out.println("Please enter staff first name: ");
-                    first_name = firstnameInput.nextLine();
 
-                    Scanner lastnameInput = new Scanner(System.in);
-                    System.out.println("Please enter staff last name: ");
-                    last_name = lastnameInput.nextLine();
+                        Scanner firstnameInput = new Scanner(System.in);
+                        System.out.println("Please enter staff first name: ");
+                        first_name = firstnameInput.nextLine();
 
-                    Scanner staffemailInput = new Scanner(System.in);
-                    System.out.println("Please enter staff email: ");
-                    email = staffemailInput.nextLine();
+                        Scanner lastnameInput = new Scanner(System.in);
+                        System.out.println("Please enter staff last name: ");
+                        last_name = lastnameInput.nextLine();
 
-                    Scanner phone_numberInput = new Scanner(System.in);
-                    System.out.println("Please enter staff phone number: ");
-                    phone_number = phone_numberInput.nextLine();
+                        Scanner staffemailInput = new Scanner(System.in);
+                        System.out.println("Please enter staff email: ");
+                        email = staffemailInput.nextLine();
 
-                    Scanner office_locationInput = new Scanner(System.in);
-                    System.out.println("Please enter staff office location: ");  //college_address_id???
-                    office_location = office_locationInput.nextLine();
+                        Scanner phone_numberInput = new Scanner(System.in);
+                        System.out.println("Please enter staff phone number: ");
+                        phone_number = phone_numberInput.nextLine();
 
-                    Scanner departmentidInput = new Scanner(System.in);
-                    System.out.println("Please enter staff department: ");
-                    department_id = departmentidInput.nextLine();
+                        Scanner office_locationInput = new Scanner(System.in);
+                        System.out.println("Please enter staff office location: ");  //college_address_id???
+                        office_location = office_locationInput.nextLine();
+
+                        Scanner departmentidInput = new Scanner(System.in);
+                        System.out.println("Please enter staff department: ");
+                        department_id = departmentidInput.nextLine();
 
 
+                        String staffInsertSQL = "INSERT INTO staff (first_name, last_name, email, phone_number, office_location ,department_id) VALUES ('" + first_name + "', '" + last_name + "','" + email + "','" + phone_number + "','" + office_location + "','" + department_id + "')";
 
-                    String staffInsertSQL = "INSERT INTO staff (first_name, last_name, email, phone_number, office_location ,department_id) VALUES ('" + first_name + "', '" + last_name + "','" + email + "','" + phone_number + "','" + office_location + "','" + department_id + "')";
+                        try (Connection connection = DriverManager.getConnection(url, username, password);
+                             Statement statement = connection.createStatement()) {
 
-                    try (Connection connection = DriverManager.getConnection(url, username, password);
-                         Statement statement = connection.createStatement()) {
+                            // Execute the insert query
 
-                        // Execute the insert query
+                            rowsAffected = statement.executeUpdate(staffInsertSQL);
 
-                        rowsAffected = statement.executeUpdate(staffInsertSQL);
-
-                        if (rowsAffected > 0) {
-                            System.out.println("Record inserted successfully.");
-                        } else {
-                            System.out.println("Failed to insert record.");
+                            if (rowsAffected > 0) {
+                                System.out.println("Record inserted successfully.");
+                            } else {
+                                System.out.println("Failed to insert record.");
+                            }
+                        } catch (SQLException e) {
+                            e.printStackTrace();
                         }
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    break;
+                        break;
 
-                case 8:
+                    case 8:
 
-                    // Get details of student address
-                    Scanner studentidInput = new Scanner(System.in);
-                    System.out.println("Please enter student id: ");
-                    student_id = studentidInput.nextLine();
+                        // Get details of student address
+                        Scanner studentidInput = new Scanner(System.in);
+                        System.out.println("Please enter student id: ");
+                        student_id = studentidInput.nextLine();
 
-                    Scanner studentln1Input = new Scanner(System.in);
-                    System.out.println("Please enter address line 1: ");
-                    line1 = studentln1Input.nextLine();
+                        Scanner studentln1Input = new Scanner(System.in);
+                        System.out.println("Please enter address line 1: ");
+                        line1 = studentln1Input.nextLine();
 
-                    Scanner studentln2Input = new Scanner(System.in);
-                    System.out.println("Please enter address line 2: ");
-                    line2 = studentln2Input.nextLine();
+                        Scanner studentln2Input = new Scanner(System.in);
+                        System.out.println("Please enter address line 2: ");
+                        line2 = studentln2Input.nextLine();
 
-                    Scanner studentToCiInput = new Scanner(System.in);
-                    System.out.println("Please enter town/city: ");
-                    town_city = studentToCiInput.nextLine();
+                        Scanner studentToCiInput = new Scanner(System.in);
+                        System.out.println("Please enter town/city: ");
+                        town_city = studentToCiInput.nextLine();
 
-                    Scanner studentadCInput = new Scanner(System.in);
-                    System.out.println("Please enter county: ");
-                    county = studentadCInput.nextLine();
+                        Scanner studentadCInput = new Scanner(System.in);
+                        System.out.println("Please enter county: ");
+                        county = studentadCInput.nextLine();
 
-                    String S_addressInsertSQL = "INSERT INTO student_address (student_id, address_line_1, address_line_2, town_city, county) VALUES ('" + student_id + "', '" + line1 + "','" + line2 + "', '" + town_city + "','" + county + "')";
+                        String S_addressInsertSQL = "INSERT INTO student_address (student_id, address_line_1, address_line_2, town_city, county) VALUES ('" + student_id + "', '" + line1 + "','" + line2 + "', '" + town_city + "','" + county + "')";
 
-                    try (Connection connection = DriverManager.getConnection(url, username, password);
-                         Statement statement = connection.createStatement()) {
+                        try (Connection connection = DriverManager.getConnection(url, username, password);
+                             Statement statement = connection.createStatement()) {
 
-                    // Execute the insert query
-                    rowsAffected = statement.executeUpdate(S_addressInsertSQL);
+                            // Execute the insert query
+                            rowsAffected = statement.executeUpdate(S_addressInsertSQL);
 
-                    if (rowsAffected > 0) {
-                        System.out.println("Record inserted successfully.");
-                    } else {
-                        System.out.println("Failed to insert record.");
-                    }
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                    break;
+                            if (rowsAffected > 0) {
+                                System.out.println("Record inserted successfully.");
+                            } else {
+                                System.out.println("Failed to insert record.");
+                            }
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+                        break;
 
 
-                default:
-                    System.out.println("Invalid choice");
-                    return;
+                    default:
+                        System.out.println("Invalid choice");
+                        return;
+                        */
+                }
+
             }
         }
     }
-}
+
+

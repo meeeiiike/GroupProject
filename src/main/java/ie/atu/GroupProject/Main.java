@@ -34,6 +34,8 @@ public class Main {
                 case 1:
                     System.out.println("You Selected Create");
                     //call your class
+                    // fergal, once your SmsCreate class is all changed, you should be able to call the methods the same as me. example -> case 1: StudentManagementCreate.getDepartmentInput(sc);
+                    // we call the set details method as this is the method which asks the user for the info, then at the end of the method it calls the second method, which SETs the details after connecting to the DB
                     break;
                 case 2:
                     System.out.println("You Selected Read");

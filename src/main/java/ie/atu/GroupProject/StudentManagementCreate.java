@@ -3,28 +3,38 @@ package ie.atu.GroupProject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.*;
-import java.util.Properties;
+import java.util.Properties; // greyed out so its likely unused, (should) be safe to omit these. Should being key word lol
 import java.util.Scanner;
 
+/*
+* WHEN YOU GET ON: first task should be to create failure test for department.
+* from there you needto write success/ failure (same format as your department Success test) for the rest of the tables
+* and you'll also need to refactor this create class, following same format as we did
+*
+ */
 
 public class StudentManagementCreate {
-    public static void getdepartmentInput(Scanner sc) throws SQLException {
+    //Class format:
+    // psvm
+    // menu, grab user input
+    // call switch() pass user input
+    // case 1: will call StudentManagementCreate.getDepartmentInput(sc);
+    // rest of cases will handle rest of tables and dont forget option to exit program
+    // try not stress it too much, focus on functionality first, we can always clean it up and make changes AFTER everythings working and of course just shout me if any issues at all
 
+    // get Details
+    public static void getdepartmentInput(Scanner sc) throws SQLException {
         System.out.println("Enter department name: ");
         String name = sc.nextLine();
-
         setDepartmentInput(name);
     }
-
+    // connect to DB and SET details
     public static void setDepartmentInput(String name) throws SQLException {
         String departmentInsertSQL = "INSERT INTO department (name) VALUES ('" + name + "')";
         try (Connection connection = DbUtils.getConnection()) {
             Statement statement = connection.createStatement();
-
                 // Execute the insert query
-
                 int rowsAffected = statement.executeUpdate(departmentInsertSQL);
-
                 if (rowsAffected > 0) {
                     System.out.println("Record inserted successfully.");
                 } else {
@@ -34,6 +44,15 @@ public class StudentManagementCreate {
                 e.printStackTrace();
             }
     }
+    // Try follwo same format for rest of your tables, will leave examples below. any issues just shout me
+
+    // getStudentDetails
+    // setStudentDetails
+    // so on so on all your methods
+    //public static void main
+    // menu
+    // take in input, pass to swtch
+    // now your cases will only have to call the SET method which handles connecting to DB and setting details
 
     public static void main(String[] args) throws SQLException {
         Scanner sc = new Scanner(System.in);
@@ -51,12 +70,12 @@ public class StudentManagementCreate {
             System.out.print("Enter your choice: ");
 
             int choice = sc.nextInt();
-            int rowsAffected;
+            int rowsAffected; //shouldnt need this as its in the methods
 
 
             sc.nextLine();
 
-            String name;
+            String name;            // shouldnt need any these as theyre in the methods
             String department_id;
             String first_name;
             String last_name;
@@ -101,6 +120,9 @@ public class StudentManagementCreate {
 
                   /*  case 2:
                         // Get details of student
+
+                        // Set details of student
+                   */
 
                         Scanner department_idInput = new Scanner(System.in);
                         System.out.println("Please enter student department id: ");

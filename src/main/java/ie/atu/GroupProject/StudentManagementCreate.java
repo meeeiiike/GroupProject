@@ -22,13 +22,13 @@ import java.util.Scanner;
 
 public class StudentManagementCreate {
 
-    // get Details
+    // get Department Details
     public static void getDepartmentInput(Scanner sc) throws SQLException {
         System.out.println("Enter department name: ");
         String name = sc.nextLine();
         setDepartmentInput(name);
     }
-    // connect to DB and SET details
+    // connect to DB and SET Department details
     public static void setDepartmentInput(String name) throws SQLException {
         String departmentInsertSQL = "INSERT INTO department (name) VALUES ('" + name + "')";
         try (Connection connection = DbUtils.getConnection()) {
@@ -39,19 +39,17 @@ public class StudentManagementCreate {
                     System.out.println("Record inserted successfully.");
                 } else {
                     System.out.println("Failed to insert record.");
-                    throw new SQLException("ID INVALID: must be > 0 AND must be assigned already");
+                   // throw new SQLException("ID INVALID: must be > 0 AND must be assigned already");
                 }
             }
     }
     /* *************************************************************************************  */
-
-
+    // get Department Details
     public static void getStudentInput(Scanner sc) throws SQLException {
-
         Scanner getdepartment_idInput = new Scanner(System.in);
         System.out.println("Please enter student department id: ");
-        String department_id = getdepartment_idInput.nextLine();
-
+       // String department_id = getdepartment_idInput.nextLine();
+        int department_id = sc.nextInt();
         Scanner first_nameInput = new Scanner(System.in);
         System.out.println("Please enter student first name: ");
         String first_name = first_nameInput.nextLine();
@@ -65,26 +63,22 @@ public class StudentManagementCreate {
         String email = emailInput.nextLine();
 
         String studentInsertSQL = "INSERT INTO student (department_id, first_name, last_name, email) VALUES ('" + department_id + "','" + first_name + "', '" + last_name + "','" + email + "')";
-
-
         String name = sc.nextLine();
         setStudentInput(department_id, first_name, last_name, email);
     }
 
     // connect to DB and SET details
-    public static void setStudentInput(String department_id, String first_name, String last_name, String email) throws SQLException {
-       // String departmentInsertSQL = "INSERT INTO department (name) VALUES ('" + name + "')";
+    public static void setStudentInput(int department_id, String first_name, String last_name, String email) throws SQLException {
         String studentInsertSQL = "INSERT INTO student (department_id, first_name, last_name, email) VALUES ('" + department_id + "','" + first_name + "', '" + last_name + "','" + email + "')";
-
         try (Connection connection = DbUtils.getConnection()) {
             Statement statement = connection.createStatement();
             // Execute the insert query
             int rowsAffected = statement.executeUpdate(studentInsertSQL);
-            if (rowsAffected > 0) {
+            if  (rowsAffected > 0) {
                 System.out.println("Record inserted successfully.");
             } else {
                 System.out.println("Failed to insert record.");
-                throw new SQLException("ID INVALID: must be > 0 AND must be assigned already");
+              //  throw new SQLException("ID INVALID: must be > 0 AND must be assigned already");
             }
         }
     }

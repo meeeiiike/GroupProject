@@ -12,18 +12,18 @@ import java.util.Scanner;
 * and you'll also need to refactor this create class, following same format as we did
 *
  */
+//Class format:
+// psvm
+// menu, grab user input
+// call switch() pass user input
+// case 1: will call StudentManagementCreate.getDepartmentInput(sc);
+// rest of cases will handle rest of tables and dont forget option to exit program
+// try not stress it too much, focus on functionality first, we can always clean it up and make changes AFTER everythings working and of course just shout me if any issues at all
 
 public class StudentManagementCreate {
-    //Class format:
-    // psvm
-    // menu, grab user input
-    // call switch() pass user input
-    // case 1: will call StudentManagementCreate.getDepartmentInput(sc);
-    // rest of cases will handle rest of tables and dont forget option to exit program
-    // try not stress it too much, focus on functionality first, we can always clean it up and make changes AFTER everythings working and of course just shout me if any issues at all
 
     // get Details
-    public static void getdepartmentInput(Scanner sc) throws SQLException {
+    public static void getDepartmentInput(Scanner sc) throws SQLException {
         System.out.println("Enter department name: ");
         String name = sc.nextLine();
         setDepartmentInput(name);
@@ -39,12 +39,104 @@ public class StudentManagementCreate {
                     System.out.println("Record inserted successfully.");
                 } else {
                     System.out.println("Failed to insert record.");
+                    throw new SQLException("ID INVALID: must be > 0 AND must be assigned already");
                 }
-            } catch (SQLException e) {
-                e.printStackTrace();
             }
     }
-    // Try follwo same format for rest of your tables, will leave examples below. any issues just shout me
+    /* *************************************************************************************  */
+
+
+    public static void getStudentInput(Scanner sc) throws SQLException {
+
+        Scanner getdepartment_idInput = new Scanner(System.in);
+        System.out.println("Please enter student department id: ");
+        String department_id = getdepartment_idInput.nextLine();
+
+        Scanner first_nameInput = new Scanner(System.in);
+        System.out.println("Please enter student first name: ");
+        String first_name = first_nameInput.nextLine();
+
+        Scanner last_nameInput = new Scanner(System.in);
+        System.out.println("Please enter student last name: ");
+        String last_name = last_nameInput.nextLine();
+
+        Scanner emailInput = new Scanner(System.in);
+        System.out.println("Please enter student email: ");
+        String email = emailInput.nextLine();
+
+        String studentInsertSQL = "INSERT INTO student (department_id, first_name, last_name, email) VALUES ('" + department_id + "','" + first_name + "', '" + last_name + "','" + email + "')";
+
+
+        String name = sc.nextLine();
+        setStudentInput(department_id, first_name, last_name, email);
+    }
+
+    // connect to DB and SET details
+    public static void setStudentInput(String department_id, String first_name, String last_name, String email) throws SQLException {
+       // String departmentInsertSQL = "INSERT INTO department (name) VALUES ('" + name + "')";
+        String studentInsertSQL = "INSERT INTO student (department_id, first_name, last_name, email) VALUES ('" + department_id + "','" + first_name + "', '" + last_name + "','" + email + "')";
+
+        try (Connection connection = DbUtils.getConnection()) {
+            Statement statement = connection.createStatement();
+            // Execute the insert query
+            int rowsAffected = statement.executeUpdate(studentInsertSQL);
+            if (rowsAffected > 0) {
+                System.out.println("Record inserted successfully.");
+            } else {
+                System.out.println("Failed to insert record.");
+                throw new SQLException("ID INVALID: must be > 0 AND must be assigned already");
+            }
+        }
+    }
+
+
+    /* *************************************************************************************  */
+
+/*
+    Scanner getdepartment_idInput = new Scanner(System.in);
+                                        System.out.println("Please enter student department id: ");
+                    department_id = getdepartment_idInput.nextLine();
+
+                    Scanner first_nameInput = new Scanner(System.in);
+                                        System.out.println("Please enter student first name: ");
+                    first_name = first_nameInput.nextLine();
+
+                    Scanner last_nameInput = new Scanner(System.in);
+                                        System.out.println("Please enter student last name: ");
+                    last_name = last_nameInput.nextLine();
+
+                    Scanner emailInput = new Scanner(System.in);
+                                        System.out.println("Please enter student email: ");
+                    email = emailInput.nextLine();
+
+                    String studentInsertSQL = "INSERT INTO student (department_id, first_name, last_name, email) VALUES ('" + department_id + "','" + first_name + "', '" + last_name + "','" + email + "')";
+
+
+                                    try (Connection connection = DbUtils.getConnection()){
+                        //try (Connection connection = DriverManager.getConnection(url, username, password);
+                        Statement statement = connection.createStatement();
+
+                        // Execute the insert query
+
+                        rowsAffected = statement.executeUpdate(studentInsertSQL);
+
+                        if (rowsAffected > 0) {
+                            System.out.println("Record inserted successfully.");
+                        } else {
+                            System.out.println("Failed to insert record.");
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                        break;
+
+
+ */
+    /* *************************************************************************************  */
+
+
+
+    // Try follow same format for rest of your tables, will leave examples below. any issues just shout me
 
     // getStudentDetails
     // setStudentDetails
@@ -75,7 +167,7 @@ public class StudentManagementCreate {
 
             sc.nextLine();
 
-            String name;            // shouldnt need any these as theyre in the methods
+            /*String name;            // shouldnt need any these as theyre in the methods
             String department_id;
             String first_name;
             String last_name;
@@ -86,11 +178,11 @@ public class StudentManagementCreate {
             String town_city;
             String county;
             String phone_number;
-            String office_location;
+            String office_location;*/
 
 
                 switch (choice) {
-                    case 1: getdepartmentInput(sc);
+                    case 1: getDepartmentInput(sc);
 
                /*     // Get name of department
                     Scanner departmentInput = new Scanner(System.in);
@@ -116,17 +208,15 @@ public class StudentManagementCreate {
 
 
                 */
-                        break;
+                       break;
 
-                  /*  case 2:
+                   case 2: getStudentInput(sc);
                         // Get details of student
 
-                        // Set details of student
-                   */
-
-                        Scanner department_idInput = new Scanner(System.in);
+                       /*
+                        Scanner getdepartment_idInput = new Scanner(System.in);
                         System.out.println("Please enter student department id: ");
-                        department_id = department_idInput.nextLine();
+                        department_id = getdepartment_idInput.nextLine();
 
                         Scanner first_nameInput = new Scanner(System.in);
                         System.out.println("Please enter student first name: ");
@@ -142,8 +232,10 @@ public class StudentManagementCreate {
 
                         String studentInsertSQL = "INSERT INTO student (department_id, first_name, last_name, email) VALUES ('" + department_id + "','" + first_name + "', '" + last_name + "','" + email + "')";
 
-                        try (Connection connection = DriverManager.getConnection(url, username, password);
-                             Statement statement = connection.createStatement()) {
+
+                    try (Connection connection = DbUtils.getConnection()){
+                    //try (Connection connection = DriverManager.getConnection(url, username, password);
+                             Statement statement = connection.createStatement();
 
                             // Execute the insert query
 
@@ -157,7 +249,10 @@ public class StudentManagementCreate {
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
-                        break;
+
+
+                        */
+                       break;
 
                     case 3:
                         // Get details of staff

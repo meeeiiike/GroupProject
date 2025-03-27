@@ -136,11 +136,9 @@ public class StudentManagementCreate {
             } else {
                 System.out.println("Failed to insert record.");
             }
-        } //catch (SQLException e) {
-        //  e.printStackTrace();
+        }
     }
-    //}
-//}
+
 
     /* *************************************************************************************  */
     // Case 4
@@ -364,55 +362,6 @@ public class StudentManagementCreate {
         }
     }
 
-/*
-    // Get details of student address
-    Scanner studentidInput = new Scanner(System.in);
-                        System.out.println("Please enter student id: ");
-    student_id =studentidInput.nextLine();
-
-    Scanner studentln1Input = new Scanner(System.in);
-                        System.out.println("Please enter address line 1: ");
-    line1 =studentln1Input.nextLine();
-
-    Scanner studentln2Input = new Scanner(System.in);
-                        System.out.println("Please enter address line 2: ");
-    line2 =studentln2Input.nextLine();
-
-    Scanner studentToCiInput = new Scanner(System.in);
-                        System.out.println("Please enter town/city: ");
-    town_city =studentToCiInput.nextLine();
-
-    Scanner studentadCInput = new Scanner(System.in);
-                        System.out.println("Please enter county: ");
-    county =studentadCInput.nextLine();
-
-    String S_addressInsertSQL = "INSERT INTO student_address (student_id, address_line_1, address_line_2, town_city, county) VALUES ('" + student_id + "', '" + line1 + "','" + line2 + "', '" + town_city + "','" + county + "')";
-
-                        try(
-    Connection connection = DriverManager.getConnection(url, username, password);
-    Statement statement = connection.createStatement())
-
-    {
-
-        // Execute the insert query
-        rowsAffected = statement.executeUpdate(S_addressInsertSQL);
-
-        if (rowsAffected > 0) {
-            System.out.println("Record inserted successfully.");
-        } else {
-            System.out.println("Failed to insert record.");
-        }
-    } catch(
-    SQLException e)
-
-    {
-        e.printStackTrace();
-    }
-}
-}
-
- */
-
 
     // Try follow same format for rest of your tables, will leave examples below. any issues just shout me
 
@@ -421,90 +370,85 @@ public class StudentManagementCreate {
     // so on so on all your methods
     //public static void main
     // menu
-    // take in input, pass to swtch
+    // take in input, pass to switch
     // now your cases will only have to call the SET method which handles connecting to DB and setting details
 
-    public static void main(String[] args) throws SQLException {
-        Scanner sc = new Scanner(System.in);
-        while (true) {
-            System.out.print("Select table to insert data: \n");
-            System.out.print("1. Department: \n");
-            System.out.print("2. Student: \n");
-            System.out.print("3. Staff: \n");
-            System.out.print("4. Course: \n");
-            System.out.print("5. Grades: \n");
-            System.out.print("6. Payments: \n");
-            System.out.print("7. College Address: \n");
-            System.out.print("8. Student Address: \n");
-            System.out.print("9. Exit Menu:\n");
-            System.out.print("Enter your choice: ");
+public static void main(String[] args) throws SQLException {
+    Scanner sc = new Scanner(System.in);
+    while (true) {
+        System.out.print("Select table to insert data: \n");
+        System.out.print("1. Department: \n");
+        System.out.print("2. Student: \n");
+        System.out.print("3. Staff: \n");
+        System.out.print("4. Course: \n");
+        System.out.print("5. Grades: \n");
+        System.out.print("6. Payments: \n");
+        System.out.print("7. College Address: \n");
+        System.out.print("8. Student Address: \n");
+        System.out.print("9. Exit Menu:\n");
+        System.out.print("Enter your choice: ");
 
-            int choice = sc.nextInt();
-            int rowsAffected; //shouldnt need this as its in the methods
+        int choice = sc.nextInt();
+        int rowsAffected; //shouldnt need this as its in the methods
 
+        sc.nextLine();
 
-            sc.nextLine();
+        switch (choice) {
 
+            // Get details of department
+            case 1: getDepartmentInput(sc);
 
+                break;
 
+            // Get details of student
+            case 2: getStudentInput(sc);
 
-                switch (choice) {
+                break;
 
-                    // Get details of department
-                    case 1: getDepartmentInput(sc);
+            // Get details of staff
+            case 3: getStaffInput(sc);
 
-                        break;
+                break;
 
-                    // Get details of student
-                    case 2: getStudentInput(sc);
+            // Get details of course
+            case 4: getCourseInput(sc);
 
-                        break;
+                break;
 
-                    // Get details of staff
-                    case 3: getStaffInput(sc);
+            // Get details Grades
+            case 5: getGradesInput(sc);
 
-                        break;
+                break;
 
-                    // Get details of course
-                    case 4: getCourseInput(sc);
+            // Get Payments details
+            case 6: getPaymentsInput(sc);
 
-                        break;
+                break;
 
-                    // Get details Grades
-                    case 5: getGradesInput(sc);
+            // Get College address
+            case 7: getCollege_addressInput(sc);
 
-                        break;
-
-                    // Get Payments details
-                    case 6: getPaymentsInput(sc);
-
-                        break;
-
-                    // Get College address
-                    case 7: getCollege_addressInput(sc);
-
-                        break;
+                break;
 
 
-                     // Get student address details
-                    case 8: getStudent_addressInput(sc);
+             // Get student address details
+            case 8: getStudent_addressInput(sc);
 
 
-                        break;
+                break;
 
-                    // Exit
-                    case 9:
-                        System.out.println("Exit");
-                        return;
+            // Exit
+            case 9:
+                System.out.println("Exit");
+                return;
 
-                    default:
-                        System.out.println("Invalid choice");
-                        return;
-
-                }
-
+            default:
+                System.out.println("Invalid choice");
+                return;
             }
+
         }
     }
+}
 
 

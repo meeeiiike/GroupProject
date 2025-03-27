@@ -228,7 +228,7 @@ public class StudentManagementCreate {
     }
     // connect to DB and set Grades details
     public static void setGradesInput(int student_id, int course_id, int level, int grade) throws SQLException {
-        String gradesInsertSQL = "INSERT INTO course (student_id, course_id, level, grade) VALUES ('" + student_id + "','" + course_id + "', '" + level + "','" + grade + "')";
+        String gradesInsertSQL = "INSERT INTO grades (student_id, course_id, level, grade) VALUES ('" + student_id + "','" + course_id + "', '" + level + "','" + grade + "')";
 
         try (Connection connection = DbUtils.getConnection()) {
             Statement statement = connection.createStatement();

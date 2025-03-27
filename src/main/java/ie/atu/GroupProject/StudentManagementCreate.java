@@ -50,10 +50,10 @@ public class StudentManagementCreate {
     // Case 2
     // get Student details
     public static void getStudentInput(Scanner sc) throws SQLException {
-       // Scanner getdepartment_idInput = new Scanner(System.in);
+
         System.out.println("Please enter student department id: ");
-        // String department_id = getdepartment_idInput.nextLine();
         int department_id = sc.nextInt();
+
         Scanner first_nameInput = new Scanner(System.in);
         System.out.println("Please enter student first name: ");
         String first_name = first_nameInput.nextLine();
@@ -199,57 +199,45 @@ public class StudentManagementCreate {
     }
 
     /* *************************************************************************************  */
-    // Case 5
-    // get Grades details
-    public static void getCourseInput(Scanner sc) throws SQLException {
-        Scanner course_nameInput = new Scanner(System.in);
-        System.out.println("Enter course name: ");
-        String course_name = course_nameInput.nextLine();
 
-        System.out.println("Enter credits: ");
-        int credits = sc.nextInt();
+        // Case 5
+    // get Grades details
+    public static void getGradesInput(Scanner sc) throws SQLException {
+        Scanner gradesInput = new Scanner(System.in);
+
+        System.out.println("Please enter student id: ");
+        int student_id = sc.nextInt();
+        sc.nextLine();
+
+        System.out.println("Please enter course id: ");
+        int course_id = sc.nextInt();
         sc.nextLine();
 
         System.out.println("Enter level: ");
         int level = sc.nextInt();
         sc.nextLine();
 
-        System.out.println("Enter semester: ");
-        int semester = sc.nextInt();
-        sc.nextLine();
+        System.out.println("Enter grade: ");
+        int grade = sc.nextInt();
+       // sc.nextLine();
 
-        System.out.println("Enter duration in weeks: ");
-        int duration_weeks = sc.nextInt();
-        sc.nextLine();
-
-        System.out.println("Enter Max Students: ");
-        int max_students = sc.nextInt();
-        sc.nextLine();
-
-        System.out.println("Please Choose Department ID: ");
-        int department_id = sc.nextInt();
-        sc.nextLine();
-
-        System.out.println("Please Choose Staff ID: ");
-        int staff_id = sc.nextInt();
-        // sc.nextLine();
-
-        String courseInsertSQL = "INSERT INTO course (course_name, credits, level, semester, duration_weeks, max_students, department_id, staff_id) VALUES ('" + course_name + "','" + credits + "', '" + level + "','" + semester + "','" + duration_weeks + "', '" + max_students + "', '" + department_id + "','" + staff_id + "')";
+        String gradesInsertSQL = "INSERT INTO grades (student_id, course_id, level, grade) VALUES ('" + student_id + "','" + course_id + "', '" + level + "','" + grade + "')";
         String name = sc.nextLine();
-        setCourseInput(course_name, credits, level, semester, duration_weeks, max_students, department_id, staff_id);
+
+        setGradesInput(student_id, course_id, level, grade);
     }
-    // connect to DB and set Staff details
-    public static void setCourseInput(String course_name, int credits, int level, int semester, int duration_weeks, int max_students, int department_id, int staff_id) throws SQLException {
-        String courseInsertSQL = "INSERT INTO course (course_name, credits, level, semester, duration_weeks, max_students, department_id, staff_id) VALUES ('" + course_name + "','" + credits + "', '" + level + "','" + semester + "','" + duration_weeks + "', '" + max_students + "', '" + department_id + "','" + staff_id + "')";
+    // connect to DB and set Grades details
+    public static void setGradesInput(int student_id, int course_id, int level, int grade) throws SQLException {
+        String gradesInsertSQL = "INSERT INTO course (student_id, course_id, level, grade) VALUES ('" + student_id + "','" + course_id + "', '" + level + "','" + grade + "')";
+
         try (Connection connection = DbUtils.getConnection()) {
             Statement statement = connection.createStatement();
             // Execute the insert query
-            int rowsAffected = statement.executeUpdate(courseInsertSQL);
+            int rowsAffected = statement.executeUpdate(gradesInsertSQL);
             if (rowsAffected > 0) {
                 System.out.println("Record inserted successfully.");
             } else {
                 System.out.println("Failed to insert record.");
-                //  throw new SQLException("ID INVALID: must be > 0 AND must be assigned already");
             }
         }
     }
@@ -296,22 +284,27 @@ public class StudentManagementCreate {
                     // Get details of department
                     case 1: getDepartmentInput(sc);
 
-                    break;
+                        break;
 
                     // Get details of student
                     case 2: getStudentInput(sc);
 
-                    break;
+                        break;
 
                     // Get details of staff
                     case 3: getStaffInput(sc);
 
-                    break;
+                        break;
 
                     // Get details of course
                     case 4: getCourseInput(sc);
 
-                    break;
+                        break;
+
+                    // Get details Grades
+                    case 5: getGradesInput(sc);
+
+                        break;
 /*
                     case 8:
 

@@ -492,6 +492,10 @@ public class StudentManagementCreate {
 
                         break;
 
+                    // Exit
+                    case 9:
+                        System.out.println("Exit");
+                        return;
 
                     default:
                         System.out.println("Invalid choice");

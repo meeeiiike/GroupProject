@@ -112,7 +112,7 @@ public class StudentManagementCreate {
         System.out.println("Please enter staff office location: ");  //college_address_id???
         String office_location = office_locationInput.nextLine();
 
-       // Scanner department_idInput = new Scanner(System.in);
+        // Scanner department_idInput = new Scanner(System.in);
         System.out.println("Please enter staff department id: ");
         int department_id = sc.nextInt();
         //int department_id = department_idInput = sc.nextInt();
@@ -137,8 +137,8 @@ public class StudentManagementCreate {
                 System.out.println("Failed to insert record.");
             }
         } //catch (SQLException e) {
-          //  e.printStackTrace();
-        }
+        //  e.printStackTrace();
+    }
     //}
 //}
 
@@ -176,12 +176,13 @@ public class StudentManagementCreate {
 
         System.out.println("Please Choose Staff ID: ");
         int staff_id = sc.nextInt();
-       // sc.nextLine();
+        // sc.nextLine();
 
         String courseInsertSQL = "INSERT INTO course (course_name, credits, level, semester, duration_weeks, max_students, department_id, staff_id) VALUES ('" + course_name + "','" + credits + "', '" + level + "','" + semester + "','" + duration_weeks + "', '" + max_students + "', '" + department_id + "','" + staff_id + "')";
         String name = sc.nextLine();
         setCourseInput(course_name, credits, level, semester, duration_weeks, max_students, department_id, staff_id);
     }
+
     // connect to DB and set Staff details
     public static void setCourseInput(String course_name, int credits, int level, int semester, int duration_weeks, int max_students, int department_id, int staff_id) throws SQLException {
         String courseInsertSQL = "INSERT INTO course (course_name, credits, level, semester, duration_weeks, max_students, department_id, staff_id) VALUES ('" + course_name + "','" + credits + "', '" + level + "','" + semester + "','" + duration_weeks + "', '" + max_students + "', '" + department_id + "','" + staff_id + "')";
@@ -200,32 +201,26 @@ public class StudentManagementCreate {
 
     /* *************************************************************************************  */
 
-        // Case 5
+    // Case 5
     // get Grades details
     public static void getGradesInput(Scanner sc) throws SQLException {
-        Scanner gradesInput = new Scanner(System.in);
+        //  Scanner gradesInput = new Scanner(System.in);
 
         System.out.println("Please enter student id: ");
         int student_id = sc.nextInt();
-        sc.nextLine();
 
         System.out.println("Please enter course id: ");
         int course_id = sc.nextInt();
-        sc.nextLine();
 
         System.out.println("Enter level: ");
         int level = sc.nextInt();
-        sc.nextLine();
 
         System.out.println("Enter grade: ");
         int grade = sc.nextInt();
-       // sc.nextLine();
-
-        String gradesInsertSQL = "INSERT INTO grades (student_id, course_id, level, grade) VALUES ('" + student_id + "','" + course_id + "', '" + level + "','" + grade + "')";
-        String name = sc.nextLine();
 
         setGradesInput(student_id, course_id, level, grade);
     }
+
     // connect to DB and set Grades details
     public static void setGradesInput(int student_id, int course_id, int level, int grade) throws SQLException {
         String gradesInsertSQL = "INSERT INTO grades (student_id, course_id, level, grade) VALUES ('" + student_id + "','" + course_id + "', '" + level + "','" + grade + "')";
@@ -242,9 +237,181 @@ public class StudentManagementCreate {
         }
     }
 
+    /* *************************************************************************************  */
 
+    // Case 6
+    // get Payments details
+    public static void getPaymentsInput(Scanner sc) throws SQLException {
 
+        System.out.println("Please enter student id: ");
+        int student_id = sc.nextInt();
 
+        System.out.println("Please enter course id: ");
+        int course_id = sc.nextInt();
+
+        Scanner payment_statusInput = new Scanner(System.in);
+        System.out.println("Enter payment status: ");
+        String payment_status = payment_statusInput.nextLine();
+
+        System.out.println("Enter payment amount: ");
+        int payment_amount = sc.nextInt();
+
+        setPaymentsInput(student_id, course_id, payment_status, payment_amount);
+    }
+
+    // connect to DB and set payments details
+    public static void setPaymentsInput(int student_id, int course_id, String payment_status, int payment_amount) throws SQLException {
+        String paymentsInsertSQL = "INSERT INTO payments (student_id, course_id, payment_status, payment_amount) VALUES ('" + student_id + "','" + course_id + "', '" + payment_status + "','" + payment_amount + "')";
+
+        try (Connection connection = DbUtils.getConnection()) {
+            Statement statement = connection.createStatement();
+            // Execute the insert query
+            int rowsAffected = statement.executeUpdate(paymentsInsertSQL);
+            if (rowsAffected > 0) {
+                System.out.println("Record inserted successfully.");
+            } else {
+                System.out.println("Failed to insert record.");
+            }
+        }
+    }
+
+    /* *************************************************************************************  */
+    // Case 7
+    // get College address
+    public static void getCollege_addressInput(Scanner sc) throws SQLException {
+
+        System.out.println("Please enter department id: ");
+        int department_id = sc.nextInt();
+
+        Scanner address_line_1Input = new Scanner(System.in);
+        System.out.println("enter address line 1: ");
+        String address_line_1 = address_line_1Input.nextLine();
+
+        Scanner address_line_2Input = new Scanner(System.in);
+        System.out.println("enter address line 2:");
+        String address_line_2 = address_line_2Input.nextLine();
+
+        Scanner town_cityInput = new Scanner(System.in);
+        System.out.println("enter town/city: ");
+        String town_city = town_cityInput.nextLine();
+
+        Scanner countyInput = new Scanner(System.in);
+        System.out.println("enter county: ");
+        String county = countyInput.nextLine();
+
+        setCollege_addressInput(department_id, address_line_1, address_line_2, town_city, county);
+
+    }
+
+    // Connect to DB and set college address details
+    public static void setCollege_addressInput(int department_id, String address_line_1, String address_line_2, String town_city, String county) throws SQLException {
+        String college_addressInsertSQL = "INSERT INTO college_address (department_id, address_line_1, address_line_2, town_city, county) VALUES ('" + department_id + "','" + address_line_1 + "', '" + address_line_2 + "','" + town_city + "', '" + county + "')";
+
+        try (Connection connection = DbUtils.getConnection()) {
+            Statement statement = connection.createStatement();
+            // Execute the insert query
+            int rowsAffected = statement.executeUpdate(college_addressInsertSQL);
+            if (rowsAffected > 0) {
+                System.out.println("Record inserted successfully.");
+            } else {
+                System.out.println("Failed to insert record.");
+            }
+        }
+    }
+
+    /* ************************************************************* */
+
+    // Case 8
+    // get Student address details
+    public static void getStudent_addressInput(Scanner sc) throws SQLException {
+
+        System.out.println("Please enter student id: ");
+        int student_id = sc.nextInt();
+
+        Scanner address_line_1Input = new Scanner(System.in);
+        System.out.println("enter address line 1: ");
+        String address_line_1 = address_line_1Input.nextLine();
+
+        Scanner address_line_2Input = new Scanner(System.in);
+        System.out.println("enter address line 2:");
+        String address_line_2 = address_line_2Input.nextLine();
+
+        Scanner town_cityInput = new Scanner(System.in);
+        System.out.println("enter town/city: ");
+        String town_city = town_cityInput.nextLine();
+
+        Scanner countyInput = new Scanner(System.in);
+        System.out.println("enter county: ");
+        String county = countyInput.nextLine();
+
+        setStudent_addressInput(student_id, address_line_1, address_line_2, town_city, county);
+
+    }
+
+    // Connect to DB and set student address details
+    public static void setStudent_addressInput(int student_id, String address_line_1, String address_line_2, String town_city, String county) throws SQLException {
+        String student_addressInsertSQL = "INSERT INTO student_address (student_id, address_line_1, address_line_2, town_city, county) VALUES ('" + student_id + "','" + address_line_1 + "', '" + address_line_2 + "','" + town_city + "', '" + county + "')";
+
+        try (Connection connection = DbUtils.getConnection()) {
+            Statement statement = connection.createStatement();
+            // Execute the insert query
+            int rowsAffected = statement.executeUpdate(student_addressInsertSQL);
+            if (rowsAffected > 0) {
+                System.out.println("Record inserted successfully.");
+            } else {
+                System.out.println("Failed to insert record.");
+            }
+        }
+    }
+
+/*
+    // Get details of student address
+    Scanner studentidInput = new Scanner(System.in);
+                        System.out.println("Please enter student id: ");
+    student_id =studentidInput.nextLine();
+
+    Scanner studentln1Input = new Scanner(System.in);
+                        System.out.println("Please enter address line 1: ");
+    line1 =studentln1Input.nextLine();
+
+    Scanner studentln2Input = new Scanner(System.in);
+                        System.out.println("Please enter address line 2: ");
+    line2 =studentln2Input.nextLine();
+
+    Scanner studentToCiInput = new Scanner(System.in);
+                        System.out.println("Please enter town/city: ");
+    town_city =studentToCiInput.nextLine();
+
+    Scanner studentadCInput = new Scanner(System.in);
+                        System.out.println("Please enter county: ");
+    county =studentadCInput.nextLine();
+
+    String S_addressInsertSQL = "INSERT INTO student_address (student_id, address_line_1, address_line_2, town_city, county) VALUES ('" + student_id + "', '" + line1 + "','" + line2 + "', '" + town_city + "','" + county + "')";
+
+                        try(
+    Connection connection = DriverManager.getConnection(url, username, password);
+    Statement statement = connection.createStatement())
+
+    {
+
+        // Execute the insert query
+        rowsAffected = statement.executeUpdate(S_addressInsertSQL);
+
+        if (rowsAffected > 0) {
+            System.out.println("Record inserted successfully.");
+        } else {
+            System.out.println("Failed to insert record.");
+        }
+    } catch(
+    SQLException e)
+
+    {
+        e.printStackTrace();
+    }
+}
+}
+
+ */
 
 
     // Try follow same format for rest of your tables, will leave examples below. any issues just shout me
@@ -279,6 +446,8 @@ public class StudentManagementCreate {
             sc.nextLine();
 
 
+
+
                 switch (choice) {
 
                     // Get details of department
@@ -305,49 +474,25 @@ public class StudentManagementCreate {
                     case 5: getGradesInput(sc);
 
                         break;
-/*
-                    case 8:
 
-                        // Get details of student address
-                        Scanner studentidInput = new Scanner(System.in);
-                        System.out.println("Please enter student id: ");
-                        student_id = studentidInput.nextLine();
+                    // Get Payments details
+                    case 6: getPaymentsInput(sc);
 
-                        Scanner studentln1Input = new Scanner(System.in);
-                        System.out.println("Please enter address line 1: ");
-                        line1 = studentln1Input.nextLine();
-
-                        Scanner studentln2Input = new Scanner(System.in);
-                        System.out.println("Please enter address line 2: ");
-                        line2 = studentln2Input.nextLine();
-
-                        Scanner studentToCiInput = new Scanner(System.in);
-                        System.out.println("Please enter town/city: ");
-                        town_city = studentToCiInput.nextLine();
-
-                        Scanner studentadCInput = new Scanner(System.in);
-                        System.out.println("Please enter county: ");
-                        county = studentadCInput.nextLine();
-
-                        String S_addressInsertSQL = "INSERT INTO student_address (student_id, address_line_1, address_line_2, town_city, county) VALUES ('" + student_id + "', '" + line1 + "','" + line2 + "', '" + town_city + "','" + county + "')";
-
-                        try (Connection connection = DriverManager.getConnection(url, username, password);
-                             Statement statement = connection.createStatement()) {
-
-                            // Execute the insert query
-                            rowsAffected = statement.executeUpdate(S_addressInsertSQL);
-
-                            if (rowsAffected > 0) {
-                                System.out.println("Record inserted successfully.");
-                            } else {
-                                System.out.println("Failed to insert record.");
-                            }
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
                         break;
 
-*/
+                    // Get College address
+                    case 7: getCollege_addressInput(sc);
+
+                        break;
+
+
+                     // Get student address details
+                    case 8: getStudent_addressInput(sc);
+
+
+                        break;
+
+
                     default:
                         System.out.println("Invalid choice");
                         return;

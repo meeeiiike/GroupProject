@@ -30,7 +30,7 @@ public class SmsCreateTest {
             String last_Name = "TestLastName";
             String email = "TestEmail";
             StudentManagementCreate.setStudentInput(department_id, first_Name, last_Name, email);
-            //StudentManagementCreate.setDepartmentInput(name);
+
         }
 
     @Test
@@ -43,6 +43,9 @@ public class SmsCreateTest {
             assertEquals("Cannot add or update a child row: a foreign key constraint fails (`sms`.`student`, CONSTRAINT `student_idfk_1` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`))", e.getMessage());
         }
     }
+
+
+
 
 
 

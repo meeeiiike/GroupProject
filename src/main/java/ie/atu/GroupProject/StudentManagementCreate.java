@@ -17,18 +17,22 @@ import java.util.Scanner;
 // menu, grab user input
 // call switch() pass user input
 // case 1: will call StudentManagementCreate.getDepartmentInput(sc);
-// rest of cases will handle rest of tables and dont forget option to exit program
+// rest of cases will handle rest of tables and don't forget option to exit program
 // try not stress it too much, focus on functionality first, we can always clean it up and make changes AFTER everythings working and of course just shout me if any issues at all
 
-// Test3 Push for fresh clone
+
 
 public class StudentManagementCreate {
 
     // Case 1
     // get Department details
     public static void getDepartmentInput(Scanner sc) throws SQLException {
+
+        Scanner scanner = new Scanner(System.in);
+
         System.out.println("Enter department name: ");
         String name = sc.nextLine();
+
         setDepartmentInput(name);
     }
 
@@ -56,20 +60,18 @@ public class StudentManagementCreate {
         System.out.println("Please enter student department id: ");
         int department_id = sc.nextInt();
 
-        Scanner first_nameInput = new Scanner(System.in);
         System.out.println("Please enter student first name: ");
-        String first_name = first_nameInput.nextLine();
+        String first_name = sc.nextLine();
 
-        Scanner last_nameInput = new Scanner(System.in);
         System.out.println("Please enter student last name: ");
-        String last_name = last_nameInput.nextLine();
+        String last_name = sc.nextLine();
 
-        Scanner emailInput = new Scanner(System.in);
         System.out.println("Please enter student email: ");
-        String email = emailInput.nextLine();
+        String email = sc.nextLine();
 
-        String studentInsertSQL = "INSERT INTO student (department_id, first_name, last_name, email) VALUES ('" + department_id + "','" + first_name + "', '" + last_name + "','" + email + "')";
-        String name = sc.nextLine();
+       // String studentInsertSQL = "INSERT INTO student (department_id, first_name, last_name, email) VALUES ('" + department_id + "','" + first_name + "', '" + last_name + "','" + email + "')";
+       // String name = sc.nextLine();
+
         setStudentInput(department_id, first_name, last_name, email);
     }
 
@@ -93,35 +95,30 @@ public class StudentManagementCreate {
     /* *************************************************************************************  */
     // Case 3
     public static void getStaffInput(Scanner sc) throws SQLException {
-        Scanner first_nameInput = new Scanner(System.in);
+
+
+
         System.out.println("Please enter staff first name: ");
-        String first_name = first_nameInput.nextLine();
-        //String = first_nameInput.nextLine();
+        String first_name = sc.nextLine();
 
-        Scanner last_nameInput = new Scanner(System.in);
         System.out.println("Please enter staff last name: ");
-        String last_name = last_nameInput.nextLine();
+        String last_name = sc.nextLine();
 
-        Scanner emailInput = new Scanner(System.in);
         System.out.println("Please enter staff email: ");
-        String email = emailInput.nextLine();
+        String email = sc.nextLine();
 
-        Scanner phone_numberInput = new Scanner(System.in);
         System.out.println("Please enter staff phone number: ");
-        String phone_number = phone_numberInput.nextLine();
+        String phone_number = sc.nextLine();
 
-        Scanner office_locationInput = new Scanner(System.in);
-        System.out.println("Please enter staff office location: ");  //college_address_id???
-        String office_location = office_locationInput.nextLine();
+        System.out.println("Please enter staff office location: ");
+        String office_location = sc.nextLine();
 
-        // Scanner department_idInput = new Scanner(System.in);
         System.out.println("Please enter staff department id: ");
         int department_id = sc.nextInt();
-        //int department_id = department_idInput = sc.nextInt();
 
-        //setStaffInput(first_name, last_name, email, phone_number, office_location, int department_id,) throws SQLException {
-        String staffInsertSQL = "INSERT INTO staff ( first_name,  last_name,  email,  phone_number, office_location, department_id) VALUES ('" + first_name + "', '" + last_name + "','" + email + "','" + phone_number + "','" + office_location + "','" + department_id + "')";
-        //String name = sc.nextLine();
+
+        //   String staffInsertSQL = "INSERT INTO staff ( first_name,  last_name,  email,  phone_number, office_location, department_id) VALUES ('" + first_name + "', '" + last_name + "','" + email + "','" + phone_number + "','" + office_location + "','" + department_id + "')";
+        //   String name = sc.nextLine();
         setStaffInput(first_name, last_name, email, phone_number, office_location, department_id);
 
     }
@@ -146,9 +143,10 @@ public class StudentManagementCreate {
     // Case 4
     // get Course details
     public static void getCourseInput(Scanner sc) throws SQLException {
-        Scanner course_nameInput = new Scanner(System.in);
+       // Scanner course_nameInput = new Scanner(System.in);
+
         System.out.println("Enter course name: ");
-        String course_name = course_nameInput.nextLine();
+        String course_name = sc.nextLine();
 
         System.out.println("Enter credits: ");
         int credits = sc.nextInt();
@@ -178,8 +176,8 @@ public class StudentManagementCreate {
         int staff_id = sc.nextInt();
         // sc.nextLine();
 
-        String courseInsertSQL = "INSERT INTO course (course_name, credits, level, semester, duration_weeks, max_students, department_id, staff_id) VALUES ('" + course_name + "','" + credits + "', '" + level + "','" + semester + "','" + duration_weeks + "', '" + max_students + "', '" + department_id + "','" + staff_id + "')";
-        String name = sc.nextLine();
+       // String courseInsertSQL = "INSERT INTO course (course_name, credits, level, semester, duration_weeks, max_students, department_id, staff_id) VALUES ('" + course_name + "','" + credits + "', '" + level + "','" + semester + "','" + duration_weeks + "', '" + max_students + "', '" + department_id + "','" + staff_id + "')";
+      //  String name = sc.nextLine();
         setCourseInput(course_name, credits, level, semester, duration_weeks, max_students, department_id, staff_id);
     }
 
@@ -249,9 +247,9 @@ public class StudentManagementCreate {
         System.out.println("Please enter course id: ");
         int course_id = sc.nextInt();
 
-        Scanner payment_statusInput = new Scanner(System.in);
+        //Scanner payment_statusInput = new Scanner(System.in);
         System.out.println("Enter payment status: ");
-        String payment_status = payment_statusInput.nextLine();
+        String payment_status = sc.nextLine();
 
         System.out.println("Enter payment amount: ");
         int payment_amount = sc.nextInt();
@@ -283,21 +281,21 @@ public class StudentManagementCreate {
         System.out.println("Please enter department id: ");
         int department_id = sc.nextInt();
 
-        Scanner address_line_1Input = new Scanner(System.in);
+        //Scanner address_line_1Input = new Scanner(System.in);
         System.out.println("enter address line 1: ");
-        String address_line_1 = address_line_1Input.nextLine();
+        String address_line_1 = sc.nextLine();
 
-        Scanner address_line_2Input = new Scanner(System.in);
+        //Scanner address_line_2Input = new Scanner(System.in);
         System.out.println("enter address line 2:");
-        String address_line_2 = address_line_2Input.nextLine();
+        String address_line_2 = sc.nextLine();
 
-        Scanner town_cityInput = new Scanner(System.in);
+       // Scanner town_cityInput = new Scanner(System.in);
         System.out.println("enter town/city: ");
-        String town_city = town_cityInput.nextLine();
+        String town_city = sc.nextLine();
 
-        Scanner countyInput = new Scanner(System.in);
+       // Scanner countyInput = new Scanner(System.in);
         System.out.println("enter county: ");
-        String county = countyInput.nextLine();
+        String county = sc.nextLine();
 
         setCollege_addressInput(department_id, address_line_1, address_line_2, town_city, county);
 
@@ -328,21 +326,21 @@ public class StudentManagementCreate {
         System.out.println("Please enter student id: ");
         int student_id = sc.nextInt();
 
-        Scanner address_line_1Input = new Scanner(System.in);
+        //Scanner address_line_1Input = new Scanner(System.in);
         System.out.println("enter address line 1: ");
-        String address_line_1 = address_line_1Input.nextLine();
+        String address_line_1 = sc.nextLine();
 
-        Scanner address_line_2Input = new Scanner(System.in);
+        //Scanner address_line_2Input = new Scanner(System.in);
         System.out.println("enter address line 2:");
-        String address_line_2 = address_line_2Input.nextLine();
+        String address_line_2 = sc.nextLine();
 
-        Scanner town_cityInput = new Scanner(System.in);
+        //Scanner town_cityInput = new Scanner(System.in);
         System.out.println("enter town/city: ");
-        String town_city = town_cityInput.nextLine();
+        String town_city = sc.nextLine();
 
-        Scanner countyInput = new Scanner(System.in);
+        //Scanner countyInput = new Scanner(System.in);
         System.out.println("enter county: ");
-        String county = countyInput.nextLine();
+        String county = sc.nextLine();
 
         setStudent_addressInput(student_id, address_line_1, address_line_2, town_city, county);
 

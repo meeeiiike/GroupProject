@@ -56,20 +56,21 @@ public class StudentManagementCreate {
         System.out.println("Please enter student department id: ");
         int department_id = sc.nextInt();
 
-        Scanner first_nameInput = new Scanner(System.in);
+        //Scanner first_nameInput = new Scanner(System.in);
         System.out.println("Please enter student first name: ");
-        String first_name = first_nameInput.nextLine();
+        String first_name = sc.nextLine();
 
-        Scanner last_nameInput = new Scanner(System.in);
+       // Scanner last_nameInput = new Scanner(System.in);
         System.out.println("Please enter student last name: ");
-        String last_name = last_nameInput.nextLine();
+        String last_name = sc.nextLine();
 
-        Scanner emailInput = new Scanner(System.in);
+       // Scanner emailInput = new Scanner(System.in);
         System.out.println("Please enter student email: ");
-        String email = emailInput.nextLine();
+        String email = sc.nextLine();
 
         String studentInsertSQL = "INSERT INTO student (department_id, first_name, last_name, email) VALUES ('" + department_id + "','" + first_name + "', '" + last_name + "','" + email + "')";
         String name = sc.nextLine();
+
         setStudentInput(department_id, first_name, last_name, email);
     }
 

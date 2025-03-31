@@ -326,21 +326,21 @@ public class StudentManagementCreate {
         System.out.println("Please enter student id: ");
         int student_id = sc.nextInt();
 
-        Scanner address_line_1Input = new Scanner(System.in);
+        //Scanner address_line_1Input = new Scanner(System.in);
         System.out.println("enter address line 1: ");
-        String address_line_1 = address_line_1Input.nextLine();
+        String address_line_1 = sc.nextLine();
 
-        Scanner address_line_2Input = new Scanner(System.in);
+        //Scanner address_line_2Input = new Scanner(System.in);
         System.out.println("enter address line 2:");
-        String address_line_2 = address_line_2Input.nextLine();
+        String address_line_2 = sc.nextLine();
 
-        Scanner town_cityInput = new Scanner(System.in);
+        //Scanner town_cityInput = new Scanner(System.in);
         System.out.println("enter town/city: ");
-        String town_city = town_cityInput.nextLine();
+        String town_city = sc.nextLine();
 
-        Scanner countyInput = new Scanner(System.in);
+        //Scanner countyInput = new Scanner(System.in);
         System.out.println("enter county: ");
-        String county = countyInput.nextLine();
+        String county = sc.nextLine();
 
         setStudent_addressInput(student_id, address_line_1, address_line_2, town_city, county);
 

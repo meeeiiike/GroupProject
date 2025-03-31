@@ -247,9 +247,9 @@ public class StudentManagementCreate {
         System.out.println("Please enter course id: ");
         int course_id = sc.nextInt();
 
-        Scanner payment_statusInput = new Scanner(System.in);
+        //Scanner payment_statusInput = new Scanner(System.in);
         System.out.println("Enter payment status: ");
-        String payment_status = payment_statusInput.nextLine();
+        String payment_status = sc.nextLine();
 
         System.out.println("Enter payment amount: ");
         int payment_amount = sc.nextInt();

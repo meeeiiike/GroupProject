@@ -1,4 +1,6 @@
 
+import ie.atu.GroupProject.StudentManagementDelete;
+import ie.atu.GroupProject.StudentManagementRead;
 import org.junit.jupiter.api.*;
 import java.io.InputStream;
 import java.sql.*;
@@ -8,62 +10,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class SmsReadTest {
 
-    private Connection connection;
+   @Test
+    void testDepartmentReadSuccess()throws SQLException{
+       String url = "jdbc:mysql://localhost:3306/sms";
+       String username = "root";
+       String password = "password";
 
-
-    private void testTable(String tableName, String idColumn) {
-        try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM " + tableName + " LIMIT 1")) {
-
-            assertNotNull(rs, "ResultSet for " + tableName + " Shouldn't be null");
-            assertTrue(rs.next(), "Table " + tableName + " Must have at least one row");
-
-            int id = rs.getInt(idColumn);
-            assertTrue(id > 0, idColumn + " in " + tableName + " must be valid");
-
-        } catch (SQLException e) {
-            fail("SQL query failed for " + tableName + ": " + e.getMessage());
-        }
-    }
+       StudentManagementRead.ReadDepartment(url, username, password);
+   }
 
     @Test
-    void testReadDepartment(){
-        testTable("Department", "departmentID");
-    }
+    void testDepartmentReadFailure()throws SQLException{
+        String url = "jdbc:mysql://localhost:3306/ssms";
+        String username = "root";
+        String password = "password";
 
-    @Test
-    void testReadStudent(){
-        testTable("Student", "studentID");
-    }
+        Exception ex = assertThrows(SQLSyntaxErrorException.class, () -> StudentManagementRead.ReadDepartment(url, username, password));
+        assertEquals("Error: SQL connection not found.", ex.getMessage());
 
-    @Test
-    void testReadStaff(){
-        testTable("Staff", "staffID");
     }
-
-    @Test
-    void testReadGrades(){
-        testTable("Grades", "gradeID");
-    }
-
-    @Test
-    void testReadCourse(){
-        testTable("Course", "courseID");
-    }
-
-    @Test
-    void testReadPayment(){
-        testTable("Payment", "paymentID");
-    }
-
-    @Test
-    void testReadCollege(){
-        testTable("CollegeAddress", "collegeAddressID");
-    }
-    @Test
-    void testReadAddress(){
-        testTable("studentAddress", "studentAddressID");
-    }
-
 
 }

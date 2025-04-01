@@ -47,7 +47,7 @@ public class StudentManagementRead {
                     ReadDepartment(url, username, password);
                     break;
                 case 2:
-                    ReadStudent(selectSQL,url,username,password);
+                    ReadStudent(selectSQL,url,username);
                      break;
                 case 3:
                     ReadStaff(selectSQL,url,username,password);
@@ -105,8 +105,8 @@ public class StudentManagementRead {
 
     }
 
-    public static void ReadStudent(String selectSQL,String url,String username,String password)throws SQLException{
-        selectSQL = "Select * from student";
+    public static void ReadStudent(String url,String username, String password)throws SQLException{
+        String selectSQL = "Select * from student";
         try (Connection connection = DriverManager.getConnection(url, username, password);
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(selectSQL)){
@@ -131,8 +131,8 @@ public class StudentManagementRead {
         }
 
     }
-    public static void ReadStaff(String selectSQL,String url,String username,String password) throws SQLException{
-        selectSQL = "Select * from staff";
+    public static void ReadStaff(String url,String username,String password) throws SQLException{
+        String selectSQL = "Select * from staff";
         try (Connection connection = DriverManager.getConnection(url, username, password);
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(selectSQL)){
@@ -157,8 +157,8 @@ public class StudentManagementRead {
             e.printStackTrace();
         }
     }
-    public static void ReadCourse(String selectSQL,String url,String username,String password) throws SQLException{
-        selectSQL = "Select * from course";
+    public static void ReadCourse(String url,String username,String password) throws SQLException{
+        String selectSQL = "Select * from course";
         try (Connection connection = DriverManager.getConnection(url, username, password);
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(selectSQL)){
@@ -185,8 +185,8 @@ public class StudentManagementRead {
             e.printStackTrace();
         }
     }
-    public static void ReadGrades(String selectSQL,String url,String username,String password) throws SQLException{
-        selectSQL = "Select * from grades";
+    public static void ReadGrades(String url,String username,String password) throws SQLException{
+        String selectSQL = "Select * from grades";
         try (Connection connection = DriverManager.getConnection(url, username, password);
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(selectSQL)){
@@ -209,8 +209,8 @@ public class StudentManagementRead {
             e.printStackTrace();
         }
     }
-    public static void ReadPayments(String selectSQL,String url,String username,String password) throws SQLException{
-        selectSQL = "Select * from payments";
+    public static void ReadPayments(String url,String username,String password) throws SQLException{
+       String selectSQL = "Select * from payments";
         try (Connection connection = DriverManager.getConnection(url, username, password);
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(selectSQL)){
@@ -233,8 +233,8 @@ public class StudentManagementRead {
             e.printStackTrace();
         }
     }
-    public static void ReadStudAddress(String selectSQL,String url,String username,String password) throws SQLException{
-        selectSQL = "Select * from student_address";
+    public static void ReadStudAddress(String url,String username,String password) throws SQLException{
+        String selectSQL = "Select * from student_address";
         try (Connection connection = DriverManager.getConnection(url, username, password);
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(selectSQL)){
@@ -259,8 +259,8 @@ public class StudentManagementRead {
             e.printStackTrace();
         }
     }
-    public static void ReadColAddress(String selectSQL,String url,String username,String password)throws SQLException{
-        selectSQL = "Select * from college_address";
+    public static void ReadColAddress(String url,String username,String password)throws SQLException{
+        String selectSQL = "Select * from college_address";
         try (Connection connection = DriverManager.getConnection(url, username, password);
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(selectSQL)){
@@ -285,7 +285,6 @@ public class StudentManagementRead {
             e.printStackTrace();
         }
     }
-
 
 
 }

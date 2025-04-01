@@ -50,22 +50,22 @@ public class StudentManagementRead {
                     ReadStudent(selectSQL,url,username);
                      break;
                 case 3:
-                    ReadStaff(selectSQL,url,username,password);
+                    ReadStaff(url,username,password);
                     break;
                 case 4:
-                    ReadCourse(selectSQL,url,username,password);
+                    ReadCourse(url,username,password);
                     break;
                 case 5:
-                    ReadGrades(selectSQL,url,username,password);
+                    ReadGrades(url,username,password);
                     break;
                 case 6:
-                    ReadPayments(selectSQL,url,username,password);
+                    ReadPayments(url,username,password);
                     break;
                 case 7:
-                    ReadColAddress(selectSQL,url,username,password);
+                    ReadColAddress(url,username,password);
                     break;
                 case 8:
-                    ReadStudAddress(selectSQL,url,username,password);
+                    ReadStudAddress(url,username,password);
                     break;
                 case 9:
                     System.out.print("Goodbye:)\n");

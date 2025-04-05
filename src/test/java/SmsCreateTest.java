@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 // first thing just make sure you change name of class to SmsCreateTest,
 public class SmsCreateTest {
-
+// Test Create Department
     @Test
         void testInsertDepartmentSuccess() throws SQLException {
             String name = "TestDepartmentSuccess";
@@ -22,7 +22,7 @@ public class SmsCreateTest {
             Exception e = assertThrows(SQLException.class, ()-> StudentManagementCreate.setDepartmentInput(name));
             assertEquals("Data truncation: Data too long for column 'name' at row 1", e.getMessage());
          }
-
+// Test Create Student
     @Test
         void testInsertStudentSuccess() throws SQLException {
             int department_id = 25;
@@ -36,13 +36,39 @@ public class SmsCreateTest {
     @Test
         void testInsertStudentFailure() {
         int department_id = 0;
-        String first_Name = "TestFirstName";
-        String last_Name = "TestLastName";
+        String first_name = "TestFirstName";
+        String last_name = "TestLastName";
         String email = "TestEmail";
-            Exception e = assertThrows(SQLException.class, ()-> StudentManagementCreate.setStudentInput(department_id, first_Name, last_Name, email));
+            Exception e = assertThrows(SQLException.class, ()-> StudentManagementCreate.setStudentInput(department_id, first_name, last_name, email));
             assertEquals("Cannot add or update a child row: a foreign key constraint fails (`sms`.`student`, CONSTRAINT `student_idfk_1` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`))", e.getMessage());
         }
+    // Test Create Staff
+    @Test
+    void testInsertStaffSuccess() throws SQLException {
+        String first_name = "TestFirstName";
+        String last_name = "TestLastName";
+        String email = "TestEmail";
+        String phone_number = "TestPhoneNumber";
+        String office_location = "TestOfficeLocation";
+        int department_id = 44;
+        StudentManagementCreate.setStaffInput(first_name, last_name, email, phone_number, office_location, department_id);
+
     }
+
+    @Test
+    void testInsertStaffFailure() {
+
+        String first_name = "TestFirstName";
+        String last_name = "TestLastName";
+        String email = "TestEmail";
+        String phone_number = "TestPhoneNumber";
+        String office_location = "TestOfficeLocation";
+        int department_id = 0;
+        Exception e = assertThrows(SQLException.class, ()-> StudentManagementCreate.setStaffInput(first_name, last_name, email, phone_number, office_location, department_id));
+        assertEquals("Cannot add or update a child row: a foreign key constraint fails (`sms`.`staff`, CONSTRAINT `staff_idfk_1` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`))" , e.getMessage());
+
+    }
+}
 
 
 

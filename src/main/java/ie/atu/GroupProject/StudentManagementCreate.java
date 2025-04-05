@@ -24,15 +24,10 @@ public class StudentManagementCreate {
     public static void setDepartmentInput(String name) throws SQLException {
         String departmentInsertSQL = "INSERT INTO department (name) VALUES ('" + name + "')";
         try (Connection connection = DbUtils.getConnection()) {
-           // Statement statement = connection.createStatement();
-            // Set the value of the name parameter
-            PreparedStatement preparedStatement = connection.prepareStatement(departmentInsertSQL)) {
-                preparedStatement.setString(1, name);
-
+            Statement statement = connection.createStatement();
             // Execute the insert query
-            //int rowsAffected = statement.executeUpdate(departmentInsertSQL);
-            int rowsAffected = preparedStatement.executeUpdate();
-                if (rowsAffected > 0) {
+            int rowsAffected = statement.executeUpdate(departmentInsertSQL);
+            if (rowsAffected > 0) {
                 System.out.println("Record inserted successfully.");
             } else {
                 System.out.println("Failed to insert record.");

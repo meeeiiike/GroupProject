@@ -73,7 +73,6 @@ public class StudentManagementCreate {
     /* *************************************************************************************  */
     // Case 3
     public static void getStaffInput(Scanner sc) throws SQLException {
-
         System.out.println("Please enter staff first name: ");
         String first_name = sc.nextLine();
 
@@ -91,6 +90,7 @@ public class StudentManagementCreate {
 
         System.out.println("Please enter staff department id: ");
         int department_id = sc.nextInt();
+            sc.nextLine();
 
         setStaffInput(first_name, last_name, email, phone_number, office_location, department_id);
     }
@@ -137,6 +137,7 @@ public class StudentManagementCreate {
 
         System.out.println("Please Choose Staff ID: ");
         int staff_id = sc.nextInt();
+            sc.nextLine();
 
         setCourseInput(course_name, credits, level, semester, duration_weeks, max_students, department_id, staff_id);
     }
@@ -161,7 +162,6 @@ public class StudentManagementCreate {
     // Case 5
     // get Grades details
     public static void getGradesInput(Scanner sc) throws SQLException {
-
         System.out.println("Please enter student id: ");
         int student_id = sc.nextInt();
 
@@ -202,6 +202,7 @@ public class StudentManagementCreate {
 
         System.out.println("Please enter course id: ");
         int course_id = sc.nextInt();
+            sc.nextLine();
 
         System.out.println("Enter payment status: ");
         String payment_status = sc.nextLine();
@@ -272,6 +273,7 @@ public class StudentManagementCreate {
     public static void getStudent_addressInput(Scanner sc) throws SQLException {
         System.out.println("Please enter student id: ");
         int student_id = sc.nextInt();
+            sc.nextLine();
 
         System.out.println("enter address line 1: ");
         String address_line_1 = sc.nextLine();

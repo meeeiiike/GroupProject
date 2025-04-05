@@ -3,16 +3,10 @@ package ie.atu.GroupProject;
 import java.sql.*;
 import java.util.Scanner;
 
-//TODO:
-// add error msg when we add ID that doesnt exist yet
+//TODO: add error msg when we add ID that doesnt exist yet
 // add transactions
-// add more functionality to updateTable methods
-// test for failure, add exceptions and error logs
-// need to add lots of more exception types along with lots more specific success/failure tests
+// add more functionality to updateTable methods, add more exceptions and error logs for specific tests
 // Use Code Coverage to help with Testing! Complexity < 10
-// LOTS OF REDUNDANT CODE! once happy with functionality,
-// Clean up code to reduce redundancy
-
 
 public class StudentManagementUpdate {
     public static void main(String[] args) throws SQLException {
@@ -66,7 +60,6 @@ public class StudentManagementUpdate {
             PreparedStatement stmt = con.prepareStatement("UPDATE department SET name = ? WHERE department_id =" + departmentID);
             stmt.setString(1, name);
             int rowsUpdated = stmt.executeUpdate();
-            // TODO: include when id>0 BUT not assigned to anything
             if (rowsUpdated <= 0) {
                 throw new SQLException("ID INVALID: must be > 0 AND must be assigned already");
             }

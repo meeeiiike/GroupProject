@@ -14,8 +14,6 @@ public class StudentManagementCreate {
     // get Department details
     public static void getDepartmentInput(Scanner sc) throws SQLException {
 
-      //  Scanner sc = new Scanner(System.in);
-
         System.out.println("Enter department name: ");
         String name = sc.nextLine();
 
@@ -41,9 +39,9 @@ public class StudentManagementCreate {
     // Case 2
     // get Student details
     public static void getStudentInput(Scanner sc) throws SQLException {
-
         System.out.println("Please enter student department id: ");
         int department_id = sc.nextInt();
+            sc.nextLine();
 
         System.out.println("Please enter student first name: ");
         String first_name = sc.nextLine();
@@ -116,34 +114,26 @@ public class StudentManagementCreate {
     // Case 4
     // get Course details
     public static void getCourseInput(Scanner sc) throws SQLException {
-       // Scanner course_nameInput = new Scanner(System.in);
-
         System.out.println("Enter course name: ");
         String course_name = sc.nextLine();
 
         System.out.println("Enter credits: ");
         int credits = sc.nextInt();
-       // sc.nextLine();
 
         System.out.println("Enter level: ");
         int level = sc.nextInt();
-      //  sc.nextLine();
 
         System.out.println("Enter semester: ");
         int semester = sc.nextInt();
-        sc.nextLine();
 
         System.out.println("Enter duration in weeks: ");
         int duration_weeks = sc.nextInt();
-        sc.nextLine();
 
         System.out.println("Enter Max Students: ");
         int max_students = sc.nextInt();
-        sc.nextLine();
 
         System.out.println("Please Choose Department ID: ");
         int department_id = sc.nextInt();
-        sc.nextLine();
 
         System.out.println("Please Choose Staff ID: ");
         int staff_id = sc.nextInt();
@@ -243,6 +233,7 @@ public class StudentManagementCreate {
     public static void getCollege_addressInput(Scanner sc) throws SQLException {
         System.out.println("Please enter department id: ");
         int department_id = sc.nextInt();
+            sc.nextLine();
 
         System.out.println("enter address line 1: ");
         String address_line_1 = sc.nextLine();
@@ -325,12 +316,10 @@ public static void main(String[] args) throws SQLException {
         System.out.print("7. College Address: \n");
         System.out.print("8. Student Address: \n");
         System.out.print("9. Exit Menu:\n");
-        System.out.print("Enter your choice: ");
+        System.out.print("Enter your choice: \n");
 
         int choice = sc.nextInt();
-       // int rowsAffected; //shouldnt need this as its in the methods
-
-       // sc.nextLine();
+            sc.nextLine();
 
         switch (choice) {
             // Get details of department

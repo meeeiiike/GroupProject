@@ -9,7 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 // first thing just make sure you change name of class to SmsCreateTest,
 public class SmsCreateTest {
-
+// Test Create Department
     @Test
         void testInsertDepartmentSuccess() throws SQLException {
             String name = "TestDepartmentSuccess";
@@ -22,7 +22,7 @@ public class SmsCreateTest {
             Exception e = assertThrows(SQLException.class, ()-> StudentManagementCreate.setDepartmentInput(name));
             assertEquals("Data truncation: Data too long for column 'name' at row 1", e.getMessage());
          }
-
+// Test Create Student
     @Test
         void testInsertStudentSuccess() throws SQLException {
             int department_id = 25;
@@ -42,7 +42,27 @@ public class SmsCreateTest {
             Exception e = assertThrows(SQLException.class, ()-> StudentManagementCreate.setStudentInput(department_id, first_Name, last_Name, email));
             assertEquals("Cannot add or update a child row: a foreign key constraint fails (`sms`.`student`, CONSTRAINT `student_idfk_1` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`))", e.getMessage());
         }
+    // Test Create Staff
+    @Test
+    void testInsertStaffSuccess() throws SQLException {
+        int department_id = 25;
+        String first_Name = "TestFirstName";
+        String last_Name = "TestLastName";
+        String email = "TestEmail";
+        StudentManagementCreate.setStaffInput(department_id, first_Name, last_Name, email);
+
     }
+
+    @Test
+    void testInsertStaffFailure() {
+        int department_id = 0;
+        String first_Name = "TestFirstName";
+        String last_Name = "TestLastName";
+        String email = "TestEmail";
+        Exception e = assertThrows(SQLException.class, ()-> StudentManagementCreate.setStaffInput(department_id, first_Name, last_Name, email));
+        assertEquals("Cannot add or update a child row: a foreign key constraint fails (`sms`.`student`, CONSTRAINT `student_idfk_1` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`))", e.getMessage());
+    }
+}
 
 
 

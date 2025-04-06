@@ -8,12 +8,6 @@ public class StudentManagementDelete {
         Scanner scanner = new Scanner(System.in);
         boolean continueRunning = true;
 
-        //Database connection
-        String url = "jdbc:mysql://localhost/sms";
-        String user = "root";
-        String password = "password";
-
-        try (Connection connection = DriverManager.getConnection(url, user, password)) {
             while (continueRunning) {
                 System.out.println("Select table to delete data:");
                 System.out.println("1. Department");
@@ -118,10 +112,6 @@ public class StudentManagementDelete {
                 }
 
             }
-        }catch (SQLException e) {
-            System.out.println("Database connection failed");
-            e.printStackTrace();
-        }
     }
 
     public static void deleteDepartment(int departmentID) throws SQLException {

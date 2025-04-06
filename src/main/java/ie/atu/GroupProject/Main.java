@@ -69,7 +69,7 @@ public class Main {
                     break;
                 case 4:
                     System.out.println("You Selected Delete");
-                    //call your class
+                    StudentManagementDelete.runDeleteMenu(sc);
                     break;
                 case 5:
                     System.out.println("Goodbye!");

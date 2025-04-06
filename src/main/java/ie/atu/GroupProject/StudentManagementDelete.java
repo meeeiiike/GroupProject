@@ -6,6 +6,9 @@ import java.util.Scanner;
 public class StudentManagementDelete {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        runDeleteMenu(scanner);
+    }
+    public static void runDeleteMenu(Scanner scanner) {
         boolean continueRunning = true;
 
             while (continueRunning) {

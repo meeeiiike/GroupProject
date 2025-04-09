@@ -253,11 +253,21 @@ public class StudentManagementCreate {
 
     // Connect to DB and set college address details
     public static void setCollege_addressInput(int department_id, String address_line_1, String address_line_2, String town_city, String county) throws SQLException {
-        String college_addressInsertSQL = "INSERT INTO college_address (department_id, address_line_1, address_line_2, town_city, county) VALUES ('" + department_id + "','" + address_line_1 + "', '" + address_line_2 + "','" + town_city + "', '" + county + "')";
-        try (Connection connection = DbUtils.getConnection()) {
-            Statement statement = connection.createStatement();
+        String college_addressInsertSQL = "INSERT INTO college_address (department_id, address_line_1, address_line_2, town_city, county) VALUES (?, ?, ?, ?, ?)";
+
+        try (Connection connection = DbUtils.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(college_addressInsertSQL)) {
+
+            // Set the values to the prepared statement
+            preparedStatement.setInt(1, department_id);
+            preparedStatement.setString(2, address_line_1);
+            preparedStatement.setString(3, address_line_2);
+            preparedStatement.setString(4, town_city);
+            preparedStatement.setString(5, county);
+
             // Execute the insert query
-            int rowsAffected = statement.executeUpdate(college_addressInsertSQL);
+            int rowsAffected = preparedStatement.executeUpdate();
+
             if (rowsAffected > 0) {
                 System.out.println("Record inserted successfully.");
             } else {
@@ -265,7 +275,6 @@ public class StudentManagementCreate {
             }
         }
     }
-
     /* ************************************************************* */
 
     // Case 8

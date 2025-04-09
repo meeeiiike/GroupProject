@@ -83,7 +83,7 @@ public class SmsCreateTest {
         int staff_id = 4;
         StudentManagementCreate.setCourseInput(course_name, credits, level, semester, duration_weeks, max_students, department_id, staff_id);
         }
-/*
+
     @Test
     void testInsertCourseFailure() {
         String course_name = "TestCourseName";
@@ -95,12 +95,10 @@ public class SmsCreateTest {
         int staff_id = 0;
     int department_id = 0;
         Exception e = assertThrows(SQLException.class, ()-> StudentManagementCreate.setCourseInput(course_name, credits, level, semester, duration_weeks, max_students, department_id, staff_id));
-        //        String courseInsertSQL = "INSERT INTO course (course_name, credits, level, semester, duration_weeks, max_students, department_id, staff_id) VALUES ('" + course_name + "','" + credits + "', '" + level + "','" + semester + "','" + duration_weeks + "', '" + max_students + "', '" + department_id + "','" + staff_id + "')";
-        assertEquals("Cannot add or update a child row: a foreign key constraint fails (`sms`.`staff`, CONSTRAINT `staff_idfk_1` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`))" , e.getMessage());
+        assertEquals("Cannot add or update a child row: a foreign key constraint fails (`sms`.`course`, CONSTRAINT `course_idfk_1` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`))" , e.getMessage());
         }
 
- */
-}
+ }
 
 
 

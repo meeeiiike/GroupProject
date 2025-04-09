@@ -135,6 +135,29 @@ public class SmsCreateTest {
         Exception e = assertThrows(SQLException.class, ()-> StudentManagementCreate.setPaymentsInput(student_id, course_id, payment_status, payment_amount));
         assertEquals("Cannot add or update a child row: a foreign key constraint fails (`sms`.`payments`, CONSTRAINT `payments_idfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`))" , e.getMessage());
     }
+
+    // Test Create College_address
+    @Test
+    void testInsertCollegeAddressSuccess() throws SQLException {
+        int department_id = 1;
+        String address_line_1 = "Address line 1";
+        String address_line_2 = "Address line 2";
+        String town_city = "Town/City";
+        String county = "County";
+        StudentManagementCreate.setCollege_addressInput(department_id, address_line_1, address_line_2, town_city, county);
+    }
+
+    @Test
+    void testInsertCollegeAddressFailure() {
+        int department_id = 0;
+        String address_line_1 = "Address line 1";
+        String address_line_2 = "Address line 2";
+        String town_city = "Town/City";
+        String county = "County";
+        Exception e = assertThrows(SQLException.class, ()-> StudentManagementCreate.setCollege_addressInput(department_id, address_line_1, address_line_2, town_city, county));
+        assertEquals("Cannot add or update a child row: a foreign key constraint fails (`sms`.`college_address`, CONSTRAINT `college_address_idfk_1` FOREIGN KEY (`department_id`) REFERENCES `department` (`department_id`))" , e.getMessage());
+    }
+
  }
 
 

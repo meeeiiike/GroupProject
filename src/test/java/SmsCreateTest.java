@@ -115,6 +115,26 @@ public class SmsCreateTest {
         Exception e = assertThrows(SQLException.class, ()-> StudentManagementCreate.setGradesInput(student_id, course_id, level, grade));
         assertEquals("Cannot add or update a child row: a foreign key constraint fails (`sms`.`grades`, CONSTRAINT `grades_idfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`))" , e.getMessage());
     }
+
+    // Test Create Payments
+    @Test
+    void testInsertPaymentsSuccess() throws SQLException {
+        int student_id = 1;
+        int course_id = 3;
+        String payment_status = "TestPaid/Unpaid";
+        int payment_amount = 1;
+        StudentManagementCreate.setPaymentsInput(student_id, course_id, payment_status, payment_amount);
+    }
+
+    @Test
+    void testInsertPaymentsFailure() {
+        int student_id = 0;
+        int course_id = 0;
+        String payment_status = "TestPaid/Unpaid";
+        int payment_amount = 0;
+        Exception e = assertThrows(SQLException.class, ()-> StudentManagementCreate.setPaymentsInput(student_id, course_id, payment_status, payment_amount));
+        assertEquals("Cannot add or update a child row: a foreign key constraint fails (`sms`.`payments`, CONSTRAINT `payments_idfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`student_id`))" , e.getMessage());
+    }
  }
 
 

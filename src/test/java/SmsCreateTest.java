@@ -1,7 +1,6 @@
 
 import java.sql.*;
 import ie.atu.GroupProject.StudentManagementCreate;
-import ie.atu.GroupProject.StudentManagementUpdate;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
